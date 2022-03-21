@@ -1,0 +1,107 @@
+.App {
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  width: 100%;
+}
+
+.navbar {
+  height: 70px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffa50040;
+  margin-bottom: 50px;
+}
+
+
+
+.navbar__link {
+  margin: 0 10px;
+}
+
+.navbar__button {
+  padding: 5px 15px;
+  color: darkviolet;
+  font-size: 14px;
+  background: rgba(205,185,255,0.51);
+  border: 1px solid violet;
+  cursor: pointer;
+  margin: 0 3px;
+}
+
+.navbar__links {
+  margin-left: auto;
+}
+
+:root {
+  --color-default: rgb(112, 159, 238);
+  --color-active: #0041d3;
+}
+
+.navbar > a {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2em;
+  border-bottom: 2px solid transparent;
+  transition: all 0.25s ease-in-out;
+}
+
+.navbar > a:active {
+  color: var(--color-active) !important;
+}
+
+.navbar > a:visited {
+  color: var(--color-default);
+}
+
+.active-link {
+  color: var(--color-active) !important;
+  /*cursor: default;*/
+  border-bottom: 2px solid currentColor !important;
+}
+
