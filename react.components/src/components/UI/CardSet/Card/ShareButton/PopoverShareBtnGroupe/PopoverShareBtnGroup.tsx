@@ -28,7 +28,7 @@ export default class PopoverShareBtnGroup extends React.Component<IPopoverShareB
             size="large"
             color="transparent"
             aria-label="large primary button group"
-            data-testid="ShareLinksList"
+            data-testid="shareLinksList"
           >
             <Button
               color={'primary'}

@@ -6,7 +6,7 @@ import CardSet from '../../components/UI/CardSet/CardSet';
 const Main: React.FC = () => {
   return (
     <div className={ItemStyles.Main} data-testid="mainPage">
-      <SearchBar name={'search-bar'} marginBottom={'3em'} />
+      <SearchBar name={'search-bar'} style={{ marginBottom: '3em' }} />
       <CardSet />
     </div>
   );

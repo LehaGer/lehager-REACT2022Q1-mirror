@@ -26,7 +26,7 @@ export interface ISearchBarProps {
   type?: string;
   placeholder?: string;
   className?: string;
-  marginBottom?: string;
+  style?: {};
 }
 
 export interface ISearchBarState {

@@ -19,10 +19,10 @@ class Card extends React.Component<ICardProps, ICardState> {
     };
   }
   componentDidMount(): void {
-    this.setState((prevState) => ({
-      ...prevState,
-      isFavorite: localStorage.getItem(String(this.props.id))
-        ? localStorage.getItem(String(this.props.id)) === 'true'
+    this.setState((state, props) => ({
+      ...state,
+      isFavorite: localStorage.getItem(String(props.id))
+        ? localStorage.getItem(String(props.id)) === 'true'
         : false,
     }));
 
@@ -35,19 +35,19 @@ class Card extends React.Component<ICardProps, ICardState> {
   }
 
   handleFavouriteClick = () => {
-    this.setState((prevState) => ({ ...prevState, isFavorite: !this.state.isFavorite }));
+    this.setState((state) => ({ ...state, isFavorite: !state.isFavorite }));
   };
 
   handleMouseEnterEvent = () => {
-    this.setState((prevState) => ({
-      ...prevState,
+    this.setState((state) => ({
+      ...state,
       isHovered: true,
     }));
   };
 
   handleMouseLeaveEvent = () => {
-    this.setState((prevState) => ({
-      ...prevState,
+    this.setState((state) => ({
+      ...state,
       isHovered: false,
     }));
   };

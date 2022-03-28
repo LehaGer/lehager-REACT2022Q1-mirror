@@ -36,7 +36,7 @@ class ShareButton extends React.Component<IShareButtonProps, IShareButtonState> 
             aria-controls={Boolean(this.state.anchorEl) ? 'account-menu' : undefined}
             aria-haspopup="false"
             aria-expanded={Boolean(this.state.anchorEl) ? 'true' : undefined}
-            data-testid="ShareBtn"
+            data-testid="shareBtn"
           >
             <ShareIcon />
           </IconButton>
