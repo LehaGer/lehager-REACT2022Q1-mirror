@@ -21,10 +21,9 @@ class CardSet extends React.Component<
     try {
       const response = await axios.get('https://rickandmortyapi.com/api/character/?page=1');
       if (this._isMounted) {
-        this.setState((prevState) => ({
-          ...prevState,
+        this.setState({
           cards: response.data.results,
-        }));
+        });
       }
     } catch (e) {
       console.log(e);

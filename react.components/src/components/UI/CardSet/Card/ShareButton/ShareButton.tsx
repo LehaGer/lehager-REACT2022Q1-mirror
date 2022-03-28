@@ -15,17 +15,15 @@ class ShareButton extends React.Component<IShareButtonProps, IShareButtonState> 
   }
 
   handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    this.setState((prevState) => ({
-      ...prevState,
+    this.setState({
       anchorEl: event.currentTarget,
-    }));
+    });
   };
 
   handleClose = () => {
-    this.setState((prevState) => ({
-      ...prevState,
+    this.setState({
       anchorEl: null,
-    }));
+    });
   };
 
   render() {
