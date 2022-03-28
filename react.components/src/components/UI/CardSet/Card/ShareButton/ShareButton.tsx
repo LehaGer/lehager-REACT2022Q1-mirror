@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { IconButton } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
-import { ShareButtonProps, ShareButtonState } from '../../../../../types/types';
+import { IShareButtonProps, IShareButtonState } from '../../../../../types/types';
 import ShareIcon from '@mui/icons-material/Share';
 import PopoverShareBtnGroup from './PopoverShareBtnGroupe/PopoverShareBtnGroup';
 
-class ShareButton extends React.Component<ShareButtonProps, ShareButtonState> {
-  constructor(props: ShareButtonProps) {
+class ShareButton extends React.Component<IShareButtonProps, IShareButtonState> {
+  constructor(props: IShareButtonProps) {
     super(props);
 
     this.state = {

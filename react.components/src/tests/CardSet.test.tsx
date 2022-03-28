@@ -3,13 +3,13 @@ import { render, screen } from '@testing-library/react';
 import CardSet from '../components/UI/CardSet/CardSet';
 import axios, { AxiosResponse } from 'axios';
 import MockDataSet from '../DataFromDB/MockDataSet';
-import { CharacterRowInfo } from '../types/types';
+import { ICharacterRowInfo } from '../types/types';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('CardSet testing', () => {
-  let response: CharacterRowInfo[];
+  let response: ICharacterRowInfo[];
   let mockedResponse: AxiosResponse;
   beforeEach(() => {
     response = MockDataSet;
@@ -22,7 +22,7 @@ describe('CardSet testing', () => {
     };
   });
 
-  test('is CardSet corresponds to cards count', async () => {
+  test('does CardSet correspond to cards count', async () => {
     mockedAxios.get.mockResolvedValue(mockedResponse);
     expect(axios.get).not.toHaveBeenCalled();
     render(<CardSet />);

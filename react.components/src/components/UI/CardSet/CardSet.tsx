@@ -1,15 +1,15 @@
 import React from 'react';
 import Card from './Card/Card';
 import ItemStyles from './CardSet.module.css';
-import { CharacterRowInfo, CardSetProps, CardSetState } from '../../../types/types';
+import { ICharacterRowInfo, ICardSetProps, ICardSetState } from '../../../types/types';
 import axios from 'axios';
 
 class CardSet extends React.Component<
-  CardSetProps<CharacterRowInfo>,
-  CardSetState<CharacterRowInfo>
+  ICardSetProps<ICharacterRowInfo>,
+  ICardSetState<ICharacterRowInfo>
 > {
   _isMounted = false;
-  constructor(props: CardSetProps<CharacterRowInfo>) {
+  constructor(props: ICardSetProps<ICharacterRowInfo>) {
     super(props);
 
     this.state = {
@@ -51,7 +51,6 @@ class CardSet extends React.Component<
             origin={dataSetElement.origin.name}
             location={dataSetElement.location.name}
             image={dataSetElement.image}
-            data-testid="CardInCardSet"
           />
         ))}
       </div>

@@ -5,12 +5,12 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
-import { PopoverShareBtnGroupProps } from '../../../../../../types/types';
+import { IPopoverShareBtnGroupProps } from '../../../../../../types/types';
 import BtnGropeTheme from '../../../../../../styles/BtnGropeTheme';
 import PopoverCustom from '../../../../PopoverCustom/PopoverCustom';
 
-export default class PopoverShareBtnGroup extends React.Component<PopoverShareBtnGroupProps> {
-  constructor(props: PopoverShareBtnGroupProps) {
+export default class PopoverShareBtnGroup extends React.Component<IPopoverShareBtnGroupProps> {
+  constructor(props: IPopoverShareBtnGroupProps) {
     super(props);
   }
 

@@ -3,9 +3,9 @@ import { IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { red } from '@mui/material/colors';
 import Tooltip from '@mui/material/Tooltip';
-import { FavouriteButtonProps } from '../../../../../types/types';
+import { IFavouriteButtonProps } from '../../../../../types/types';
 
-class FavouriteButton extends React.Component<FavouriteButtonProps> {
+class FavouriteButton extends React.Component<IFavouriteButtonProps> {
   render() {
     return (
       <Tooltip title={!this.props.isFavorite ? 'Add to favourites' : 'Remove from favourites'}>

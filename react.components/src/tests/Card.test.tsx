@@ -2,25 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event/dist';
 import Card from '../components/UI/CardSet/Card/Card';
-
-const fakeLocalStorage = (function () {
-  let store: { [key: string]: string } = {};
-
-  return {
-    getItem: function (key: string | number) {
-      return store[key] || null;
-    },
-    setItem: function (key: string | number, value: string | number) {
-      store[key] = value.toString();
-    },
-    removeItem: function (key: string | number) {
-      delete store[key];
-    },
-    clear: function () {
-      store = {};
-    },
-  };
-})();
+import fakeLocalStorage from './helpers/fackeLocalStorage';
 
 describe('Card testing', () => {
   beforeEach(() => {
@@ -34,7 +16,7 @@ describe('Card testing', () => {
     window.localStorage.clear();
   });
 
-  test('is Card reacts on hover', () => {
+  test('does Card react on hover', () => {
     render(
       <Card
         id={1}
@@ -52,7 +34,7 @@ describe('Card testing', () => {
     expect(screen.getByTestId('Card')).toHaveClass('MuiPaper-elevation1');
   });
 
-  test('is Cards FavouriteBtn changes color on click', () => {
+  test('does Cards FavouriteBtn change color on click', () => {
     render(
       <Card
         id={1}
@@ -70,7 +52,7 @@ describe('Card testing', () => {
     expect(screen.getByTestId('favouriteIcon')).not.toHaveStyle({ color: '#f44336' });
   });
 
-  test('is Cards FavouriteBtn saving state on unmounting', () => {
+  test('does Cards FavouriteBtn save state on unmounting', () => {
     const { unmount } = render(
       <Card
         id={1}
@@ -87,7 +69,7 @@ describe('Card testing', () => {
     expect(window.localStorage.getItem('1')).toEqual('true');
   });
 
-  test('is Cards FavouriteBtn set state on mounting', () => {
+  test('does Cards FavouriteBtn set state on mounting', () => {
     window.localStorage.setItem('1', 'true');
     render(
       <Card

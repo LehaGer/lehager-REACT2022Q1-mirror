@@ -5,7 +5,7 @@ import Navbar from '../components/UI/Navbar/Navbar';
 import { renderWithRouter } from './helpers/renderWithRouter';
 
 describe('Router testing', () => {
-  test('test if "Main" is an initial page', () => {
+  test('is "Main" is an initial page', () => {
     renderWithRouter(<Navbar />);
     expect(screen.getByTestId('mainPage')).toBeInTheDocument();
   });
@@ -13,34 +13,34 @@ describe('Router testing', () => {
   test('test "Main" link', () => {
     renderWithRouter(<Navbar />, '/some-not-main-page');
     expect(screen.queryByTestId('mainPage')).not.toBeInTheDocument();
-    const mainLink = screen.getByTestId('main-link');
+    const mainLink = screen.getByTestId('mainLink');
     userEvent.click(mainLink);
     expect(screen.getByTestId('mainPage')).toBeInTheDocument();
   });
 
   test('test "About" link', () => {
     renderWithRouter(<Navbar />);
-    const aboutLink = screen.getByTestId('about-link');
+    const aboutLink = screen.getByTestId('aboutLink');
     userEvent.click(aboutLink);
-    expect(screen.getByTestId('about-page')).toBeInTheDocument();
+    expect(screen.getByTestId('aboutPage')).toBeInTheDocument();
   });
 
   test('test "NotFound" link', () => {
     renderWithRouter(<Navbar />);
-    const notFoundLink = screen.getByTestId('not-found-link');
+    const notFoundLink = screen.getByTestId('notFoundLink');
     userEvent.click(notFoundLink);
-    expect(screen.getByTestId('not-found-page')).toBeInTheDocument();
+    expect(screen.getByTestId('notFoundPage')).toBeInTheDocument();
   });
 
   test('test "Wrong" link', () => {
     renderWithRouter(<Navbar />);
-    const wrongLink = screen.getByTestId('wrong-link');
+    const wrongLink = screen.getByTestId('wrongLink');
     userEvent.click(wrongLink);
-    expect(screen.getByTestId('not-found-page')).toBeInTheDocument();
+    expect(screen.getByTestId('notFoundPage')).toBeInTheDocument();
   });
 
   test('test on entering wrong URL directly', () => {
     renderWithRouter(null, '/some-not-existing-page');
-    expect(screen.getByTestId('not-found-page')).toBeInTheDocument();
+    expect(screen.getByTestId('notFoundPage')).toBeInTheDocument();
   });
 });

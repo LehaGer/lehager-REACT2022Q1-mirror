@@ -5,12 +5,12 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardProps, CardState } from '../../../../types/types';
+import { ICardProps, ICardState } from '../../../../types/types';
 import FavouriteButton from './FavouriteButton/FavouriteButton';
 import ButtonCustom from '../../ButtonCustom/ButtonCustom';
 
-class Card extends React.Component<CardProps, CardState> {
-  constructor(props: CardProps) {
+class Card extends React.Component<ICardProps, ICardState> {
+  constructor(props: ICardProps) {
     super(props);
 
     this.state = {
@@ -75,18 +75,9 @@ class Card extends React.Component<CardProps, CardState> {
           </Typography>
         </CardContent>
         <CardActions>
-          <FavouriteButton
-            isFavorite={this.state.isFavorite}
-            onClick={this.handleFavouriteClick}
-            data-testid="favouriteBtnInCard"
-          />
-          <ShareButton data-testid="ShareBtnInCard" />
-          <ButtonCustom
-            variant={'contained'}
-            size="small"
-            style={{ marginLeft: 'auto' }}
-            data-testid="commonBtnInCard"
-          >
+          <FavouriteButton isFavorite={this.state.isFavorite} onClick={this.handleFavouriteClick} />
+          <ShareButton />
+          <ButtonCustom variant={'contained'} size="small" style={{ marginLeft: 'auto' }}>
             Learn More
           </ButtonCustom>
         </CardActions>

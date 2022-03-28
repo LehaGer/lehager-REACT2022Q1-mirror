@@ -1,9 +1,9 @@
 import React from 'react';
 import ItemStyles from './SearchBar.module.css';
-import { SearchBarProps, SearchBarState } from '../../../types/types';
+import { ISearchBarProps, ISearchBarState } from '../../../types/types';
 
-class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
-  constructor(props: SearchBarProps) {
+class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
+  constructor(props: ISearchBarProps) {
     super(props);
 
     this.state = {
@@ -11,7 +11,7 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
     };
   }
 
-  static defaultProps: SearchBarProps = {
+  static defaultProps: ISearchBarProps = {
     name: 'default-name',
     type: 'text',
     placeholder: 'default searching request',

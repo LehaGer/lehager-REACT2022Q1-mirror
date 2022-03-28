@@ -1,7 +1,7 @@
 import React from 'react';
-import { CharacterRowInfo } from '../types/types';
+import { ICharacterRowInfo } from '../types/types';
 
-const MockDataSet: CharacterRowInfo[] = [
+const MockDataSet: ICharacterRowInfo[] = [
   {
     id: 1,
     name: 'Rick Sanchez',

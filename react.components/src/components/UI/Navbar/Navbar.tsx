@@ -13,17 +13,17 @@ const Navbar = () => {
 
   return (
     <header>
-      <nav className={ItemStyles.navBar} data-testid="navbar">
-        <NavLink to="/" className={setActive} data-testid="main-link">
+      <nav className={ItemStyles.navBar}>
+        <NavLink to="/" className={setActive} data-testid="mainLink">
           Main
         </NavLink>
-        <NavLink to="/about" className={setActive} data-testid="about-link">
+        <NavLink to="/about" className={setActive} data-testid="aboutLink">
           About Us
         </NavLink>
-        <NavLink to="/not-found" className={setActive} data-testid="not-found-link">
+        <NavLink to="/not-found" className={setActive} data-testid="notFoundLink">
           404
         </NavLink>
-        <NavLink to="/wrong-path" className={setActive} data-testid="wrong-link">
+        <NavLink to="/wrong-path" className={setActive} data-testid="wrongLink">
           Not existing page
         </NavLink>
       </nav>

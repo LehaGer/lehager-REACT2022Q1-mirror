@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Popover from '@mui/material/Popover';
-import { PopoverCustomProps } from '../../../types/types';
+import { IPopoverCustomProps } from '../../../types/types';
 
-export default class PopoverCustom extends React.Component<PopoverCustomProps> {
+export default class PopoverCustom extends React.Component<IPopoverCustomProps> {
   render() {
     return (
       <Popover

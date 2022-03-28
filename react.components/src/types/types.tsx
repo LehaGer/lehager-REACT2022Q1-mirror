@@ -1,7 +1,6 @@
-import * as React from 'react';
-import { ElementType, MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
 
-export interface CharacterRowInfo {
+export interface ICharacterRowInfo {
   id: number;
   name: string;
   status: string;
@@ -22,7 +21,7 @@ export interface CharacterRowInfo {
   created: string;
 }
 
-export interface SearchBarProps {
+export interface ISearchBarProps {
   name: string;
   type?: string;
   placeholder?: string;
@@ -30,19 +29,19 @@ export interface SearchBarProps {
   marginBottom?: string;
 }
 
-export interface SearchBarState {
+export interface ISearchBarState {
   searchRequest?: string;
 }
 
-export interface CardSetProps<CharacterRowInfo> {
-  dataSet?: CharacterRowInfo[];
+export interface ICardSetProps<ICharacterRowInfo> {
+  dataSet?: ICharacterRowInfo[];
 }
 
-export interface CardSetState<CharacterRowInfo> {
-  cards: CharacterRowInfo[];
+export interface ICardSetState<ICharacterRowInfo> {
+  cards: ICharacterRowInfo[];
 }
 
-export interface CardProps {
+export interface ICardProps {
   id: number;
   name: string;
   status: string;
@@ -51,7 +50,7 @@ export interface CardProps {
   image: string;
 }
 
-export interface CardState {
+export interface ICardState {
   isFavorite: boolean;
   isHovered: boolean;
 }
@@ -62,26 +61,26 @@ export enum characterStatusSet {
   unknown = 'unknown',
 }
 
-export interface ShareButtonProps {
+export interface IShareButtonProps {
   name?: string;
 }
 
-export interface ShareButtonState {
+export interface IShareButtonState {
   anchorEl: null | Element | ((element: Element) => Element);
 }
 
-export interface FavouriteButtonProps {
+export interface IFavouriteButtonProps {
   onClick: MouseEventHandler;
   isFavorite: boolean;
 }
 
-export interface PopoverShareBtnGroupProps {
+export interface IPopoverShareBtnGroupProps {
   anchorEl: null | Element | ((element: Element) => Element);
   onClick: MouseEventHandler;
   onClose: MouseEventHandler;
 }
 
-export interface PopoverCustomProps {
+export interface IPopoverCustomProps {
   anchorEl: null | Element | ((element: Element) => Element);
   isOpen: boolean;
   onClick?: MouseEventHandler;
