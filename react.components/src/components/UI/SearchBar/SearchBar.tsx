@@ -19,10 +19,11 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
   };
 
   componentDidMount(): void {
-    this.setState({
+    this.setState((prevState) => ({
+      ...prevState,
       searchRequest:
         '' + (localStorage.getItem(this.props.name) ? localStorage.getItem(this.props.name) : ''),
-    });
+    }));
 
     window.addEventListener('beforeunload', this.handleSavingCurrentState);
   }
@@ -36,7 +37,10 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
     const input = event.target;
     const value = input.value;
 
-    this.setState({ searchRequest: value });
+    this.setState((prevState) => ({
+      ...prevState,
+      searchRequest: value,
+    }));
   };
 
   handleSavingCurrentState = () => {
