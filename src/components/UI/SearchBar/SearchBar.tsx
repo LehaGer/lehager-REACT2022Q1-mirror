@@ -1,17 +1,6 @@
 import React from 'react';
-import '../../styles/SearchBar.css';
-
-interface SearchBarProps {
-  name: string;
-  type?: string;
-  placeholder?: string;
-  className?: string;
-  marginBottom?: string;
-}
-
-interface SearchBarState {
-  searchRequest?: string;
-}
+import ItemStyles from './SearchBar.module.css';
+import { SearchBarProps, SearchBarState } from '../../../types/types';
 
 class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
   constructor(props: SearchBarProps) {
@@ -26,7 +15,7 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
     name: 'default-name',
     type: 'text',
     placeholder: 'default searching request',
-    className: 'search-bar',
+    className: ItemStyles.searchBar,
   };
 
   componentDidMount(): void {
@@ -65,6 +54,7 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
         style={{
           marginBottom: this.props.marginBottom,
         }}
+        data-testid="searchBar"
       />
     );
   }

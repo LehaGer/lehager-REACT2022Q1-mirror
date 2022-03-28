@@ -1,28 +1,5 @@
 import React from 'react';
-import '../../styles/Main.css';
-import SearchBar from '../UI/SearchBar';
-import CardSet from '../UI/CardSet';
-
-export interface CharacterRowInfo {
-  id: number;
-  name: string;
-  status: string;
-  species: string;
-  type: string;
-  gender: string;
-  origin: {
-    name: string;
-    url: string;
-  };
-  location: {
-    name: string;
-    url: string;
-  };
-  image: string;
-  episode: string[];
-  url: string;
-  created: string;
-}
+import { CharacterRowInfo } from '../types/types';
 
 const MockDataSet: CharacterRowInfo[] = [
   {
@@ -582,13 +559,4 @@ const MockDataSet: CharacterRowInfo[] = [
   },
 ];
 
-const Main: React.FC = () => {
-  return (
-    <div className={'Main'}>
-      <SearchBar name={'search-bar'} marginBottom={'4em'} />
-      <CardSet dataSet={MockDataSet} />
-    </div>
-  );
-};
-
-export default Main;
+export default MockDataSet;

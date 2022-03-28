@@ -1,50 +1,13 @@
 import React from 'react';
+import ShareButton from './ShareButton/ShareButton';
 import CardMUI from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button, { ButtonProps } from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { IconButton } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import { red } from '@mui/material/colors';
-import { styled } from '@mui/material/styles';
-
-const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
-  '&.MuiButton-root': {
-    '&.MuiButton-containedPrimary': {
-      backgroundColor: '#ffa5009c',
-      '&.MuiButton-containedPrimary': {
-        '&:hover, &.Mui-focusVisible': {
-          color: 'white',
-        },
-        '&.Mui-active': {
-          color: 'white',
-        },
-      },
-    },
-  },
-}));
-
-export enum characterStatusSet {
-  Alive = 'Alive',
-  Dead = 'Dead',
-  unknown = 'unknown',
-}
-
-export interface CardProps {
-  id: number;
-  name: string;
-  status: string;
-  origin: string;
-  location: string;
-  image: string;
-}
-
-interface CardState {
-  isFavorite: boolean;
-}
+import { CardProps, CardState } from '../../../../types/types';
+import FavouriteButton from './FavouriteButton/FavouriteButton';
+import ButtonCustom from '../../ButtonCustom/ButtonCustom';
 
 class Card extends React.Component<CardProps, CardState> {
   constructor(props: CardProps) {
@@ -52,6 +15,7 @@ class Card extends React.Component<CardProps, CardState> {
 
     this.state = {
       isFavorite: false,
+      isHovered: false,
     };
   }
   componentDidMount(): void {
@@ -73,13 +37,31 @@ class Card extends React.Component<CardProps, CardState> {
     this.setState({ isFavorite: !this.state.isFavorite });
   };
 
+  handleMouseEnterEvent = () => {
+    this.setState({
+      isHovered: true,
+    });
+  };
+
+  handleMouseLeaveEvent = () => {
+    this.setState({
+      isHovered: false,
+    });
+  };
+
   handleSavingCurrentState = () => {
     localStorage.setItem(String(this.props.id), String(this.state.isFavorite));
   };
 
   render() {
     return (
-      <CardMUI sx={{ maxWidth: 300, margin: '1em' }}>
+      <CardMUI
+        sx={{ maxWidth: 300, margin: '1em' }}
+        onMouseEnter={this.handleMouseEnterEvent}
+        onMouseLeave={this.handleMouseLeaveEvent}
+        elevation={!this.state.isHovered ? 1 : 10}
+        data-testid="Card"
+      >
         <CardMedia component="img" alt={this.props.name} height="280" image={this.props.image} />
         <CardContent sx={{ height: 80 }}>
           <Typography gutterBottom variant="h5" component="div">
@@ -93,15 +75,20 @@ class Card extends React.Component<CardProps, CardState> {
           </Typography>
         </CardContent>
         <CardActions>
-          <IconButton aria-label="add to favorites" onClick={this.handleFavouriteClick}>
-            <FavoriteIcon sx={this.state.isFavorite ? { color: red[500] } : { color: 'primary' }} />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
-          <StyledButton variant={'contained'} size="small" style={{ marginLeft: 'auto' }}>
+          <FavouriteButton
+            isFavorite={this.state.isFavorite}
+            onClick={this.handleFavouriteClick}
+            data-testid="favouriteBtnInCard"
+          />
+          <ShareButton data-testid="ShareBtnInCard" />
+          <ButtonCustom
+            variant={'contained'}
+            size="small"
+            style={{ marginLeft: 'auto' }}
+            data-testid="commonBtnInCard"
+          >
             Learn More
-          </StyledButton>
+          </ButtonCustom>
         </CardActions>
       </CardMUI>
     );
