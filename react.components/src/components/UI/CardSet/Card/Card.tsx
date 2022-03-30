@@ -59,7 +59,7 @@ class Card extends React.Component<ICardProps, ICardState> {
   render() {
     return (
       <CardMUI
-        sx={{ maxWidth: 300, margin: '1em' }}
+        sx={{ width: 300, margin: '1em' }}
         onMouseEnter={this.handleMouseEnterEvent}
         onMouseLeave={this.handleMouseLeaveEvent}
         elevation={!this.state.isHovered ? 1 : 10}
