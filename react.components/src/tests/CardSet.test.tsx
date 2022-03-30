@@ -28,6 +28,6 @@ describe('CardSet testing', () => {
     render(<CardSet />);
     expect(axios.get).toHaveBeenCalled();
     const cards = await screen.findAllByTestId('Card');
-    expect(cards.length).toBe(20);
+    expect(cards.length).toBe(7);
   });
 });
