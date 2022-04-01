@@ -32,13 +32,6 @@ describe('Router testing', () => {
     expect(screen.getByTestId('notFoundPage')).toBeInTheDocument();
   });
 
-  test('test "Wrong" link', () => {
-    renderWithRouter(<Navbar />);
-    const wrongLink = screen.getByTestId('wrongLink');
-    userEvent.click(wrongLink);
-    expect(screen.getByTestId('notFoundPage')).toBeInTheDocument();
-  });
-
   test('test on entering wrong URL directly', () => {
     renderWithRouter(null, '/some-not-existing-page');
     expect(screen.getByTestId('notFoundPage')).toBeInTheDocument();
