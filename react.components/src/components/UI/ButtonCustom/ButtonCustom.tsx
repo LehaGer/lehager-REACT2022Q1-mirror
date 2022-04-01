@@ -1,20 +1,18 @@
-import { styled } from '@mui/material/styles';
-import Button, { ButtonProps } from '@mui/material/Button';
+import React from 'react';
+import ItemStyles from './ButtonCustom.module.css';
 
-const ButtonCustom = styled(Button)<ButtonProps>(({ theme }) => ({
-  '&.MuiButton-root': {
-    '&.MuiButton-containedPrimary': {
-      backgroundColor: '#ffa5009c',
-      '&.MuiButton-containedPrimary': {
-        '&:hover, &.Mui-focusVisible': {
-          color: 'white',
-        },
-        '&.Mui-active': {
-          color: 'white',
-        },
-      },
-    },
-  },
-}));
+interface IButtonCustom {
+  name?: string;
+}
+
+class ButtonCustom extends React.Component<IButtonCustom> {
+  constructor(props: IButtonCustom) {
+    super(props);
+  }
+
+  render() {
+    return <button className={ItemStyles.btnCustom}>{this.props.children}</button>;
+  }
+}
 
 export default ButtonCustom;

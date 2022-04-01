@@ -1,5 +1,5 @@
 import React from 'react';
-import { ICharacterRowInfo } from '../types/types';
+import { ICharacterRowInfo } from '../types/interfaces';
 
 const MockDataSet: ICharacterRowInfo[] = [
   {

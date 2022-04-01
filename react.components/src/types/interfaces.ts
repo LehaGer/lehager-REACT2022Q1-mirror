@@ -70,8 +70,8 @@ export interface IShareButtonState {
 }
 
 export interface IFavouriteButtonProps {
-  onClick: MouseEventHandler;
-  isFavorite: boolean;
+  onClick?: MouseEventHandler;
+  isFavorite?: boolean;
 }
 
 export interface IPopoverShareBtnGroupProps {

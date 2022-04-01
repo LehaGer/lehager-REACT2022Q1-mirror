@@ -1,8 +1,8 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event/dist';
-import Navbar from '../components/UI/Navbar/Navbar';
-import { renderWithRouter } from './helpers/renderWithRouter';
+import Navbar from '../components/Navbar/Navbar';
+import { renderWithRouter } from './functions/renderWithRouter';
 
 describe('Router testing', () => {
   test('is "Main" is an initial page', () => {

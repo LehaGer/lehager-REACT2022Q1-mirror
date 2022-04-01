@@ -1,6 +1,6 @@
 import React from 'react';
 import ItemStyles from './SearchBar.module.css';
-import { ISearchBarProps, ISearchBarState } from '../../../types/types';
+import { ISearchBarProps, ISearchBarState } from '../../types/interfaces';
 
 class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
   constructor(props: ISearchBarProps) {

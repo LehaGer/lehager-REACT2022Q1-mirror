@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event/dist';
-import ShareButton from '../components/UI/CardSet/Card/ShareButton/ShareButton';
+import ShareButton from '../components/UI/ShareButton/ShareButton';
 
 describe('ShareButton testing', () => {
   test('does shareLinksList open on click ShareBtn', () => {

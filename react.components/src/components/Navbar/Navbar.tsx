@@ -23,9 +23,6 @@ const Navbar = () => {
         <NavLink to="/not-found" className={setActive} data-testid="notFoundLink">
           404
         </NavLink>
-        <NavLink to="/wrong-path" className={setActive} data-testid="wrongLink">
-          Not existing page
-        </NavLink>
       </nav>
     </header>
   );

@@ -1,0 +1,31 @@
+.shrBtn {
+    color: white;
+    font-size: 0.7em;
+    height: 3em;
+    width: 3em;
+
+    background-image: url('../../../asserts/svg/share-icon.svg');
+    background-color: rgba(0,0,0,0.1);
+    background-repeat: no-repeat;
+    background-position: calc(50% - .1em) calc(50% - .05em);
+    background-size: 1.5em;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding-left: 16px;
+    vertical-align: middle;
+    margin: 0.5em;
+    transition: all 0.2s linear;
+
+}
+
+.shrBtn:hover {
+    background-color: rgba(0,0,0,0.3);
+    box-shadow: 0.1em 0.1em 0.5em rgba(0, 0, 0, 0.5);
+
+}
+
+.shrBtn > img {
+    vertical-align: middle;
+    height: 3em;
+}

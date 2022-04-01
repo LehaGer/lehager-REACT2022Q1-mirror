@@ -1,7 +1,7 @@
 import React from 'react';
 import ItemStyles from './Main.module.css';
-import SearchBar from '../../components/UI/SearchBar/SearchBar';
-import CardSet from '../../components/UI/CardSet/CardSet';
+import SearchBar from '../../components/SearchBar/SearchBar';
+import CardSet from '../../components/CardSet/CardSet';
 
 const Main: React.FC = () => {
   return (

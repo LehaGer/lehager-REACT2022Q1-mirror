@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import SearchBar from '../components/UI/SearchBar/SearchBar';
+import SearchBar from '../components/SearchBar/SearchBar';
 import userEvent from '@testing-library/user-event/dist';
-import fakeLocalStorage from './helpers/fackeLocalStorage';
+import fakeLocalStorage from './functions/fackeLocalStorage';
 
 describe('SearchBar testing', () => {
   beforeEach(() => {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event/dist';
-import Card from '../components/UI/CardSet/Card/Card';
-import fakeLocalStorage from './helpers/fackeLocalStorage';
+import Card from '../components/Card/Card';
+import fakeLocalStorage from './functions/fackeLocalStorage';
 
 describe('Card testing', () => {
   beforeEach(() => {
