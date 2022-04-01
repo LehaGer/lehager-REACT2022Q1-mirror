@@ -20,7 +20,6 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
 
   componentDidMount(): void {
     this.setState((state, props) => ({
-      ...state,
       searchRequest:
         '' + (localStorage.getItem(props.name) ? localStorage.getItem(props.name) : ''),
     }));
