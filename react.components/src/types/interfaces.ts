@@ -42,7 +42,7 @@ export interface ICardSetState<ICharacterRowInfo> {
 }
 
 export interface ICardProps {
-  id: number;
+  id: string | number;
   name: string;
   status: string;
   origin: string;

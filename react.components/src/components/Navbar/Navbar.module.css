@@ -1,3 +1,5 @@
+
+
 .navBar {
     height: 70px;
     width: 100%;
@@ -6,10 +8,6 @@
     align-items: center;
     background: #ffa50040;
     margin-bottom: 4em;
-}
-
-.navBar__link {
-    margin: 0 10px;
 }
 
 .navBar__button {
@@ -32,6 +30,7 @@
     font-size: 1.2em;
     border-bottom: 2px solid transparent;
     transition: all 0.25s ease-in-out;
+    margin: 0 10px;
 }
 
 .navBar > a:active {
@@ -47,7 +46,7 @@
     --color-active: #0041d3;
 }
 
-.activeLink {
+:global(.active) {
     color: var(--color-active) !important;
     /*cursor: default;*/
     border-bottom: 2px solid currentColor !important;
