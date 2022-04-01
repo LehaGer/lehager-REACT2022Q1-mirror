@@ -31,21 +31,19 @@ class Card extends React.Component<ICardProps, ICardState> {
   }
 
   handleFavouriteClick = () => {
-    this.setState((state) => ({ ...state, isFavorite: !state.isFavorite }));
+    this.setState((state) => ({ isFavorite: !state.isFavorite }));
   };
 
   handleMouseEnterEvent = () => {
-    this.setState((state) => ({
-      ...state,
+    this.setState({
       isHovered: true,
-    }));
+    });
   };
 
   handleMouseLeaveEvent = () => {
-    this.setState((state) => ({
-      ...state,
+    this.setState({
       isHovered: false,
-    }));
+    });
   };
 
   handleSavingCurrentState = () => {
