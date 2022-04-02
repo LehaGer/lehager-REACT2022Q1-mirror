@@ -1,17 +1,15 @@
-import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event/dist';
-import Navbar from '../components/Navbar/Navbar';
-import { renderWithRouter } from './functions/renderWithRouter';
+import { renderRouter } from './functions/renderRouter';
 
 describe('Router testing', () => {
   test('is "Main" is an initial page', () => {
-    renderWithRouter(<Navbar />);
+    renderRouter();
     expect(screen.getByTestId('mainPage')).toBeInTheDocument();
   });
 
   test('test "Main" link', () => {
-    renderWithRouter(<Navbar />, '/some-not-main-page');
+    renderRouter('/some-not-main-page');
     expect(screen.queryByTestId('mainPage')).not.toBeInTheDocument();
     const mainLink = screen.getByTestId('mainLink');
     userEvent.click(mainLink);
@@ -19,21 +17,21 @@ describe('Router testing', () => {
   });
 
   test('test "About" link', () => {
-    renderWithRouter(<Navbar />);
+    renderRouter('/some-not-about-page');
     const aboutLink = screen.getByTestId('aboutLink');
     userEvent.click(aboutLink);
     expect(screen.getByTestId('aboutPage')).toBeInTheDocument();
   });
 
   test('test "NotFound" link', () => {
-    renderWithRouter(<Navbar />);
+    renderRouter('/some-not-notfound-page');
     const notFoundLink = screen.getByTestId('notFoundLink');
     userEvent.click(notFoundLink);
     expect(screen.getByTestId('notFoundPage')).toBeInTheDocument();
   });
 
   test('test on entering wrong URL directly', () => {
-    renderWithRouter(null, '/some-not-existing-page');
+    renderRouter('/some-not-existing-page');
     expect(screen.getByTestId('notFoundPage')).toBeInTheDocument();
   });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Main from '../pages/Main/Main';
 import About from '../pages/About/About';
 import NotFound from '../pages/NotFound/NotFound';
@@ -7,7 +7,7 @@ import Navbar from './Navbar/Navbar';
 
 const AppRouter = () => {
   return (
-    <BrowserRouter>
+    <>
       <Navbar />
       <Routes>
         <Route path="" element={<Main />} />
@@ -15,7 +15,7 @@ const AppRouter = () => {
         <Route path="not-found" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 };
 

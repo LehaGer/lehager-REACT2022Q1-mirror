@@ -3,11 +3,10 @@ import { MemoryRouter } from 'react-router-dom';
 import AppRouter from '../../components/AppRouter';
 import { render } from '@testing-library/react';
 
-export const renderWithRouter = (component: JSX.Element | null, initialRoute = '/') => {
+export const renderRouter = (initialRoute = '/') => {
   return render(
     <MemoryRouter initialEntries={[initialRoute]}>
       <AppRouter />
-      {component}
     </MemoryRouter>
   );
 };
