@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import CardSet from '../components/CardSet/CardSet';
 import axios, { AxiosResponse } from 'axios';
-import MockDataSet from '../data/cardsData';
+import MockDataSet from './data/cardsData';
 import { ICharacterRowInfo } from '../types/interfaces';
 
 jest.mock('axios');
