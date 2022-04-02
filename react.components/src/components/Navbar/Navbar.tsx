@@ -4,15 +4,15 @@ import ItemStyles from './Navbar.module.css';
 
 const Navbar = () => {
   return (
-    <header>
+    <header className="App-header">
       <nav className={ItemStyles.navBar}>
-        <NavLink to="/" data-testid="mainLink">
+        <NavLink to="/" className="App-link" data-testid="mainLink">
           Main
         </NavLink>
-        <NavLink to="/about" data-testid="aboutLink">
+        <NavLink to="/about" className="App-link" data-testid="aboutLink">
           About Us
         </NavLink>
-        <NavLink to="/not-found" data-testid="notFoundLink">
+        <NavLink to="/not-found" className="App-link" data-testid="notFoundLink">
           404
         </NavLink>
       </nav>
