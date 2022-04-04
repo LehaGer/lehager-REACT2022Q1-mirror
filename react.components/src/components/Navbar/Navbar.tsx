@@ -15,6 +15,9 @@ const Navbar = () => {
         <NavLink to="/not-found" className="App-link" data-testid="notFoundLink">
           404
         </NavLink>
+        <NavLink to="/forms" className="App-link" data-testid="formsLink">
+          Forms
+        </NavLink>
       </nav>
     </header>
   );

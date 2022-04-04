@@ -1,0 +1,14 @@
+.Form {
+    border: 3px solid #ffb100;
+    border-radius: 2em;
+    width: 540px;
+    padding: 1em;
+}
+
+.Form > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    margin: 0 0 1em 1em;
+}
