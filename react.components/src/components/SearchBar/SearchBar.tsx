@@ -19,9 +19,9 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
   };
 
   componentDidMount(): void {
-    this.setState((state, props) => ({
-      searchRequest: localStorage.getItem(props.name) || '',
-    }));
+    this.setState({
+      searchRequest: localStorage.getItem(this.props.name) || '',
+    });
   }
 
   componentWillUnmount(): void {
@@ -29,12 +29,11 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
   }
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const input = event.target;
-    const value = input.value;
-
+    const value = event.target.value;
     this.setState({
       searchRequest: value,
     });
+    localStorage.setItem(this.props.name, value);
   };
 
   handleSavingCurrentState = () => {
@@ -48,7 +47,7 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
         placeholder={this.props.placeholder}
         className={this.props.className}
         value={this.state.searchRequest}
-        onChange={this.handleChange}
+        onInput={this.handleChange}
         style={this.props.style}
         data-testid="searchBar"
       />

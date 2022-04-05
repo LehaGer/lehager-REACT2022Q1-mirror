@@ -9,7 +9,6 @@ const AppRouter = () => {
     <Routes>
       <Route path="" element={<Main />} />
       <Route path="about" element={<About />} />
-      <Route path="not-found" element={<NotFound />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
