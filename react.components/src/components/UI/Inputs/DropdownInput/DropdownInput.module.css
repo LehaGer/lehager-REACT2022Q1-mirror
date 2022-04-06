@@ -1,0 +1,61 @@
+.dropdownInput {
+    margin: 5px;
+    width: 100%;
+}
+
+.dropdownInput > div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropdownInput > div > label {
+    margin-right: 0.5em;
+    white-space: nowrap;
+}
+
+.dropdownInput > div:nth-child(1) > select {
+    padding: 0.6em;
+    border: 3px solid #ffa5009c;
+    border-radius: 15px;
+    outline: none;
+    transition: 0.5s;
+    font-size: 1.0em;
+    color: #ccc;
+    caret-color: currentColor;
+}
+
+.dropdownInput > div:nth-child(1) > select:focus {
+    border: 3px solid #ffa5009c;
+    opacity: 1;
+    color: #8d8d8d;
+}
+
+.dropdownInput > div:nth-child(1) > select::placeholder {
+    opacity: 0.5;
+}
+
+.dropdownInput > div:nth-child(2) {
+    color: red;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+:global(.showed) {
+    height: 2.5em;
+}
+
+:global(.hidden) {
+    height: 0;
+    opacity: 0;
+}
+
+.textInput > div.hidden:nth-child(2) {
+    height: 0;
+    opacity: 1;
+}

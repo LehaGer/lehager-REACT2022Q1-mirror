@@ -1,5 +1,12 @@
 import React from 'react';
 import ItemStyles from './Form.module.css';
+import TextInput from '../UI/Inputs/TextInput/TextInput';
+import DateInput from '../UI/Inputs/DateInput/DateInput';
+import DropdownInput from '../UI/Inputs/DropdownInput/DropdownInput';
+import CheckboxInput from '../UI/Inputs/CheckboxInput/CheckboxInput';
+import SwitcherInput from '../UI/Inputs/SwitcherInput/SwitcherInput';
+import FileUploadInput from '../UI/Inputs/FileUploadInput/FileUploadInput';
+import SubmitInput from '../UI/Inputs/SubmiInput/SubmitInput';
 
 interface IFormProps {
   name?: string;
@@ -10,105 +17,177 @@ interface IFormState {
 }
 
 class Form extends React.Component<IFormProps, IFormState> {
-  private fromReference = React.createRef<HTMLFormElement>();
+  private readonly formReference = React.createRef<HTMLFormElement>();
+  private readonly firstName = React.createRef<HTMLInputElement>();
+  private readonly lastName = React.createRef<HTMLInputElement>();
+  private readonly zipCode = React.createRef<HTMLInputElement>();
+  private readonly birthday = React.createRef<HTMLInputElement>();
+  private readonly arrivingDate = React.createRef<HTMLInputElement>();
+  private readonly country = React.createRef<HTMLSelectElement>();
+  private readonly isAgreeToProcConfData = React.createRef<HTMLInputElement>();
+  private readonly isAgreeToGetAdvToEmail = React.createRef<HTMLInputElement>();
+  private readonly genderMale = React.createRef<HTMLInputElement>();
+  private readonly genderFemale = React.createRef<HTMLInputElement>();
+  private readonly profilePicture = React.createRef<HTMLInputElement>();
 
   constructor(props: IFormProps) {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
 
-    this.fromReference = React.createRef();
+    this.state = {};
   }
 
   handleSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
 
-    /*alert('firstNameInput: ' + this.firstNameInput.current?.value);
-    alert('lastNameInput: ' + this.lastNameInput.current?.value);*/
+    alert('firstName: ' + this.firstName.current?.value);
+    alert('lastName: ' + this.lastName.current?.value);
+    alert('zipCode: ' + this.zipCode.current?.value);
+    alert('birthday: ' + this.birthday.current?.value);
+    alert('arrivingDate: ' + this.arrivingDate.current?.value);
+    alert('country: ' + this.country.current?.value);
+    alert('isAgreeToProcConfData: ' + this.isAgreeToProcConfData.current?.checked);
+    alert('isAgreeToGetAdvToEmail: ' + this.isAgreeToGetAdvToEmail.current?.checked);
+    alert(
+      'gender: ' +
+        ((this.genderMale.current?.checked ? this.genderMale.current?.value : false) ||
+          (this.genderFemale.current?.checked ? this.genderFemale.current?.value : false) ||
+          undefined)
+    );
+    alert('profilePicture: ' + this.profilePicture.current?.value);
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} className={ItemStyles.Form} ref={this.fromReference}>
+      <form onSubmit={this.handleSubmit} className={ItemStyles.Form} ref={this.formReference}>
         <div>
-          <div>
-            <label htmlFor="firstName">First Name:</label>
-            <input type="text" defaultValue="" id="firstName" name="firstName" />
-          </div>
-          <div>
-            <label htmlFor="lastName">Last Name:</label>
-            <input type="text" defaultValue="" id="lastName" name="lastName" />
-          </div>
-          <div>
-            <label htmlFor="zipCode">Zip code:</label>
-            <input type="text" defaultValue="" id="zipCode" name="zipCode" />
-          </div>
+          <TextInput
+            id={'firstName'}
+            name={'firstName'}
+            defaultValue={''}
+            reference={this.firstName}
+            formatInstruction={'ur name must include letters only'}
+            isCorrectFormat={true}
+            label={'First Name: '}
+          />
+          <TextInput
+            id={'lastName'}
+            name={'lastName'}
+            defaultValue={''}
+            reference={this.lastName}
+            formatInstruction={'ur surname must include letters only'}
+            isCorrectFormat={true}
+            label={'Last Name: '}
+          />
+          <TextInput
+            id={'zipCode'}
+            name={'zipCode'}
+            defaultValue={''}
+            reference={this.zipCode}
+            formatInstruction={'ur zip-code must include 6 symbols only'}
+            isCorrectFormat={true}
+            label={'Zip-code: '}
+          />
         </div>
         <div>
-          <div>
-            <label htmlFor="birthday">birthday:</label>
-            <input type="date" defaultValue="" name="birthday" id="birthday" />
-          </div>
-          <div>
-            <label htmlFor="arrivingDate">arriving date:</label>
-            <input type="date" defaultValue="" name="arrivingDate" id="arrivingDate" />
-          </div>
+          <DateInput
+            id={'birthday'}
+            name={'birthday'}
+            defaultValue={''}
+            reference={this.birthday}
+            formatInstruction={'select date < NOW'}
+            isCorrectFormat={true}
+            label={'birthday: '}
+          />
+          <DateInput
+            id={'arrivingDate'}
+            name={'arrivingDate'}
+            defaultValue={''}
+            reference={this.arrivingDate}
+            formatInstruction={'select date > NOW'}
+            isCorrectFormat={true}
+            label={'arriving date: '}
+          />
         </div>
         <div>
-          <label htmlFor="country">country:</label>
-          <select name="country" id="country">
-            <option value="Åland Islands">Åland Islands</option>
-            <option value="Belarus">Belarus</option>
-            <option value="Canada">Canada</option>
-            <option value="El Salvador">El Salvador</option>
-            <option value="France">France</option>
-            <option value="Gambia">Gambia</option>
-            <option value="Honduras">Honduras</option>
-            <option value="Ireland">Ireland</option>
-            <option value="Japan">Japan</option>
-            <option value="Kazakhstan">Kazakhstan</option>
-            <option value="Latvia">Latvia</option>
-            <option value="Macao">Macao</option>
-          </select>
+          <DropdownInput
+            id={'country'}
+            name={'country'}
+            defaultValue={''}
+            reference={this.country}
+            formatInstruction={'u must pick some country'}
+            isCorrectFormat={true}
+            label={'country:'}
+            options={[
+              'Åland Islands',
+              'Belarus',
+              'Canada',
+              'El Salvador',
+              'France',
+              'Gambia',
+              'Honduras',
+              'Ireland',
+              'Japan',
+              'Kazakhstan',
+              'Latvia',
+              'Macao',
+            ]}
+          />
         </div>
         <div>
-          <div>
-            <input
-              type="checkbox"
-              defaultValue=""
-              id="isAgreeToProcConfData"
-              name="isAgreeToProcConfData"
-            />
-            <label htmlFor="isAgreeToProcConfData">agree to processing my data</label>
-          </div>
-          <div>
-            <input
-              type="checkbox"
-              defaultValue=""
-              id="isAgreeToGetAdvToEmail"
-              name="isAgreeToGetAdvToEmail"
-            />
-            <label htmlFor="isAgreeToGetAdvToEmail">receive advertisement</label>
-          </div>
+          <CheckboxInput
+            id={'isAgreeToProcConfData'}
+            name={'isAgreeToProcConfData'}
+            defaultChecked={false}
+            reference={this.isAgreeToProcConfData}
+            formatInstruction={'must be checked'}
+            isCorrectFormat={true}
+            label={' - agree to processing my data'}
+          />
+          <CheckboxInput
+            id={'isAgreeToGetAdvToEmail'}
+            name={'isAgreeToGetAdvToEmail'}
+            defaultChecked={false}
+            reference={this.isAgreeToGetAdvToEmail}
+            formatInstruction={'must be checked'}
+            isCorrectFormat={true}
+            label={' - receive advertisement'}
+          />
         </div>
         <div>
-          <div>
-            <input type="radio" name="gender" id="male" value="male" />
-            <label htmlFor="male">Male</label>
-          </div>
-          <div>
-            <input type="radio" name="gender" id="female" value="female" />
-            <label htmlFor="female">Female</label>
-          </div>
+          <SwitcherInput
+            id={'male'}
+            name={'gender'}
+            defaultChecked={false}
+            reference={this.genderMale}
+            formatInstruction={'u musk pick one of these'}
+            isCorrectFormat={true}
+            label={' - Male'}
+          />
+          <SwitcherInput
+            id={'female'}
+            name={'gender'}
+            defaultChecked={false}
+            reference={this.genderFemale}
+            formatInstruction={'u musk pick one of these'}
+            isCorrectFormat={true}
+            label={' - Female'}
+          />
         </div>
         <div>
-          <div>
-            <label htmlFor="profilePicture">profile picture</label>
-            <input type="file" defaultValue="" id="profilePicture" name="profilePicture" />
-          </div>
+          <FileUploadInput
+            id={'profilePicture'}
+            name={'profilePicture'}
+            defaultValue={''}
+            reference={this.profilePicture}
+            formatInstruction={'pick correct img'}
+            isCorrectFormat={true}
+            label={'profile picture: '}
+          />
         </div>
         <div>
-          <input type="submit" value="Создать запись" />
+          <SubmitInput value={'Submit'} />
         </div>
       </form>
     );

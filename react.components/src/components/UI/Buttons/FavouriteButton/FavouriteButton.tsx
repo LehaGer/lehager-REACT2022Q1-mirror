@@ -1,7 +1,7 @@
 import React from 'react';
-import { IFavouriteButtonProps } from '../../../types/interfaces';
+import { IFavouriteButtonProps } from '../../../../types/interfaces';
 import ItemStyles from './FavouriteButton.module.css';
-import favouriteIcon from '../../../asserts/svg/favourite-icon.svg';
+import favouriteIcon from '../../../../asserts/svg/favourite-icon.svg';
 
 class FavouriteButton extends React.Component<IFavouriteButtonProps> {
   constructor(props: IFavouriteButtonProps) {

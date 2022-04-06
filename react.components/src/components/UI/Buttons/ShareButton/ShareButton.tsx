@@ -1,7 +1,7 @@
 import React from 'react';
-import { IShareButtonProps } from '../../../types/interfaces';
+import { IShareButtonProps } from '../../../../types/interfaces';
 import ItemStyles from './ShareButton.module.css';
-import shareIcon from '../../../asserts/svg/share-icon.svg';
+import shareIcon from '../../../../asserts/svg/share-icon.svg';
 
 class ShareButton extends React.Component<IShareButtonProps> {
   constructor(props: IShareButtonProps) {
