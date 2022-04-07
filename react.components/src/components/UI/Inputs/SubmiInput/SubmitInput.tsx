@@ -1,9 +1,6 @@
 import React from 'react';
 import ItemStyles from './SubmitInput.module.css';
-
-interface ISubmitInput {
-  value: string;
-}
+import { ISubmitInput } from '../../../../types/interfaces';
 
 class SubmitInput extends React.Component<ISubmitInput> {
   constructor(props: ISubmitInput) {

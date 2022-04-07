@@ -1,7 +1,21 @@
 .formCard {
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
     margin: 2em;
     background-color: rgba(255, 165, 0, 0.25);
     border-radius: 1em;
+    padding: 1em;
+    word-break: break-word;
+    box-shadow: 0 0 1em #0000003d;
+    transition: all 0.2s linear;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.formCard:hover {
+    box-shadow: 0 0 3em #0000003d;
 }

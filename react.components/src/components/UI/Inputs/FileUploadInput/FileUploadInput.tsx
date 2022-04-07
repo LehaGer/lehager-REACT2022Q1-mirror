@@ -1,15 +1,6 @@
-import React, { RefObject } from 'react';
+import React from 'react';
 import ItemStyles from './FileUploadInput.module.css';
-
-interface IFileUploadInput {
-  id: string;
-  name: string;
-  defaultValue: string;
-  reference: RefObject<HTMLInputElement>;
-  formatInstruction: string;
-  isCorrectFormat: boolean | true;
-  label: string;
-}
+import { IFileUploadInput } from '../../../../types/interfaces';
 
 class FileUploadInput extends React.Component<IFileUploadInput> {
   constructor(props: IFileUploadInput) {

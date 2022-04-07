@@ -7,14 +7,7 @@ import CheckboxInput from '../UI/Inputs/CheckboxInput/CheckboxInput';
 import SwitcherInput from '../UI/Inputs/SwitcherInput/SwitcherInput';
 import FileUploadInput from '../UI/Inputs/FileUploadInput/FileUploadInput';
 import SubmitInput from '../UI/Inputs/SubmiInput/SubmitInput';
-
-interface IFormProps {
-  name?: string;
-}
-
-interface IFormState {
-  name?: string;
-}
+import { genderTypes, IFormProps, IFormState } from '../../types/interfaces';
 
 class Form extends React.Component<IFormProps, IFormState> {
   private readonly formReference = React.createRef<HTMLFormElement>();
@@ -26,8 +19,7 @@ class Form extends React.Component<IFormProps, IFormState> {
   private readonly country = React.createRef<HTMLSelectElement>();
   private readonly isAgreeToProcConfData = React.createRef<HTMLInputElement>();
   private readonly isAgreeToGetAdvToEmail = React.createRef<HTMLInputElement>();
-  private readonly genderMale = React.createRef<HTMLInputElement>();
-  private readonly genderFemale = React.createRef<HTMLInputElement>();
+  private readonly gender = React.createRef<SwitcherInput>();
   private readonly profilePicture = React.createRef<HTMLInputElement>();
 
   constructor(props: IFormProps) {
@@ -41,7 +33,7 @@ class Form extends React.Component<IFormProps, IFormState> {
   handleSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
 
-    alert('firstName: ' + this.firstName.current?.value);
+    /*alert('firstName: ' + this.firstName.current?.value);
     alert('lastName: ' + this.lastName.current?.value);
     alert('zipCode: ' + this.zipCode.current?.value);
     alert('birthday: ' + this.birthday.current?.value);
@@ -49,13 +41,23 @@ class Form extends React.Component<IFormProps, IFormState> {
     alert('country: ' + this.country.current?.value);
     alert('isAgreeToProcConfData: ' + this.isAgreeToProcConfData.current?.checked);
     alert('isAgreeToGetAdvToEmail: ' + this.isAgreeToGetAdvToEmail.current?.checked);
-    alert(
-      'gender: ' +
-        ((this.genderMale.current?.checked ? this.genderMale.current?.value : false) ||
-          (this.genderFemale.current?.checked ? this.genderFemale.current?.value : false) ||
-          undefined)
-    );
-    alert('profilePicture: ' + this.profilePicture.current?.value);
+    alert('gender: ' + this.gender.current?.value);
+    alert('profilePicture: ' + this.profilePicture.current?.value);*/
+
+    // console.log(this.gender.current?.value);
+
+    this.props.addNewCard({
+      arrivingDate: String(this.arrivingDate.current?.value),
+      birthday: String(this.birthday.current?.value),
+      country: String(this.country.current?.value),
+      firstName: String(this.firstName.current?.value),
+      gender: this.gender.current?.value as genderTypes,
+      isAgreeToGetAdvToEmail: Boolean(this.isAgreeToGetAdvToEmail.current?.value),
+      isAgreeToProcConfData: Boolean(this.isAgreeToProcConfData.current?.value),
+      lastName: String(this.lastName.current?.value),
+      profilePicture: String(this.profilePicture.current?.value),
+      zipCode: String(this.zipCode.current?.value),
+    });
   }
 
   render() {
@@ -157,22 +159,22 @@ class Form extends React.Component<IFormProps, IFormState> {
         </div>
         <div>
           <SwitcherInput
-            id={'male'}
             name={'gender'}
-            defaultChecked={false}
-            reference={this.genderMale}
             formatInstruction={'u musk pick one of these'}
             isCorrectFormat={true}
-            label={' - Male'}
-          />
-          <SwitcherInput
-            id={'female'}
-            name={'gender'}
-            defaultChecked={false}
-            reference={this.genderFemale}
-            formatInstruction={'u musk pick one of these'}
-            isCorrectFormat={true}
-            label={' - Female'}
+            ref={this.gender}
+            options={[
+              {
+                id: 'male',
+                defaultChecked: false,
+                label: ' - Male',
+              },
+              {
+                id: 'female',
+                defaultChecked: false,
+                label: ' - Female',
+              },
+            ]}
           />
         </div>
         <div>

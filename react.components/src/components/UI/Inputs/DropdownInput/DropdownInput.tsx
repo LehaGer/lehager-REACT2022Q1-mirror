@@ -1,16 +1,6 @@
-import React, { RefObject } from 'react';
+import React from 'react';
 import ItemStyles from './DropdownInput.module.css';
-
-interface IDropdownInput {
-  id: string;
-  name: string;
-  defaultValue: string | '';
-  reference: RefObject<HTMLSelectElement>;
-  formatInstruction: string;
-  isCorrectFormat: boolean | true;
-  label: string;
-  options: string[];
-}
+import { IDropdownInput } from '../../../../types/interfaces';
 
 class DropdownInput extends React.Component<IDropdownInput> {
   constructor(props: IDropdownInput) {

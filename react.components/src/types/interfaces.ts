@@ -1,4 +1,4 @@
-import { MouseEventHandler } from 'react';
+import { MouseEventHandler, RefObject } from 'react';
 
 export interface ICharacterRowInfo {
   id: number;
@@ -26,7 +26,6 @@ export interface ISearchBarProps {
   type?: string;
   placeholder?: string;
   className?: string;
-  style?: {};
 }
 
 export interface ISearchBarState {
@@ -86,4 +85,103 @@ export interface IPopoverCustomProps {
   onClick?: MouseEventHandler;
   onClose?: MouseEventHandler;
   arrowOffset?: string | number;
+}
+
+export interface IFormProps {
+  name?: string;
+  addNewCard: (card: IFormsCardProps) => void;
+}
+
+export interface IFormState {
+  name?: string;
+}
+
+export enum genderTypes {
+  MALE = 'male',
+  FEMALE = 'female',
+}
+
+export interface IFormsCardProps {
+  id?: string;
+  firstName: string;
+  lastName: string;
+  zipCode: string;
+  birthday: string;
+  arrivingDate: string;
+  country: string;
+  isAgreeToProcConfData: boolean;
+  isAgreeToGetAdvToEmail: boolean;
+  gender: genderTypes;
+  profilePicture: string;
+}
+
+export interface IFormsCardState {
+  name?: string;
+}
+
+export interface IFormsCardSetProps {
+  name?: string;
+  cardSetArray?: IFormsCardProps[];
+}
+
+export interface IFormsCardSetState {
+  name?: string;
+}
+
+export interface ISwitcherOption {
+  id: string;
+  label: string;
+  defaultChecked: boolean | false;
+}
+
+export interface ISwitcherInput {
+  name: string;
+  formatInstruction: string;
+  isCorrectFormat: boolean | true;
+  options: ISwitcherOption[];
+}
+
+export interface ISubmitInput {
+  value: string;
+}
+
+export interface IFileUploadInput {
+  id: string;
+  name: string;
+  defaultValue: string;
+  reference: RefObject<HTMLInputElement>;
+  formatInstruction: string;
+  isCorrectFormat: boolean | true;
+  label: string;
+}
+
+export interface IDropdownInput {
+  id: string;
+  name: string;
+  defaultValue: string | '';
+  reference: RefObject<HTMLSelectElement>;
+  formatInstruction: string;
+  isCorrectFormat: boolean | true;
+  label: string;
+  options: string[];
+}
+
+export interface IDateInput {
+  id: string;
+  name: string;
+  defaultValue: string | '';
+  reference: RefObject<HTMLInputElement>;
+  formatInstruction: string;
+  isCorrectFormat: boolean | true;
+  label: string;
+}
+
+export interface ICheckboxInput {
+  id: string;
+  name: string;
+  defaultChecked: boolean | false;
+  reference: RefObject<HTMLInputElement>;
+  formatInstruction: string;
+  isCorrectFormat: boolean | true;
+  label: string;
 }

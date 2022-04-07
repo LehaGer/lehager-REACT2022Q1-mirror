@@ -1,15 +1,6 @@
-import React, { RefObject } from 'react';
+import React from 'react';
 import ItemStyles from './DateInput.module.css';
-
-interface IDateInput {
-  id: string;
-  name: string;
-  defaultValue: string | '';
-  reference: RefObject<HTMLInputElement>;
-  formatInstruction: string;
-  isCorrectFormat: boolean | true;
-  label: string;
-}
+import { IDateInput } from '../../../../types/interfaces';
 
 class DateInput extends React.Component<IDateInput> {
   constructor(props: IDateInput) {

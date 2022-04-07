@@ -49,7 +49,6 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
         className={this.props.className}
         value={this.state.searchRequest}
         onChange={this.handleChange}
-        style={this.props.style}
         data-testid="searchBar"
       />
     );

@@ -1,14 +1,7 @@
 import React from 'react';
-import FormsCard, { IFormsCardProps } from '../FormsCard/FormsCard';
-
-interface IFormsCardSetProps {
-  name?: string;
-  cardSetArray?: IFormsCardProps[];
-}
-
-interface IFormsCardSetState {
-  name?: string;
-}
+import FormsCard from '../FormsCard/FormsCard';
+import ItemStyles from './FormsCardSet.module.css';
+import { IFormsCardSetProps, IFormsCardSetState } from '../../types/interfaces';
 
 class FormsCardSet extends React.Component<IFormsCardSetProps, IFormsCardSetState> {
   constructor(props: IFormsCardSetProps) {
@@ -16,10 +9,10 @@ class FormsCardSet extends React.Component<IFormsCardSetProps, IFormsCardSetStat
   }
   render() {
     return (
-      <div>
-        {this.props.cardSetArray?.map((dataSetElement) => (
+      <div className={ItemStyles.formCardSet}>
+        {this.props.cardSetArray?.map((dataSetElement, key) => (
           <FormsCard
-            key={dataSetElement?.id}
+            key={key}
             arrivingDate={dataSetElement.arrivingDate}
             birthday={dataSetElement.birthday}
             country={dataSetElement.country}

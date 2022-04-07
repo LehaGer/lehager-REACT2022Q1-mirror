@@ -1,33 +1,43 @@
-import React, { RefObject } from 'react';
+import React from 'react';
 import ItemStyles from './SwitcherInput.module.css';
-
-interface ISwitcherInput {
-  id: string;
-  name: string;
-  defaultChecked: boolean | false;
-  reference: RefObject<HTMLInputElement>;
-  formatInstruction: string;
-  isCorrectFormat: boolean | true;
-  label: string;
-}
+import { ISwitcherInput } from '../../../../types/interfaces';
 
 class SwitcherInput extends React.Component<ISwitcherInput> {
+  private readonly optionsRefs = this.props.options.map(() => React.createRef<HTMLInputElement>());
+
   constructor(props: ISwitcherInput) {
     super(props);
+
+    this.changeHandler = this.changeHandler.bind(this);
+  }
+
+  value: string | undefined;
+
+  changeHandler(event: React.ChangeEvent<HTMLInputElement>) {
+    if (event.target.checked) this.value = event.target.id;
+    /*this.value = undefined;
+    this.optionsRefs.forEach((el) => {
+      if (el.current?.checked) this.value = el.current?.id;
+    });*/
   }
 
   render() {
     return (
       <div className={ItemStyles.switcherInput}>
         <div>
-          <input
-            type="radio"
-            defaultChecked={this.props.defaultChecked}
-            id={this.props.id}
-            name={this.props.name}
-            ref={this.props.reference}
-          />
-          <label htmlFor={this.props.id}>{this.props.label}</label>
+          {this.props.options.map((el, key) => (
+            <div key={key}>
+              <input
+                type="radio"
+                id={el.id}
+                name={this.props.name}
+                defaultChecked={el.defaultChecked}
+                ref={this.optionsRefs[key]}
+                onChange={this.changeHandler}
+              />
+              <label htmlFor={el.id}>{el.label}</label>
+            </div>
+          ))}
         </div>
         <div className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
           {this.props.formatInstruction}

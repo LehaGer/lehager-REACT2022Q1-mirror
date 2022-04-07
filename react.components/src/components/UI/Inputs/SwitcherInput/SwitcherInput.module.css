@@ -5,42 +5,42 @@
 
 .switcherInput > div {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
 }
 
-.switcherInput > div > label {
+.switcherInput > div:nth-child(1) > div > label {
     margin-right: 0.5em;
     white-space: nowrap;
 }
 
-.switcherInput > div:nth-child(1) > input {
+.switcherInput > div:nth-child(1) > div > input {
     padding: 0.6em;
     border: 3px solid #ffa5009c;
     border-radius: 15px;
     outline: none;
-    transition: 0.5s;
+    transition: 0.2s;
     font-size: 1.0em;
     color: #ccc;
     caret-color: currentColor;
 }
 
-.switcherInput > div:nth-child(1) > input:focus {
+.switcherInput > div:nth-child(1) > div > input:focus {
     border: 3px solid #ffa5009c;
     opacity: 1;
     color: #8d8d8d;
 }
 
-.switcherInput > div:nth-child(1) > input::placeholder {
+.switcherInput > div:nth-child(1) > div > input::placeholder {
     opacity: 0.5;
 }
 
 .switcherInput > div:nth-child(2) {
     color: red;
     overflow: hidden;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.2s ease-in-out;
     display: flex;
     align-items: center;
     justify-content: center;

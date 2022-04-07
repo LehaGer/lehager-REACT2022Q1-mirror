@@ -1,15 +1,6 @@
-import React, { RefObject } from 'react';
+import React from 'react';
 import ItemStyles from './CheckboxInput.module.css';
-
-interface ICheckboxInput {
-  id: string;
-  name: string;
-  defaultChecked: boolean | false;
-  reference: RefObject<HTMLInputElement>;
-  formatInstruction: string;
-  isCorrectFormat: boolean | true;
-  label: string;
-}
+import { ICheckboxInput } from '../../../../types/interfaces';
 
 class CheckboxInput extends React.Component<ICheckboxInput> {
   constructor(props: ICheckboxInput) {
