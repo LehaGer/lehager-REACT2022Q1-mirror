@@ -14,8 +14,8 @@ class FormsCard extends React.Component<IFormsCardProps, IFormsCardState> {
         <div>{this.props.zipCode || '-'}</div>
         <div>{this.props.birthday || '-'}</div>
         <div>{this.props.country || '-'}</div>
-        <div>{this.props.isAgreeToProcConfData || '-'}</div>
-        <div>{this.props.isAgreeToGetAdvToEmail || '-'}</div>
+        <div>{this.props.isAgreeToProcConfData ? 'AgreeToProcConfData' : '' || '-'}</div>
+        <div>{this.props.isAgreeToGetAdvToEmail ? 'AgreeToGetAdvToEmail' : '' || '-'}</div>
         <div>{this.props.gender || '-'}</div>
         <div>{this.props.profilePicture || '-'}</div>
       </div>

@@ -59,6 +59,7 @@ class Form extends React.Component<IFormProps, IFormState> {
     return /^\d{5}-\d{4}$/.test(String(this.zipCode.current?.getValue()));
   }
   isBirthdayCorrect() {
+    if (!this.birthday.current?.getValue()) return false;
     const year = new Date().getFullYear();
     const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
     const day = new Date().getDate().toString().padStart(2, '0');
@@ -67,6 +68,7 @@ class Form extends React.Component<IFormProps, IFormState> {
     return String(this.birthday.current?.getValue()) < currentDate;
   }
   isArrivingDateCorrect() {
+    if (!this.birthday.current?.getValue()) return false;
     const year = new Date().getFullYear();
     const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
     const day = new Date().getDate().toString().padStart(2, '0');

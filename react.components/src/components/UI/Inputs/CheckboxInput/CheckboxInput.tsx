@@ -34,6 +34,7 @@ class CheckboxInput extends React.Component<ICheckboxInputProps> {
             id={this.props.id}
             name={this.props.name}
             ref={this.input}
+            onChange={this.props.onChange}
           />
           <label htmlFor={this.props.id}>{this.props.label}</label>
         </div>
