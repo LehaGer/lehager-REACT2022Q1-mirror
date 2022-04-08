@@ -52,7 +52,7 @@ class Form extends React.Component<IFormProps, IFormState> {
     return !/\d/.test(value) && /^.+$/.test(value);
   }
   isLastNameCorrect() {
-    const value = String(this.firstName.current?.getValue());
+    const value = String(this.lastName.current?.getValue());
     return !/\d/.test(value) && /^.+$/.test(value);
   }
   isZipCodeCorrect() {
@@ -68,7 +68,7 @@ class Form extends React.Component<IFormProps, IFormState> {
     return String(this.birthday.current?.getValue()) < currentDate;
   }
   isArrivingDateCorrect() {
-    if (!this.birthday.current?.getValue()) return false;
+    if (!this.arrivingDate.current?.getValue()) return false;
     const year = new Date().getFullYear();
     const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
     const day = new Date().getDate().toString().padStart(2, '0');
