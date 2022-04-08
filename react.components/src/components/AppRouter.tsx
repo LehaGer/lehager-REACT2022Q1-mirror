@@ -10,7 +10,6 @@ const AppRouter = () => {
     <Routes>
       <Route path="" element={<Main />} />
       <Route path="about" element={<About />} />
-      <Route path="not-found" element={<NotFound />} />
       <Route path="forms" element={<FormsPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
