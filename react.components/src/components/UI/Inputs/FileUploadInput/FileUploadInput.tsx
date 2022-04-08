@@ -12,8 +12,10 @@ class FileUploadInput extends React.Component<IFileUploadInputProps> {
     this.setStatus = this.setStatus.bind(this);
   }
 
-  getValue() {
-    return this.input.current?.value;
+  getValue(): string | undefined {
+    if (this.input.current && this.input.current?.files && this.input.current?.files[0]) {
+      return URL.createObjectURL(this.input.current?.files[0]);
+    } else return undefined;
   }
 
   setStatus(isCorrect: boolean) {
