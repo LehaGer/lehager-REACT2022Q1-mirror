@@ -1,10 +1,27 @@
 import React from 'react';
 import ItemStyles from './FileUploadInput.module.css';
-import { IFileUploadInput } from '../../../../types/interfaces';
+import { IFileUploadInputProps } from '../../../../types/interfaces';
 
-class FileUploadInput extends React.Component<IFileUploadInput> {
-  constructor(props: IFileUploadInput) {
+class FileUploadInput extends React.Component<IFileUploadInputProps> {
+  private readonly input = React.createRef<HTMLInputElement>();
+  private readonly errorMsg = React.createRef<HTMLDivElement>();
+
+  constructor(props: IFileUploadInputProps) {
     super(props);
+
+    this.setStatus = this.setStatus.bind(this);
+  }
+
+  getValue() {
+    return this.input.current?.value;
+  }
+
+  setStatus(isCorrect: boolean) {
+    if (isCorrect) {
+      if (this.errorMsg.current) this.errorMsg.current.className = 'hidden';
+    } else {
+      if (this.errorMsg.current) this.errorMsg.current.className = 'showed';
+    }
   }
 
   render() {
@@ -17,10 +34,11 @@ class FileUploadInput extends React.Component<IFileUploadInput> {
             defaultValue={this.props.defaultValue}
             id={this.props.id}
             name={this.props.name}
-            ref={this.props.reference}
+            ref={this.input}
+            onChange={this.props.onChange}
           />
         </div>
-        <div className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
+        <div ref={this.errorMsg} className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
           {this.props.formatInstruction}
         </div>
       </div>

@@ -1,19 +1,27 @@
-import React, { RefObject } from 'react';
+import React from 'react';
 import ItemStyles from './TextInput.module.css';
+import { ITextInputProps } from '../../../../types/interfaces';
 
-interface ITextInput {
-  id: string;
-  name: string;
-  defaultValue: string | '';
-  reference: RefObject<HTMLInputElement>;
-  formatInstruction: string;
-  isCorrectFormat: boolean | true;
-  label: string;
-}
+class TextInput extends React.Component<ITextInputProps> {
+  private readonly input = React.createRef<HTMLInputElement>();
+  private readonly errorMsg = React.createRef<HTMLDivElement>();
 
-class TextInput extends React.Component<ITextInput> {
-  constructor(props: ITextInput) {
+  constructor(props: ITextInputProps) {
     super(props);
+
+    this.setStatus = this.setStatus.bind(this);
+  }
+
+  getValue() {
+    return this.input.current?.value;
+  }
+
+  setStatus(isCorrect: boolean) {
+    if (isCorrect) {
+      if (this.errorMsg.current) this.errorMsg.current.className = 'hidden';
+    } else {
+      if (this.errorMsg.current) this.errorMsg.current.className = 'showed';
+    }
   }
 
   render() {
@@ -26,10 +34,11 @@ class TextInput extends React.Component<ITextInput> {
             defaultValue={this.props.defaultValue}
             id={this.props.id}
             name={this.props.name}
-            ref={this.props.reference}
+            ref={this.input}
+            onChange={this.props.onChange}
           />
         </div>
-        <div className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
+        <div ref={this.errorMsg} className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
           {this.props.formatInstruction}
         </div>
       </div>

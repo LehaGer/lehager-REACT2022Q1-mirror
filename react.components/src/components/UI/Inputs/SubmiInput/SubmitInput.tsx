@@ -8,7 +8,14 @@ class SubmitInput extends React.Component<ISubmitInput> {
   }
 
   render() {
-    return <input className={ItemStyles.submitInput} type="submit" value={this.props.value} />;
+    return (
+      <input
+        className={ItemStyles.submitInput}
+        type="submit"
+        value={this.props.value}
+        ref={this.props.reference}
+      />
+    );
   }
 }
 

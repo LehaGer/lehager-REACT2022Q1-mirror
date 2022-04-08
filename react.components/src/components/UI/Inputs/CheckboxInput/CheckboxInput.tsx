@@ -1,10 +1,27 @@
 import React from 'react';
 import ItemStyles from './CheckboxInput.module.css';
-import { ICheckboxInput } from '../../../../types/interfaces';
+import { ICheckboxInputProps } from '../../../../types/interfaces';
 
-class CheckboxInput extends React.Component<ICheckboxInput> {
-  constructor(props: ICheckboxInput) {
+class CheckboxInput extends React.Component<ICheckboxInputProps> {
+  private readonly input = React.createRef<HTMLInputElement>();
+  private readonly errorMsg = React.createRef<HTMLDivElement>();
+
+  constructor(props: ICheckboxInputProps) {
     super(props);
+
+    this.setStatus = this.setStatus.bind(this);
+  }
+
+  isChecked() {
+    return this.input.current?.checked;
+  }
+
+  setStatus(isCorrect: boolean) {
+    if (isCorrect) {
+      if (this.errorMsg.current) this.errorMsg.current.className = 'hidden';
+    } else {
+      if (this.errorMsg.current) this.errorMsg.current.className = 'showed';
+    }
   }
 
   render() {
@@ -16,11 +33,11 @@ class CheckboxInput extends React.Component<ICheckboxInput> {
             defaultChecked={this.props.defaultChecked}
             id={this.props.id}
             name={this.props.name}
-            ref={this.props.reference}
+            ref={this.input}
           />
           <label htmlFor={this.props.id}>{this.props.label}</label>
         </div>
-        <div className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
+        <div ref={this.errorMsg} className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
           {this.props.formatInstruction}
         </div>
       </div>

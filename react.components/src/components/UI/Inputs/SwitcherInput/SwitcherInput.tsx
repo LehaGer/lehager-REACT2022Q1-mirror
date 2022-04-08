@@ -1,24 +1,31 @@
 import React from 'react';
 import ItemStyles from './SwitcherInput.module.css';
-import { ISwitcherInput } from '../../../../types/interfaces';
+import { ISwitcherInputProps } from '../../../../types/interfaces';
 
-class SwitcherInput extends React.Component<ISwitcherInput> {
+class SwitcherInput extends React.Component<ISwitcherInputProps> {
   private readonly optionsRefs = this.props.options.map(() => React.createRef<HTMLInputElement>());
+  private readonly errorMsg = React.createRef<HTMLDivElement>();
 
-  constructor(props: ISwitcherInput) {
+  constructor(props: ISwitcherInputProps) {
     super(props);
 
-    this.changeHandler = this.changeHandler.bind(this);
+    this.setStatus = this.setStatus.bind(this);
   }
 
-  value: string | undefined;
-
-  changeHandler(event: React.ChangeEvent<HTMLInputElement>) {
-    if (event.target.checked) this.value = event.target.id;
-    /*this.value = undefined;
+  getValue(): string | undefined {
+    let value = undefined;
     this.optionsRefs.forEach((el) => {
-      if (el.current?.checked) this.value = el.current?.id;
-    });*/
+      if (el.current?.checked) value = el.current?.id;
+    });
+    return value;
+  }
+
+  setStatus(isCorrect: boolean) {
+    if (isCorrect) {
+      if (this.errorMsg.current) this.errorMsg.current.className = 'hidden';
+    } else {
+      if (this.errorMsg.current) this.errorMsg.current.className = 'showed';
+    }
   }
 
   render() {
@@ -33,13 +40,13 @@ class SwitcherInput extends React.Component<ISwitcherInput> {
                 name={this.props.name}
                 defaultChecked={el.defaultChecked}
                 ref={this.optionsRefs[key]}
-                onChange={this.changeHandler}
+                onChange={this.props.onChange}
               />
               <label htmlFor={el.id}>{el.label}</label>
             </div>
           ))}
         </div>
-        <div className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
+        <div ref={this.errorMsg} className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
           {this.props.formatInstruction}
         </div>
       </div>

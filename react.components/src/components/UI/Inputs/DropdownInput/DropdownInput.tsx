@@ -1,10 +1,27 @@
 import React from 'react';
 import ItemStyles from './DropdownInput.module.css';
-import { IDropdownInput } from '../../../../types/interfaces';
+import { IDropdownInputProps } from '../../../../types/interfaces';
 
-class DropdownInput extends React.Component<IDropdownInput> {
-  constructor(props: IDropdownInput) {
+class DropdownInput extends React.Component<IDropdownInputProps> {
+  private readonly select = React.createRef<HTMLSelectElement>();
+  private readonly errorMsg = React.createRef<HTMLDivElement>();
+
+  constructor(props: IDropdownInputProps) {
     super(props);
+
+    this.setStatus = this.setStatus.bind(this);
+  }
+
+  getValue() {
+    return this.select.current?.value;
+  }
+
+  setStatus(isCorrect: boolean) {
+    if (isCorrect) {
+      if (this.errorMsg.current) this.errorMsg.current.className = 'hidden';
+    } else {
+      if (this.errorMsg.current) this.errorMsg.current.className = 'showed';
+    }
   }
 
   render() {
@@ -15,8 +32,9 @@ class DropdownInput extends React.Component<IDropdownInput> {
           <select
             name={this.props.name}
             id={this.props.id}
-            ref={this.props.reference}
+            ref={this.select}
             defaultValue={this.props.defaultValue}
+            onChange={this.props.onChange}
           >
             <option value=""> </option>
             {this.props.options.map((el, key) => (
@@ -24,21 +42,9 @@ class DropdownInput extends React.Component<IDropdownInput> {
                 {el}
               </option>
             ))}
-            <option value="Åland Islands">Åland Islands</option>
-            <option value="Belarus">Belarus</option>
-            <option value="Canada">Canada</option>
-            <option value="El Salvador">El Salvador</option>
-            <option value="France">France</option>
-            <option value="Gambia">Gambia</option>
-            <option value="Honduras">Honduras</option>
-            <option value="Ireland">Ireland</option>
-            <option value="Japan">Japan</option>
-            <option value="Kazakhstan">Kazakhstan</option>
-            <option value="Latvia">Latvia</option>
-            <option value="Macao">Macao</option>
           </select>
         </div>
-        <div className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
+        <div ref={this.errorMsg} className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
           {this.props.formatInstruction}
         </div>
       </div>

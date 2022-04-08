@@ -128,60 +128,72 @@ export interface IFormsCardSetState {
   name?: string;
 }
 
-export interface ISwitcherOption {
+export interface ISwitcherOptionProps {
   id: string;
   label: string;
   defaultChecked: boolean | false;
 }
 
-export interface ISwitcherInput {
+export interface ISwitcherInputProps {
   name: string;
   formatInstruction: string;
   isCorrectFormat: boolean | true;
-  options: ISwitcherOption[];
+  options: ISwitcherOptionProps[];
+  onChange: (a: React.ChangeEvent) => void;
 }
 
 export interface ISubmitInput {
   value: string;
+  reference: RefObject<HTMLInputElement>;
 }
 
-export interface IFileUploadInput {
+export interface IFileUploadInputProps {
   id: string;
   name: string;
   defaultValue: string;
-  reference: RefObject<HTMLInputElement>;
   formatInstruction: string;
   isCorrectFormat: boolean | true;
   label: string;
+  onChange: (a: React.ChangeEvent) => void;
 }
 
-export interface IDropdownInput {
+export interface IDropdownInputProps {
   id: string;
   name: string;
   defaultValue: string | '';
-  reference: RefObject<HTMLSelectElement>;
   formatInstruction: string;
   isCorrectFormat: boolean | true;
   label: string;
   options: string[];
+  onChange: (a: React.ChangeEvent) => void;
 }
 
-export interface IDateInput {
+export interface IDateInputProps {
   id: string;
   name: string;
   defaultValue: string | '';
-  reference: RefObject<HTMLInputElement>;
   formatInstruction: string;
   isCorrectFormat: boolean | true;
   label: string;
+  onChange: (a: React.ChangeEvent) => void;
 }
 
-export interface ICheckboxInput {
+export interface ICheckboxInputProps {
   id: string;
   name: string;
   defaultChecked: boolean | false;
-  reference: RefObject<HTMLInputElement>;
   formatInstruction: string;
   isCorrectFormat: boolean | true;
   label: string;
+  onChange: (a: React.ChangeEvent) => void;
+}
+
+export interface ITextInputProps {
+  id: string;
+  name: string;
+  defaultValue: string | '';
+  formatInstruction: string;
+  isCorrectFormat: boolean | true;
+  label: string;
+  onChange: (a: React.ChangeEvent) => void;
 }

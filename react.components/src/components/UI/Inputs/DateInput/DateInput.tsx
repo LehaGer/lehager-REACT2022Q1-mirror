@@ -1,10 +1,27 @@
 import React from 'react';
 import ItemStyles from './DateInput.module.css';
-import { IDateInput } from '../../../../types/interfaces';
+import { IDateInputProps } from '../../../../types/interfaces';
 
-class DateInput extends React.Component<IDateInput> {
-  constructor(props: IDateInput) {
+class DateInput extends React.Component<IDateInputProps> {
+  private readonly input = React.createRef<HTMLInputElement>();
+  private readonly errorMsg = React.createRef<HTMLDivElement>();
+
+  constructor(props: IDateInputProps) {
     super(props);
+
+    this.setStatus = this.setStatus.bind(this);
+  }
+
+  getValue() {
+    return this.input.current?.value;
+  }
+
+  setStatus(isCorrect: boolean) {
+    if (isCorrect) {
+      if (this.errorMsg.current) this.errorMsg.current.className = 'hidden';
+    } else {
+      if (this.errorMsg.current) this.errorMsg.current.className = 'showed';
+    }
   }
 
   render() {
@@ -17,10 +34,11 @@ class DateInput extends React.Component<IDateInput> {
             defaultValue={this.props.defaultValue}
             id={this.props.id}
             name={this.props.name}
-            ref={this.props.reference}
+            ref={this.input}
+            onChange={this.props.onChange}
           />
         </div>
-        <div className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
+        <div ref={this.errorMsg} className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
           {this.props.formatInstruction}
         </div>
       </div>
