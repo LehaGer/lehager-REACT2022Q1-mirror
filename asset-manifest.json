@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/lehager-REACT2022Q1/static/css/main.cb47dc70.css",
-    "main.js": "/lehager-REACT2022Q1/static/js/main.ce4d940c.js",
+    "main.css": "/lehager-REACT2022Q1/static/css/main.3903cbd2.css",
+    "main.js": "/lehager-REACT2022Q1/static/js/main.ea22d292.js",
     "static/media/share-icon.svg": "/lehager-REACT2022Q1/static/media/share-icon.f75b6cdf4d069bf945dd.svg",
     "static/media/favourite-icon.svg": "/lehager-REACT2022Q1/static/media/favourite-icon.0255b7174b061e045f3c.svg",
     "static/media/search-icon.svg": "/lehager-REACT2022Q1/static/media/search-icon.32a64b970b7907bdebd5.svg",
     "index.html": "/lehager-REACT2022Q1/index.html",
-    "main.cb47dc70.css.map": "/lehager-REACT2022Q1/static/css/main.cb47dc70.css.map",
-    "main.ce4d940c.js.map": "/lehager-REACT2022Q1/static/js/main.ce4d940c.js.map"
+    "main.3903cbd2.css.map": "/lehager-REACT2022Q1/static/css/main.3903cbd2.css.map",
+    "main.ea22d292.js.map": "/lehager-REACT2022Q1/static/js/main.ea22d292.js.map"
   },
   "entrypoints": [
-    "static/css/main.cb47dc70.css",
-    "static/js/main.ce4d940c.js"
+    "static/css/main.3903cbd2.css",
+    "static/js/main.ea22d292.js"
   ]
 }
