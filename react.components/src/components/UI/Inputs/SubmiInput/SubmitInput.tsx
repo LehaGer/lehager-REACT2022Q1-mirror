@@ -14,6 +14,7 @@ class SubmitInput extends React.Component<ISubmitInput> {
         type="submit"
         value={this.props.value}
         ref={this.props.reference}
+        data-testid="SubmitInput"
       />
     );
   }

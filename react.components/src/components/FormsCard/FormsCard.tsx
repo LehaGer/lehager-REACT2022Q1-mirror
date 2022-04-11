@@ -8,7 +8,7 @@ class FormsCard extends React.Component<IFormsCardProps, IFormsCardState> {
   }
   render() {
     return (
-      <div className={ItemStyles.formCard}>
+      <div className={ItemStyles.formCard} data-testid="FormsCard">
         <img src={this.props.profilePicture} alt={''} />
         <div>
           <div>{this.props.firstName || '-'}</div>

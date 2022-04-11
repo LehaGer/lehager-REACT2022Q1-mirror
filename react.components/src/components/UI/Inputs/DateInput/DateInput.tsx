@@ -26,7 +26,7 @@ class DateInput extends React.Component<IDateInputProps> {
 
   render() {
     return (
-      <div className={ItemStyles.dateInput}>
+      <div className={ItemStyles.dateInput} data-testid="DateInput">
         <div>
           <label htmlFor={this.props.id}>{this.props.label}</label>
           <input

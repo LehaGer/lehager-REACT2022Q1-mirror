@@ -26,7 +26,7 @@ class CheckboxInput extends React.Component<ICheckboxInputProps> {
 
   render() {
     return (
-      <div className={ItemStyles.checkboxInput}>
+      <div className={ItemStyles.checkboxInput} data-testid="CheckBoxInput">
         <div>
           <input
             type="checkbox"

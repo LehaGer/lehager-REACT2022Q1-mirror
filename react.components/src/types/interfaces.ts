@@ -89,7 +89,7 @@ export interface IPopoverCustomProps {
 
 export interface IFormProps {
   name?: string;
-  addNewCard: (card: IFormsCardProps) => void;
+  addNewCard?: (card: IFormsCardProps) => void;
 }
 
 export interface IFormState {

@@ -26,7 +26,7 @@ class TextInput extends React.Component<ITextInputProps> {
 
   render() {
     return (
-      <div className={ItemStyles.textInput}>
+      <div className={ItemStyles.textInput} data-testid="TextInput">
         <div>
           <label htmlFor={this.props.id}>{this.props.label}</label>
           <input

@@ -25,11 +25,11 @@ describe('Router testing', () => {
     expect(screen.getByTestId('aboutPage')).toBeInTheDocument();
   });
 
-  test('test "NotFound" link', () => {
-    renderWithRouter(<Navbar />, '/some-not-notfound-page');
-    const notFoundLink = screen.getByTestId('notFoundLink');
-    userEvent.click(notFoundLink);
-    expect(screen.getByTestId('notFoundPage')).toBeInTheDocument();
+  test('test "Forms" link', () => {
+    renderWithRouter(<Navbar />, '/forms');
+    const formsLink = screen.getByTestId('formsLink');
+    userEvent.click(formsLink);
+    expect(screen.getByTestId('formsPage')).toBeInTheDocument();
   });
 
   test('test on entering wrong URL directly', () => {

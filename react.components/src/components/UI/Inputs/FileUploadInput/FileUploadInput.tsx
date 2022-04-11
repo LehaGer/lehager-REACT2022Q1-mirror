@@ -28,7 +28,7 @@ class FileUploadInput extends React.Component<IFileUploadInputProps> {
 
   render() {
     return (
-      <div className={ItemStyles.fileUploadInput}>
+      <div className={ItemStyles.fileUploadInput} data-testid="FileUploadInput">
         <div>
           <label htmlFor={this.props.id}>{this.props.label}</label>
           <input

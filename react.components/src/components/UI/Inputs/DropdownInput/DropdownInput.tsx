@@ -26,7 +26,7 @@ class DropdownInput extends React.Component<IDropdownInputProps> {
 
   render() {
     return (
-      <div className={ItemStyles.dropdownInput}>
+      <div className={ItemStyles.dropdownInput} data-testid="DropdownInput">
         <div>
           <label htmlFor={this.props.id}>{this.props.label}</label>
           <select

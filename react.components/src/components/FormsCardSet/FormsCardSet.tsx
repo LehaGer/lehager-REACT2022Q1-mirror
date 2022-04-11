@@ -9,7 +9,7 @@ class FormsCardSet extends React.Component<IFormsCardSetProps, IFormsCardSetStat
   }
   render() {
     return (
-      <div className={ItemStyles.formCardSet}>
+      <div className={ItemStyles.formCardSet} data-testid="FormsCardSet">
         {this.props.cardSetArray?.map((dataSetElement, key) => (
           <FormsCard
             key={key}

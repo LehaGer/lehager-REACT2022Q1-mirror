@@ -38,6 +38,7 @@ class Form extends React.Component<IFormProps, IFormState> {
       this.createCard();
       alert('SUCCESS! The new card has been created!');
       this.formReference.current?.reset();
+      if (this.submit.current) this.submit.current.disabled = true;
     } else {
       if (this.submit.current) this.submit.current.disabled = true;
     }
@@ -64,7 +65,6 @@ class Form extends React.Component<IFormProps, IFormState> {
     const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
     const day = new Date().getDate().toString().padStart(2, '0');
     const currentDate = `${year}-${month}-${day}`;
-    console.log(String(this.birthday.current?.getValue()), currentDate);
     return String(this.birthday.current?.getValue()) < currentDate;
   }
   isArrivingDateCorrect() {
@@ -191,23 +191,30 @@ class Form extends React.Component<IFormProps, IFormState> {
   }
 
   createCard() {
-    this.props.addNewCard({
-      arrivingDate: String(this.arrivingDate.current?.getValue()),
-      birthday: String(this.birthday.current?.getValue()),
-      country: String(this.country.current?.getValue()),
-      firstName: String(this.firstName.current?.getValue()),
-      gender: this.gender.current?.getValue() as genderTypes,
-      isAgreeToGetAdvToEmail: !!this.isAgreeToGetAdvToEmail.current?.isChecked(),
-      isAgreeToProcConfData: !!this.isAgreeToProcConfData.current?.isChecked(),
-      lastName: String(this.lastName.current?.getValue()),
-      profilePicture: String(this.profilePicture.current?.getValue()),
-      zipCode: String(this.zipCode.current?.getValue()),
-    });
+    if (this.props.addNewCard) {
+      this.props.addNewCard({
+        arrivingDate: String(this.arrivingDate.current?.getValue()),
+        birthday: String(this.birthday.current?.getValue()),
+        country: String(this.country.current?.getValue()),
+        firstName: String(this.firstName.current?.getValue()),
+        gender: this.gender.current?.getValue() as genderTypes,
+        isAgreeToGetAdvToEmail: !!this.isAgreeToGetAdvToEmail.current?.isChecked(),
+        isAgreeToProcConfData: !!this.isAgreeToProcConfData.current?.isChecked(),
+        lastName: String(this.lastName.current?.getValue()),
+        profilePicture: String(this.profilePicture.current?.getValue()),
+        zipCode: String(this.zipCode.current?.getValue()),
+      });
+    }
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} className={ItemStyles.Form} ref={this.formReference}>
+      <form
+        onSubmit={this.handleSubmit}
+        className={ItemStyles.Form}
+        ref={this.formReference}
+        data-testid="Form"
+      >
         <div>
           <TextInput
             id={'firstName'}
@@ -221,6 +228,7 @@ class Form extends React.Component<IFormProps, IFormState> {
               if (this.submit.current) this.submit.current.disabled = false;
               if (this.firstName.current) this.firstName.current.setStatus(true);
             }}
+            data-testid="FirstNameTextInput"
           />
           <TextInput
             id={'lastName'}
@@ -234,6 +242,7 @@ class Form extends React.Component<IFormProps, IFormState> {
               if (this.submit.current) this.submit.current.disabled = false;
               if (this.lastName.current) this.lastName.current.setStatus(true);
             }}
+            data-testid="LastNameTextInput"
           />
           <TextInput
             id={'zipCode'}
@@ -247,6 +256,7 @@ class Form extends React.Component<IFormProps, IFormState> {
               if (this.submit.current) this.submit.current.disabled = false;
               if (this.zipCode.current) this.zipCode.current.setStatus(true);
             }}
+            data-testid="ZipCodeTextInput"
           />
         </div>
         <div>
@@ -262,6 +272,7 @@ class Form extends React.Component<IFormProps, IFormState> {
               if (this.submit.current) this.submit.current.disabled = false;
               if (this.birthday.current) this.birthday.current.setStatus(true);
             }}
+            data-testid="BirthdayDateInput"
           />
           <DateInput
             id={'arrivingDate'}
@@ -275,6 +286,7 @@ class Form extends React.Component<IFormProps, IFormState> {
               if (this.submit.current) this.submit.current.disabled = false;
               if (this.arrivingDate.current) this.arrivingDate.current.setStatus(true);
             }}
+            data-testid="arrivingDateInput"
           />
         </div>
         <div>
@@ -304,6 +316,7 @@ class Form extends React.Component<IFormProps, IFormState> {
               if (this.submit.current) this.submit.current.disabled = false;
               if (this.country.current) this.country.current.setStatus(true);
             }}
+            data-testid="CountryDropdownInput"
           />
         </div>
         <div>
@@ -320,6 +333,7 @@ class Form extends React.Component<IFormProps, IFormState> {
               if (this.isAgreeToProcConfData.current)
                 this.isAgreeToProcConfData.current.setStatus(true);
             }}
+            data-testid="AgreementProcessDataCheckboxInput"
           />
           <CheckboxInput
             id={'isAgreeToGetAdvToEmail'}
@@ -334,6 +348,7 @@ class Form extends React.Component<IFormProps, IFormState> {
               if (this.isAgreeToGetAdvToEmail.current)
                 this.isAgreeToGetAdvToEmail.current.setStatus(true);
             }}
+            data-testid="AgreementGetAdvCheckboxInput"
           />
         </div>
         <div>
@@ -358,6 +373,7 @@ class Form extends React.Component<IFormProps, IFormState> {
               if (this.submit.current) this.submit.current.disabled = false;
               if (this.gender.current) this.gender.current.setStatus(true);
             }}
+            data-testid="genderSwitcherInput"
           />
         </div>
         <div>

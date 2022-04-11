@@ -30,7 +30,7 @@ class SwitcherInput extends React.Component<ISwitcherInputProps> {
 
   render() {
     return (
-      <div className={ItemStyles.switcherInput}>
+      <div className={ItemStyles.switcherInput} data-testid="SwitcherInput">
         <div>
           {this.props.options.map((el, key) => (
             <div key={key}>
