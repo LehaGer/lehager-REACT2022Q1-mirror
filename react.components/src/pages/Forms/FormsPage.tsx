@@ -2,15 +2,7 @@ import React from 'react';
 import ItemStyles from './FormsPage.module.css';
 import Form from '../../components/Form/Form';
 import FormsCardSet from '../../components/FormsCardSet/FormsCardSet';
-import { IFormsCardProps } from '../../types/interfaces';
-
-interface IFormsPageProps {
-  name?: string;
-}
-
-interface IFormsPageState {
-  cardSet: IFormsCardProps[];
-}
+import { IFormsCardProps, IFormsPageProps, IFormsPageState } from '../../types/interfaces';
 
 class FormsPage extends React.Component<IFormsPageProps, IFormsPageState> {
   constructor(props: IFormsPageProps) {

@@ -25,7 +25,7 @@ describe('CardSet testing', () => {
   test('does CardSet correspond to cards count', async () => {
     mockedAxios.get.mockResolvedValue(mockedResponse);
     expect(axios.get).not.toHaveBeenCalled();
-    render(<CardSet />);
+    render(<CardSet dataSet={response} />);
     expect(axios.get).toHaveBeenCalled();
     const cards = await screen.findAllByTestId('Card');
     expect(cards.length).toBe(7);

@@ -26,6 +26,7 @@ export interface ISearchBarProps {
   type?: string;
   placeholder?: string;
   className?: string;
+  updateCardSet: (serverResponse: ICharacterRowInfo[]) => void;
 }
 
 export interface ISearchBarState {
@@ -33,11 +34,11 @@ export interface ISearchBarState {
 }
 
 export interface ICardSetProps<ICharacterRowInfo> {
-  dataSet?: ICharacterRowInfo[];
+  dataSet: ICharacterRowInfo[];
 }
 
 export interface ICardSetState<ICharacterRowInfo> {
-  cards: ICharacterRowInfo[];
+  cards?: ICharacterRowInfo[];
 }
 
 export interface ICardProps {
@@ -54,7 +55,7 @@ export interface ICardState {
   isHovered: boolean;
 }
 
-export enum characterStatusSet {
+export enum characterStatus {
   Alive = 'Alive',
   Dead = 'Dead',
   unknown = 'unknown',
@@ -196,4 +197,35 @@ export interface ITextInputProps {
   isCorrectFormat: boolean | true;
   label: string;
   onChange: (a: React.ChangeEvent) => void;
+}
+
+export interface IFormsPageProps {
+  name?: string;
+}
+
+export interface IFormsPageState {
+  cardSet: IFormsCardProps[];
+}
+
+export interface IMainProps {
+  name?: string;
+}
+
+export interface IMainState<ICharacterRowInfo> {
+  dataSet: ICharacterRowInfo[];
+}
+
+export enum characterQueryGender {
+  female = 'female',
+  male = 'male',
+  genderless = 'genderless',
+  unknown = 'unknown',
+}
+
+export interface ICharacterQueryAttributes {
+  name?: string;
+  status?: characterStatus;
+  species?: string;
+  type?: string;
+  gender?: characterQueryGender;
 }

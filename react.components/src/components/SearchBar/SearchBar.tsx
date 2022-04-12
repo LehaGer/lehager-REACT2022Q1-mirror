@@ -1,6 +1,7 @@
 import React from 'react';
 import ItemStyles from './SearchBar.module.css';
 import { ISearchBarProps, ISearchBarState } from '../../types/interfaces';
+import CharacterService from '../../API/CharacterService';
 
 class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
   constructor(props: ISearchBarProps) {
@@ -16,24 +17,44 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
     type: 'text',
     placeholder: 'default searching request',
     className: ItemStyles.searchBar,
+    updateCardSet: () => {},
   };
 
-  componentDidMount(): void {
-    this.setState({
+  updateCharactersByName = async (name?: string) => {
+    try {
+      const response = await CharacterService.getCharacterByAttributes({
+        name: name,
+      });
+      this.props.updateCardSet(response.data.results);
+    } catch (e) {
+      console.log(e);
+      this.props.updateCardSet([]);
+    }
+  };
+
+  async componentDidMount(): Promise<void> {
+    await this.setState({
       searchRequest: localStorage.getItem(this.props.name) || '',
     });
+    await this.updateCharactersByName(this.state.searchRequest);
   }
 
   componentWillUnmount(): void {
     this.handleSavingCurrentState();
   }
 
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     this.setState({
       searchRequest: value,
     });
     localStorage.setItem(this.props.name, value);
+  };
+
+  handleSubmit = async (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      this.updateCharactersByName(this.state.searchRequest);
+    }
   };
 
   handleSavingCurrentState = () => {
@@ -47,7 +68,8 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
         placeholder={this.props.placeholder}
         className={this.props.className}
         value={this.state.searchRequest}
-        onInput={this.handleChange}
+        onInput={this.handleChangeValue}
+        onKeyUp={this.handleSubmit}
         data-testid="searchBar"
       />
     );
