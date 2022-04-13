@@ -51,8 +51,7 @@ export interface ICardProps {
 }
 
 export interface ICardState {
-  isFavorite: boolean;
-  isHovered: boolean;
+  isOpened: boolean;
 }
 
 export enum characterStatus {

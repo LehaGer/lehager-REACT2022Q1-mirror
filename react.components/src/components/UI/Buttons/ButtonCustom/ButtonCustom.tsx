@@ -3,6 +3,7 @@ import ItemStyles from './ButtonCustom.module.css';
 
 interface IButtonCustom {
   name?: string;
+  onClick?: (event: React.MouseEvent) => void;
 }
 
 class ButtonCustom extends React.Component<IButtonCustom> {
@@ -11,7 +12,11 @@ class ButtonCustom extends React.Component<IButtonCustom> {
   }
 
   render() {
-    return <button className={ItemStyles.btnCustom}>{this.props.children}</button>;
+    return (
+      <button className={ItemStyles.btnCustom} onClick={this.props.onClick}>
+        {this.props.children}
+      </button>
+    );
   }
 }
 
