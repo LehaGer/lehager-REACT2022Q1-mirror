@@ -22,6 +22,9 @@ class ModalWindow extends React.Component<IModalWindowProps> {
           onClick={(e: React.MouseEvent) => e.stopPropagation()}
         >
           {this.props.children}
+          <span className={ItemStyles.closeBtn} onClick={() => this.props.setVisible(false)}>
+            &times;
+          </span>
         </div>
       </div>
     );
