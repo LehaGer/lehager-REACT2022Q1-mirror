@@ -26,7 +26,7 @@ export interface ISearchBarProps {
   type?: string;
   placeholder?: string;
   className?: string;
-  updateCardSet: (serverResponse: ICharacterRowInfo[]) => void;
+  updateCharactersByName: (name?: string) => Promise<void>;
 }
 
 export interface ISearchBarState {
@@ -52,6 +52,9 @@ export interface ICardProps {
 
 export interface ICardState {
   isOpened: boolean;
+  isFullCardLoading: boolean;
+  isThere: boolean;
+  characterFullInfo: ICharacterRowInfo;
 }
 
 export enum characterStatus {
@@ -212,6 +215,8 @@ export interface IMainProps {
 
 export interface IMainState<ICharacterRowInfo> {
   dataSet: ICharacterRowInfo[];
+  isDataLoading: boolean;
+  isThereCharacter: boolean;
 }
 
 export enum characterQueryGender {

@@ -1,7 +1,6 @@
 import React from 'react';
 import ItemStyles from './SearchBar.module.css';
 import { ISearchBarProps, ISearchBarState } from '../../types/interfaces';
-import CharacterService from '../../API/CharacterService';
 
 class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
   constructor(props: ISearchBarProps) {
@@ -17,26 +16,16 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
     type: 'text',
     placeholder: 'default searching request',
     className: ItemStyles.searchBar,
-    updateCardSet: () => {},
-  };
-
-  updateCharactersByName = async (name?: string) => {
-    try {
-      const response = await CharacterService.getCharacterByAttributes({
-        name: name,
-      });
-      this.props.updateCardSet(response.data.results);
-    } catch (e) {
-      console.log(e);
-      this.props.updateCardSet([]);
-    }
+    updateCharactersByName: () => {
+      return new Promise(() => {});
+    },
   };
 
   async componentDidMount(): Promise<void> {
     await this.setState({
       searchRequest: localStorage.getItem(this.props.name) || '',
     });
-    await this.updateCharactersByName(this.state.searchRequest);
+    await this.props.updateCharactersByName(this.state.searchRequest);
   }
 
   componentWillUnmount(): void {
@@ -53,7 +42,7 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
 
   handleSubmit = async (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      this.updateCharactersByName(this.state.searchRequest);
+      this.props.updateCharactersByName(this.state.searchRequest);
     }
   };
 

@@ -9,11 +9,25 @@
     height: 450px;
     transition: all 0.2s linear;
     overflow: hidden;
+    animation: chowingAnimation .2s ease-in-out;
+}
+
+@keyframes chowingAnimation  {
+    from {
+        transform: scale(0.8)
+    }
+    to {
+        transform: scale(1)
+    }
 }
 
 .card:hover {
     box-shadow: 0 0 3em #0000003d;
     height: 450px;
+}
+
+.cardImg {
+    height: 300px;
 }
 
 .cardImg > img {
@@ -34,6 +48,11 @@
     padding: 15px;
     height: 70px;
     overflow: hidden;
+
+    /*display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;*/
 }
 
 .cardMataInfo::-webkit-scrollbar {
@@ -71,4 +90,14 @@
 
 .cardControls > button:nth-child(3) {
     margin-left: auto;
+}
+
+.notFoundMsg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8em;
+    color: #ccc;
+    height: 5em;
+    width: 15em;
 }

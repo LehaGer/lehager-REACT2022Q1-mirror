@@ -1,8 +1,7 @@
 import React from 'react';
 import Card from '../Card/Card';
 import ItemStyles from './CardSet.module.css';
-import { ICharacterRowInfo, ICardSetProps, ICardSetState } from '../../types/interfaces';
-import axios from 'axios';
+import { ICardSetProps, ICardSetState, ICharacterRowInfo } from '../../types/interfaces';
 
 class CardSet extends React.Component<
   ICardSetProps<ICharacterRowInfo>,

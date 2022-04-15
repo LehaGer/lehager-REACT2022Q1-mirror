@@ -6,3 +6,25 @@
 .Main > input {
     margin-bottom: 3em;
 }
+
+.notFoundMsg {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+}
+
+.notFoundMsg > div {
+    display: flex;
+    align-items: center;
+    font-size: 1.8em;
+    color: #ccc;
+    height: 2.6em;
+}
+
+.notFoundMsg > img {
+    width: 25em;
+}

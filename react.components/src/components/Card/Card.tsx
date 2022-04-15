@@ -7,36 +7,73 @@ import ItemStyles from './Card.module.css';
 import ModalWindow from '../UI/ModalWindow/ModalWindow';
 import CardFull from '../CardFull/CardFull';
 import CharacterService from '../../API/CharacterService';
+import Loader from '../UI/Loader/Loader';
 
 class Card extends React.Component<ICardProps, ICardState> {
-  private charecterFullInfo: ICharacterRowInfo | undefined;
   constructor(props: ICardProps) {
     super(props);
 
     this.state = {
       isOpened: false,
+      isFullCardLoading: true,
+      isThere: false,
+      characterFullInfo: {} as ICharacterRowInfo,
     };
   }
 
-  setNewStateFullCard = async (newState: boolean) => {
+  toggleFullCard = async (newState: boolean) => {
     if (newState) {
+      await this.setState({
+        isFullCardLoading: true,
+      });
       try {
         const response = await CharacterService.getCharacterById(Number(this.props.id));
-        this.charecterFullInfo = response.data;
-        console.log(this.charecterFullInfo);
+        await this.setState({
+          isThere: true,
+          characterFullInfo: response.data,
+        });
       } catch (e) {
         console.log(e);
-        this.charecterFullInfo = undefined;
+        await this.setState({
+          isThere: false,
+          characterFullInfo: {} as ICharacterRowInfo,
+        });
+      } finally {
+        await this.setState({
+          isFullCardLoading: false,
+        });
       }
+    } else {
+      await this.setState({
+        isThere: false,
+        characterFullInfo: {} as ICharacterRowInfo,
+      });
     }
 
-    console.log('setNewStateFullCard', newState);
     await this.setState({
       isOpened: newState,
     });
   };
 
   render() {
+    const notFoundMsg = (
+      <div className={ItemStyles.notFoundMsg}>
+        <div>No info was found =( </div>
+      </div>
+    );
+
+    let contentElement;
+
+    if (this.state.isFullCardLoading) {
+      contentElement = <Loader />;
+    } else {
+      if (this.state.isThere) {
+        contentElement = <CardFull character={this.state.characterFullInfo as ICharacterRowInfo} />;
+      } else {
+        contentElement = notFoundMsg;
+      }
+    }
+
     return (
       <>
         <div className={ItemStyles.card}>
@@ -59,19 +96,15 @@ class Card extends React.Component<ICardProps, ICardState> {
             <ButtonCustom
               onClick={(event: React.MouseEvent) => {
                 event.preventDefault();
-                this.setNewStateFullCard(true);
+                this.toggleFullCard(true);
               }}
             >
               Learn more
             </ButtonCustom>
           </div>
         </div>
-        <ModalWindow visible={this.state.isOpened} setVisible={this.setNewStateFullCard}>
-          {this.state.isOpened ? (
-            <CardFull character={this.charecterFullInfo as ICharacterRowInfo} />
-          ) : (
-            ''
-          )}
+        <ModalWindow visible={this.state.isOpened} setVisible={this.toggleFullCard}>
+          {this.state.isOpened ? contentElement : ''}
         </ModalWindow>
       </>
     );
