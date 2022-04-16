@@ -3,7 +3,7 @@ import './styles/App.css';
 import AppRouter from './components/AppRouter';
 import Navbar from './components/Navbar/Navbar';
 import { LoadContext } from './context/LoadContext';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 export interface IAppProps {
   name?: string;
@@ -31,12 +31,12 @@ class App extends React.Component<IAppProps, IAppState> {
   render() {
     return (
       <LoadContext.Provider value={this.state.isLoading}>
-        <HashRouter>
+        <BrowserRouter>
           <div className={'App'}>
             <Navbar />
             <AppRouter />
           </div>
-        </HashRouter>
+        </BrowserRouter>
       </LoadContext.Provider>
     );
   }
