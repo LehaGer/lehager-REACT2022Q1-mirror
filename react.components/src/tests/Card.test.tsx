@@ -41,8 +41,6 @@ describe('Card testing', () => {
   });
 
   test('does Card show Loader in ModalWindow', async () => {
-    // doesn't work (problems with async operations)
-
     render(
       <Card
         key={response[0].id}
@@ -56,8 +54,7 @@ describe('Card testing', () => {
     );
     expect(screen.queryByTestId('Loader')).not.toBeInTheDocument();
     userEvent.click(screen.getByTestId('learnMore'));
-    // expect(await screen.findByTestId('Loader')).toBeInTheDocument();
-    // mockedAxios.get.mockResolvedValue(mockedResponse);
+    expect(screen.getByTestId('Loader')).toBeInTheDocument();
   });
 
   test('does Card open FullCard', async () => {

@@ -22,6 +22,10 @@ class Card extends React.Component<ICardProps, ICardState> {
   }
 
   toggleFullCard = async (newState: boolean) => {
+    await this.setState({
+      isOpened: newState,
+    });
+
     if (newState) {
       await this.setState({
         isFullCardLoading: true,
@@ -49,10 +53,6 @@ class Card extends React.Component<ICardProps, ICardState> {
         characterFullInfo: {} as ICharacterRowInfo,
       });
     }
-
-    await this.setState({
-      isOpened: newState,
-    });
   };
 
   render() {
