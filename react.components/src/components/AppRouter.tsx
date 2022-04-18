@@ -1,15 +1,12 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Main from '../pages/Main/Main';
 import About from '../pages/About/About';
 import NotFound from '../pages/NotFound/NotFound';
 import FormsPage from '../pages/Forms/FormsPage';
 import { LoadContext } from '../context/LoadContext';
 import Loader from './UI/Loader/Loader';
-
-export interface IAppRouter {
-  name?: string;
-}
+import { IAppRouter } from '../types/interfaces';
 
 class AppRouter extends React.Component<IAppRouter> {
   static contextType = LoadContext;

@@ -1,10 +1,6 @@
 import React from 'react';
 import ItemStyles from './ButtonCustom.module.css';
-
-interface IButtonCustom {
-  name?: string;
-  onClick?: (event: React.MouseEvent) => void;
-}
+import { IButtonCustom } from '../../../../types/interfaces';
 
 class ButtonCustom extends React.Component<IButtonCustom> {
   constructor(props: IButtonCustom) {
@@ -13,7 +9,11 @@ class ButtonCustom extends React.Component<IButtonCustom> {
 
   render() {
     return (
-      <button className={ItemStyles.btnCustom} onClick={this.props.onClick}>
+      <button
+        className={ItemStyles.btnCustom}
+        onClick={this.props.onClick}
+        data-testid={this.props['data-testid']}
+      >
         {this.props.children}
       </button>
     );

@@ -1,17 +1,9 @@
 import React from 'react';
 import ItemStyles from './Loader.module.css';
 
-export interface ILoaderProps {
-  name?: string;
-}
-
-class Loader extends React.Component<ILoaderProps> {
-  constructor(props: ILoaderProps) {
-    super(props);
-  }
-
+class Loader extends React.Component {
   render() {
-    return <div className={ItemStyles.loader} />;
+    return <div className={ItemStyles.loader} data-testid="Loader" />;
   }
 }
 

@@ -13,7 +13,7 @@ class CardSet extends React.Component<
 
   render() {
     return (
-      <div className={ItemStyles.cardSet}>
+      <div className={ItemStyles.cardSet} data-testid="CardSet">
         {this.props.dataSet.map((dataSetElement) => (
           <Card
             key={dataSetElement.id}

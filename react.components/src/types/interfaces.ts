@@ -1,4 +1,4 @@
-import { MouseEventHandler, RefObject } from 'react';
+import React, { MouseEventHandler, RefObject } from 'react';
 
 export interface ICharacterRowInfo {
   id: number;
@@ -232,4 +232,35 @@ export interface ICharacterQueryAttributes {
   species?: string;
   type?: string;
   gender?: characterQueryGender;
+}
+
+export interface IAppProps {
+  name?: string;
+}
+
+export interface IAppState {
+  isLoading: boolean;
+}
+
+export interface IModalWindowProps {
+  visible: boolean;
+  setVisible: (newState: boolean) => void;
+}
+
+export interface ICardFullProps {
+  character: ICharacterRowInfo;
+}
+
+export interface IAppRouter {
+  name?: string;
+}
+
+export interface IButtonCustom {
+  name?: string;
+  onClick?: (event: React.MouseEvent) => void;
+  'data-testid'?: string;
+}
+
+export interface IFavouriteButton {
+  isLiked: boolean;
 }

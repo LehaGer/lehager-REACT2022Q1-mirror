@@ -1,10 +1,6 @@
 import React from 'react';
-import { ICharacterRowInfo } from '../../types/interfaces';
+import { ICardFullProps } from '../../types/interfaces';
 import ItemStyles from './CardFull.module.css';
-
-export interface ICardFullProps {
-  character: ICharacterRowInfo;
-}
 
 class CardFull extends React.Component<ICardFullProps> {
   constructor(props: ICardFullProps) {
@@ -13,12 +9,14 @@ class CardFull extends React.Component<ICardFullProps> {
 
   render() {
     return (
-      <div className={ItemStyles.card}>
+      <div className={ItemStyles.card} data-testid="CardFull">
         <div className={ItemStyles.cardImg}>
           <img src={this.props.character.image} alt="character's image" />
         </div>
         <div className={ItemStyles.cardInfo}>
-          <div className={ItemStyles.name}>{this.props.character.name}</div>
+          <div className={ItemStyles.name} data-testid="CardFullName">
+            {this.props.character.name}
+          </div>
           <div className={ItemStyles.cardMataInfo}>
             <div className={[ItemStyles.status, ItemStyles.label].join(' ')}>Status: </div>
             <div className={[ItemStyles.status, ItemStyles.value].join(' ')}>

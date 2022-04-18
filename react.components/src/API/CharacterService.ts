@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ICharacterQueryAttributes } from '../types/interfaces';
 
-export default class CharacterService {
+export default class getAllCharacters {
   static async getAllCharacters(page = 1) {
     return await axios.get('https://rickandmortyapi.com/api/character', {
       params: {

@@ -4,14 +4,7 @@ import AppRouter from './components/AppRouter';
 import Navbar from './components/Navbar/Navbar';
 import { LoadContext } from './context/LoadContext';
 import { BrowserRouter } from 'react-router-dom';
-
-export interface IAppProps {
-  name?: string;
-}
-
-export interface IAppState {
-  isLoading: boolean;
-}
+import { IAppProps, IAppState } from './types/interfaces';
 
 class App extends React.Component<IAppProps, IAppState> {
   constructor(props: IAppProps) {

@@ -1,10 +1,6 @@
 import React from 'react';
 import ItemStyles from './ModalWindow.module.css';
-
-export interface IModalWindowProps {
-  visible: boolean;
-  setVisible: (newState: boolean) => void;
-}
+import { IModalWindowProps } from '../../../types/interfaces';
 
 class ModalWindow extends React.Component<IModalWindowProps> {
   constructor(props: IModalWindowProps) {
@@ -16,13 +12,18 @@ class ModalWindow extends React.Component<IModalWindowProps> {
       <div
         className={ItemStyles.modalWindow + (this.props.visible ? ' ' + ItemStyles.active : '')}
         onClick={() => this.props.setVisible(false)}
+        data-testid="ModalWindow"
       >
         <div
           className={ItemStyles.modalWindowContent}
           onClick={(e: React.MouseEvent) => e.stopPropagation()}
         >
           {this.props.children}
-          <span className={ItemStyles.closeBtn} onClick={() => this.props.setVisible(false)}>
+          <span
+            className={ItemStyles.closeBtn}
+            onClick={() => this.props.setVisible(false)}
+            data-testid="ModalWindowCloseBtn"
+          >
             &times;
           </span>
         </div>

@@ -33,20 +33,23 @@ class Main extends React.Component<IMainProps, IMainState<ICharacterRowInfo>> {
       isDataLoading: true,
       isThereCharacter: true,
     });
+
     try {
       const response = await CharacterService.getCharacterByAttributes({
         name: name,
       });
       this.loadCards(response.data.results);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       await this.setState({
         isThereCharacter: false,
       });
     } finally {
-      await this.setState({
-        isDataLoading: false,
-      });
+      if (this._isMounted) {
+        await this.setState({
+          isDataLoading: false,
+        });
+      }
     }
   };
 
@@ -60,7 +63,7 @@ class Main extends React.Component<IMainProps, IMainState<ICharacterRowInfo>> {
 
   render() {
     const notFoundMsg = (
-      <div className={ItemStyles.notFoundMsg}>
+      <div className={ItemStyles.notFoundMsg} data-testid="MainNotFoundMsg">
         <div>No matches were found =( </div>
       </div>
     );

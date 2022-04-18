@@ -33,7 +33,7 @@ class Card extends React.Component<ICardProps, ICardState> {
           characterFullInfo: response.data,
         });
       } catch (e) {
-        console.log(e);
+        // console.log(e);
         await this.setState({
           isThere: false,
           characterFullInfo: {} as ICharacterRowInfo,
@@ -57,7 +57,7 @@ class Card extends React.Component<ICardProps, ICardState> {
 
   render() {
     const notFoundMsg = (
-      <div className={ItemStyles.notFoundMsg}>
+      <div className={ItemStyles.notFoundMsg} data-testid="CardNotFoundMsg">
         <div>No info was found =( </div>
       </div>
     );
@@ -81,7 +81,7 @@ class Card extends React.Component<ICardProps, ICardState> {
             <img src={this.props.image} alt={this.props.name} data-testid="Card" />
           </div>
           <div className={ItemStyles.cardMataInfo}>
-            <div>{this.props.name}</div>
+            <div data-testid="CardName">{this.props.name}</div>
             <div>
               <div>Origin: </div>
               {this.props.origin}
@@ -98,6 +98,7 @@ class Card extends React.Component<ICardProps, ICardState> {
                 event.preventDefault();
                 this.toggleFullCard(true);
               }}
+              data-testid="learnMore"
             >
               Learn more
             </ButtonCustom>
