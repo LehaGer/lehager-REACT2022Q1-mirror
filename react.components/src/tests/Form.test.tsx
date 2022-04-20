@@ -461,7 +461,6 @@ describe('Form testing', () => {
 
       beforeEach(() => {
         window.URL.createObjectURL = jest.fn((file: File) => {
-          console.log('window.URL.createObjectURL msg');
           if (file.type || file.name || file.size) {
             return 'blob:http://localhost:3000/f1fc20dc-94e3-4953-a569-aec5ac1adcd2';
           } else {
