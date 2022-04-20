@@ -4,24 +4,13 @@ import { IDropdownInputProps } from '../../../../types/interfaces';
 
 class DropdownInput extends React.Component<IDropdownInputProps> {
   private readonly select = React.createRef<HTMLSelectElement>();
-  private readonly errorMsg = React.createRef<HTMLDivElement>();
 
   constructor(props: IDropdownInputProps) {
     super(props);
-
-    this.setStatus = this.setStatus.bind(this);
   }
 
   getValue() {
     return this.select.current?.value;
-  }
-
-  setStatus(isCorrect: boolean) {
-    if (isCorrect) {
-      if (this.errorMsg.current) this.errorMsg.current.className = 'hidden';
-    } else {
-      if (this.errorMsg.current) this.errorMsg.current.className = 'showed';
-    }
   }
 
   render() {
@@ -44,7 +33,7 @@ class DropdownInput extends React.Component<IDropdownInputProps> {
             ))}
           </select>
         </div>
-        <div ref={this.errorMsg} className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
+        <div className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
           {this.props.formatInstruction}
         </div>
       </div>

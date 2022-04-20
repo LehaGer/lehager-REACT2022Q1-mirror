@@ -21,176 +21,161 @@ class Form extends React.Component<IFormProps, IFormState> {
   private readonly isAgreeToGetAdvToEmail = React.createRef<CheckboxInput>();
   private readonly gender = React.createRef<SwitcherInput>();
   private readonly profilePicture = React.createRef<FileUploadInput>();
-  private readonly submit = React.createRef<HTMLInputElement>();
+  private readonly submit = React.createRef<SubmitInput>();
 
   constructor(props: IFormProps) {
     super(props);
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+      isFirstNameCorrect: true,
+      isLastNameCorrect: true,
+      isZipCodeCorrect: true,
+      isBirthdayCorrect: true,
+      isArrivingDateCorrect: true,
+      isCountryCorrect: true,
+      isAgreementToProcConfDataCorrect: true,
+      isAgreementToGetAdvToEmail: true,
+      isGenderCorrect: true,
+      isProfilePictureCorrect: true,
+      isSubmitButtonDisabled: true,
+    };
+
+    this.handleClickSubmitButton = this.handleClickSubmitButton.bind(this);
   }
 
-  handleSubmit(event: React.SyntheticEvent) {
+  async handleClickSubmitButton(event: React.SyntheticEvent): Promise<void> {
     event.preventDefault();
 
-    this.checkAll();
+    await this.checkAll();
 
-    if (this.isFormCorrect()) {
-      this.createCard();
-      alert('SUCCESS! The new card has been created!');
-      this.formReference.current?.reset();
-      if (this.submit.current) this.submit.current.disabled = true;
-    } else {
-      if (this.submit.current) this.submit.current.disabled = true;
-    }
-  }
+    await (() => {
+      if (this.isFormCorrect()) {
+        this.createCard();
+        alert('SUCCESS! The new card has been created!');
+        this.formReference.current?.reset();
+      }
+    })();
 
-  componentDidMount(): void {
-    if (this.submit.current) this.submit.current.disabled = true;
+    await this.setState({ isSubmitButtonDisabled: true });
   }
 
-  isFirstNameCorrect() {
-    const value = String(this.firstName.current?.getValue());
-    return !/\d/.test(value) && /^.+$/.test(value);
-  }
-  isLastNameCorrect() {
-    const value = String(this.lastName.current?.getValue());
-    return !/\d/.test(value) && /^.+$/.test(value);
-  }
-  isZipCodeCorrect() {
-    return /^\d{5}-\d{4}$/.test(String(this.zipCode.current?.getValue()));
-  }
-  isBirthdayCorrect() {
-    if (!this.birthday.current?.getValue()) return false;
-    const year = new Date().getFullYear();
-    const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
-    const day = new Date().getDate().toString().padStart(2, '0');
-    const currentDate = `${year}-${month}-${day}`;
-    return String(this.birthday.current?.getValue()) < currentDate;
-  }
-  isArrivingDateCorrect() {
-    if (!this.arrivingDate.current?.getValue()) return false;
-    const year = new Date().getFullYear();
-    const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
-    const day = new Date().getDate().toString().padStart(2, '0');
-    const currentDate = `${year}-${month}-${day}`;
-    return String(this.arrivingDate.current?.getValue()) > currentDate;
-  }
-  isCountryCorrect() {
-    return !!String(this.country.current?.getValue()).trim();
-  }
-  isAgreementToProcConfDataCorrect() {
-    return this.isAgreeToProcConfData.current?.isChecked();
-  }
-  isAgreementToGetAdvToEmail() {
-    return this.isAgreeToGetAdvToEmail.current?.isChecked();
-  }
-  isGenderCorrect() {
-    return !!this.gender.current?.getValue();
-  }
-  isProfilePictureCorrect() {
-    return !!this.profilePicture.current?.getValue();
+  async checkAll(): Promise<void> {
+    const checkFirstName = async () => {
+      const isFirstNameCorrect = () => {
+        const value = String(this.firstName.current?.getValue());
+        return !/\d/.test(value) && /^.+$/.test(value);
+      };
+      await this.setState({ isFirstNameCorrect: isFirstNameCorrect() });
+    };
+    const checkLastName = async () => {
+      const isLastNameCorrect = () => {
+        const value = String(this.lastName.current?.getValue());
+        return !/\d/.test(value) && /^.+$/.test(value);
+      };
+      await this.setState({ isLastNameCorrect: isLastNameCorrect() });
+    };
+    const checkZipCode = async () => {
+      const isZipCodeCorrect = () => {
+        return /^\d{5}-\d{4}$/.test(String(this.zipCode.current?.getValue()));
+      };
+      await this.setState({ isZipCodeCorrect: isZipCodeCorrect() });
+    };
+    const checkBirthday = async () => {
+      const isBirthdayCorrect = () => {
+        if (!this.birthday.current?.getValue()) return false;
+        const year = new Date().getFullYear();
+        const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+        const day = new Date().getDate().toString().padStart(2, '0');
+        const currentDate = `${year}-${month}-${day}`;
+        return String(this.birthday.current?.getValue()) < currentDate;
+      };
+      await this.setState({ isBirthdayCorrect: isBirthdayCorrect() });
+    };
+    const checkArrivingDate = async () => {
+      const isArrivingDateCorrect = () => {
+        if (!this.arrivingDate.current?.getValue()) return false;
+        const year = new Date().getFullYear();
+        const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+        const day = new Date().getDate().toString().padStart(2, '0');
+        const currentDate = `${year}-${month}-${day}`;
+        return String(this.arrivingDate.current?.getValue()) > currentDate;
+      };
+      await this.setState({ isArrivingDateCorrect: isArrivingDateCorrect() });
+    };
+    const checkCountry = async () => {
+      const isCountryCorrect = () => {
+        return !!String(this.country.current?.getValue()).trim();
+      };
+      await this.setState({ isCountryCorrect: isCountryCorrect() });
+    };
+    const checkAgreementToProcConfData = async () => {
+      const isAgreementToProcConfDataCorrect = () => {
+        return this.isAgreeToProcConfData.current
+          ? this.isAgreeToProcConfData.current?.isChecked()
+          : false;
+      };
+      await this.setState({ isAgreementToProcConfDataCorrect: isAgreementToProcConfDataCorrect() });
+    };
+    const checkAgreementToGetAdvToEmail = async () => {
+      const isAgreementToGetAdvToEmail = () => {
+        return this.isAgreeToGetAdvToEmail.current
+          ? this.isAgreeToGetAdvToEmail.current?.isChecked()
+          : false;
+      };
+      await this.setState({ isAgreementToGetAdvToEmail: isAgreementToGetAdvToEmail() });
+    };
+    const checkGender = async () => {
+      const isGenderCorrect = () => {
+        return !!this.gender.current?.getValue();
+      };
+      await this.setState({ isGenderCorrect: isGenderCorrect() });
+    };
+    const checkProfilePicture = async () => {
+      const isProfilePictureCorrect = () => {
+        return !!this.profilePicture.current?.getValue();
+      };
+      await this.setState({ isProfilePictureCorrect: isProfilePictureCorrect() });
+    };
+
+    await checkFirstName();
+    await checkLastName();
+    await checkZipCode();
+    await checkBirthday();
+    await checkArrivingDate();
+    await checkCountry();
+    await checkAgreementToProcConfData();
+    await checkAgreementToGetAdvToEmail();
+    await checkGender();
+    await checkProfilePicture();
   }
 
-  isFormCorrect() {
+  isFormCorrect(): boolean {
     return (
-      this.isFirstNameCorrect() &&
-      this.isLastNameCorrect() &&
-      this.isZipCodeCorrect() &&
-      this.isBirthdayCorrect() &&
-      this.isArrivingDateCorrect() &&
-      this.isCountryCorrect() &&
-      this.isAgreementToProcConfDataCorrect() &&
-      this.isAgreementToGetAdvToEmail() &&
-      this.isGenderCorrect() &&
-      this.isProfilePictureCorrect()
+      this.state.isFirstNameCorrect &&
+      this.state.isLastNameCorrect &&
+      this.state.isZipCodeCorrect &&
+      this.state.isBirthdayCorrect &&
+      this.state.isArrivingDateCorrect &&
+      this.state.isCountryCorrect &&
+      this.state.isAgreementToProcConfDataCorrect &&
+      this.state.isAgreementToGetAdvToEmail &&
+      this.state.isGenderCorrect &&
+      this.state.isProfilePictureCorrect
     );
   }
 
-  checkFirstName() {
-    if (this.isFirstNameCorrect()) {
-      if (this.firstName.current) this.firstName.current.setStatus(true);
-    } else {
-      if (this.firstName.current) this.firstName.current.setStatus(false);
-    }
-  }
-  checkLastName() {
-    if (this.isLastNameCorrect()) {
-      if (this.lastName.current) this.lastName.current.setStatus(true);
-    } else {
-      if (this.lastName.current) this.lastName.current.setStatus(false);
-    }
-  }
-  checkZipCode() {
-    if (this.isZipCodeCorrect()) {
-      if (this.zipCode.current) this.zipCode.current.setStatus(true);
-    } else {
-      if (this.zipCode.current) this.zipCode.current.setStatus(false);
-    }
-  }
-  checkBirthday() {
-    if (this.isBirthdayCorrect()) {
-      if (this.birthday.current) this.birthday.current.setStatus(true);
-    } else {
-      if (this.birthday.current) this.birthday.current.setStatus(false);
-    }
-  }
-  checkArrivingDate() {
-    if (this.isArrivingDateCorrect()) {
-      if (this.arrivingDate.current) this.arrivingDate.current.setStatus(true);
-    } else {
-      if (this.arrivingDate.current) this.arrivingDate.current.setStatus(false);
-    }
-  }
-  checkCountry() {
-    if (this.isCountryCorrect()) {
-      if (this.country.current) this.country.current.setStatus(true);
-    } else {
-      if (this.country.current) this.country.current.setStatus(false);
-    }
-  }
-  checkAgreementToProcConfData() {
-    if (this.isAgreementToProcConfDataCorrect()) {
-      if (this.isAgreeToProcConfData.current) this.isAgreeToProcConfData.current.setStatus(true);
-    } else {
-      if (this.isAgreeToProcConfData.current) this.isAgreeToProcConfData.current.setStatus(false);
-    }
-  }
-  checkAgreementToGetAdvToEmail() {
-    if (this.isAgreementToGetAdvToEmail()) {
-      if (this.isAgreeToGetAdvToEmail.current) this.isAgreeToGetAdvToEmail.current.setStatus(true);
-    } else {
-      if (this.isAgreeToGetAdvToEmail.current) this.isAgreeToGetAdvToEmail.current.setStatus(false);
-    }
-  }
-  checkGender() {
-    if (this.isGenderCorrect()) {
-      if (this.gender.current) this.gender.current.setStatus(true);
-    } else {
-      if (this.gender.current) this.gender.current.setStatus(false);
-    }
-  }
-  checkProfilePicture() {
-    if (this.isProfilePictureCorrect()) {
-      if (this.profilePicture.current) this.profilePicture.current.setStatus(true);
-    } else {
-      if (this.profilePicture.current) this.profilePicture.current.setStatus(false);
-    }
+  hideErrorFromElement(targetElement: string): void {
+    this.setState({
+      ...this.state,
+      [targetElement]: true,
+      isSubmitButtonDisabled: false,
+    });
+    /*setTimeout(() => {
+      this.handleChangeForm();
+    }, 0);*/
   }
 
-  checkAll() {
-    this.checkFirstName();
-    this.checkLastName();
-    this.checkZipCode();
-    this.checkBirthday();
-    this.checkArrivingDate();
-    this.checkCountry();
-    this.checkAgreementToProcConfData();
-    this.checkAgreementToGetAdvToEmail();
-    this.checkGender();
-    this.checkProfilePicture();
-  }
-
-  createCard() {
+  createCard(): void {
     if (this.props.addNewCard) {
       this.props.addNewCard({
         arrivingDate: String(this.arrivingDate.current?.getValue()),
@@ -210,7 +195,7 @@ class Form extends React.Component<IFormProps, IFormState> {
   render() {
     return (
       <form
-        onSubmit={this.handleSubmit}
+        onSubmit={this.handleClickSubmitButton}
         className={ItemStyles.Form}
         ref={this.formReference}
         data-testid="Form"
@@ -222,12 +207,9 @@ class Form extends React.Component<IFormProps, IFormState> {
             defaultValue={''}
             ref={this.firstName}
             formatInstruction={'ur name must include letters only & be > 0 symbols'}
-            isCorrectFormat={true}
+            isCorrectFormat={this.state.isFirstNameCorrect}
             label={'First Name: '}
-            onChange={() => {
-              if (this.submit.current) this.submit.current.disabled = false;
-              if (this.firstName.current) this.firstName.current.setStatus(true);
-            }}
+            onChange={() => this.hideErrorFromElement('isFirstNameCorrect')}
             data-testid="FirstNameTextInput"
           />
           <TextInput
@@ -236,12 +218,9 @@ class Form extends React.Component<IFormProps, IFormState> {
             defaultValue={''}
             ref={this.lastName}
             formatInstruction={'ur surname must include letters only & be > 0 symbols'}
-            isCorrectFormat={true}
+            isCorrectFormat={this.state.isLastNameCorrect}
             label={'Last Name: '}
-            onChange={() => {
-              if (this.submit.current) this.submit.current.disabled = false;
-              if (this.lastName.current) this.lastName.current.setStatus(true);
-            }}
+            onChange={() => this.hideErrorFromElement('isLastNameCorrect')}
             data-testid="LastNameTextInput"
           />
           <TextInput
@@ -250,12 +229,9 @@ class Form extends React.Component<IFormProps, IFormState> {
             defaultValue={''}
             ref={this.zipCode}
             formatInstruction={'ur zip-code must correspond to format "XXXXX-YYYY"'}
-            isCorrectFormat={true}
+            isCorrectFormat={this.state.isZipCodeCorrect}
             label={'Zip-code: '}
-            onChange={() => {
-              if (this.submit.current) this.submit.current.disabled = false;
-              if (this.zipCode.current) this.zipCode.current.setStatus(true);
-            }}
+            onChange={() => this.hideErrorFromElement('isZipCodeCorrect')}
             data-testid="ZipCodeTextInput"
           />
         </div>
@@ -266,12 +242,9 @@ class Form extends React.Component<IFormProps, IFormState> {
             defaultValue={''}
             ref={this.birthday}
             formatInstruction={'select date < NOW'}
-            isCorrectFormat={true}
+            isCorrectFormat={this.state.isBirthdayCorrect}
             label={'birthday: '}
-            onChange={() => {
-              if (this.submit.current) this.submit.current.disabled = false;
-              if (this.birthday.current) this.birthday.current.setStatus(true);
-            }}
+            onChange={() => this.hideErrorFromElement('isBirthdayCorrect')}
             data-testid="BirthdayDateInput"
           />
           <DateInput
@@ -280,12 +253,9 @@ class Form extends React.Component<IFormProps, IFormState> {
             defaultValue={''}
             ref={this.arrivingDate}
             formatInstruction={'select date > NOW'}
-            isCorrectFormat={true}
+            isCorrectFormat={this.state.isArrivingDateCorrect}
             label={'arriving date: '}
-            onChange={() => {
-              if (this.submit.current) this.submit.current.disabled = false;
-              if (this.arrivingDate.current) this.arrivingDate.current.setStatus(true);
-            }}
+            onChange={() => this.hideErrorFromElement('isArrivingDateCorrect')}
             data-testid="arrivingDateInput"
           />
         </div>
@@ -296,7 +266,7 @@ class Form extends React.Component<IFormProps, IFormState> {
             defaultValue={''}
             ref={this.country}
             formatInstruction={'u must pick some country'}
-            isCorrectFormat={true}
+            isCorrectFormat={this.state.isCountryCorrect}
             label={'country:'}
             options={[
               'Åland Islands',
@@ -312,10 +282,7 @@ class Form extends React.Component<IFormProps, IFormState> {
               'Latvia',
               'Macao',
             ]}
-            onChange={() => {
-              if (this.submit.current) this.submit.current.disabled = false;
-              if (this.country.current) this.country.current.setStatus(true);
-            }}
+            onChange={() => this.hideErrorFromElement('isCountryCorrect')}
             data-testid="CountryDropdownInput"
           />
         </div>
@@ -326,13 +293,9 @@ class Form extends React.Component<IFormProps, IFormState> {
             defaultChecked={false}
             ref={this.isAgreeToProcConfData}
             formatInstruction={'must be checked'}
-            isCorrectFormat={true}
+            isCorrectFormat={this.state.isAgreementToProcConfDataCorrect}
             label={' - agree to processing my data'}
-            onChange={() => {
-              if (this.submit.current) this.submit.current.disabled = false;
-              if (this.isAgreeToProcConfData.current)
-                this.isAgreeToProcConfData.current.setStatus(true);
-            }}
+            onChange={() => this.hideErrorFromElement('isAgreementToProcConfDataCorrect')}
             data-testid="AgreementProcessDataCheckboxInput"
           />
           <CheckboxInput
@@ -341,13 +304,9 @@ class Form extends React.Component<IFormProps, IFormState> {
             defaultChecked={false}
             ref={this.isAgreeToGetAdvToEmail}
             formatInstruction={'must be checked'}
-            isCorrectFormat={true}
+            isCorrectFormat={this.state.isAgreementToGetAdvToEmail}
             label={' - receive advertisement'}
-            onChange={() => {
-              if (this.submit.current) this.submit.current.disabled = false;
-              if (this.isAgreeToGetAdvToEmail.current)
-                this.isAgreeToGetAdvToEmail.current.setStatus(true);
-            }}
+            onChange={() => this.hideErrorFromElement('isAgreementToGetAdvToEmail')}
             data-testid="AgreementGetAdvCheckboxInput"
           />
         </div>
@@ -355,7 +314,7 @@ class Form extends React.Component<IFormProps, IFormState> {
           <SwitcherInput
             name={'gender'}
             formatInstruction={'u musk pick one of these'}
-            isCorrectFormat={true}
+            isCorrectFormat={this.state.isGenderCorrect}
             ref={this.gender}
             options={[
               {
@@ -369,10 +328,7 @@ class Form extends React.Component<IFormProps, IFormState> {
                 label: ' - Female',
               },
             ]}
-            onChange={() => {
-              if (this.submit.current) this.submit.current.disabled = false;
-              if (this.gender.current) this.gender.current.setStatus(true);
-            }}
+            onChange={() => this.hideErrorFromElement('isGenderCorrect')}
             data-testid="genderSwitcherInput"
           />
         </div>
@@ -383,16 +339,19 @@ class Form extends React.Component<IFormProps, IFormState> {
             defaultValue={''}
             ref={this.profilePicture}
             formatInstruction={'pick correct img'}
-            isCorrectFormat={true}
+            isCorrectFormat={this.state.isProfilePictureCorrect}
             label={'profile picture: '}
-            onChange={() => {
-              if (this.submit.current) this.submit.current.disabled = false;
-              if (this.profilePicture.current) this.profilePicture.current.setStatus(true);
-            }}
+            onChange={() => this.hideErrorFromElement('isProfilePictureCorrect')}
           />
         </div>
         <div>
-          <SubmitInput value={'Submit'} reference={this.submit} />
+          <SubmitInput
+            id={'submit'}
+            name={'submit'}
+            value={'Submit'}
+            ref={this.submit}
+            isDisabled={this.state.isSubmitButtonDisabled}
+          />
         </div>
       </form>
     );

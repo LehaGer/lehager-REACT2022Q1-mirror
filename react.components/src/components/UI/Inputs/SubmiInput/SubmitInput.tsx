@@ -1,9 +1,11 @@
 import React from 'react';
 import ItemStyles from './SubmitInput.module.css';
-import { ISubmitInput } from '../../../../types/interfaces';
+import { ISubmitInputProps } from '../../../../types/interfaces';
 
-class SubmitInput extends React.Component<ISubmitInput> {
-  constructor(props: ISubmitInput) {
+class SubmitInput extends React.Component<ISubmitInputProps> {
+  private readonly input = React.createRef<HTMLInputElement>();
+
+  constructor(props: ISubmitInputProps) {
     super(props);
   }
 
@@ -12,8 +14,11 @@ class SubmitInput extends React.Component<ISubmitInput> {
       <input
         className={ItemStyles.submitInput}
         type="submit"
+        id={this.props.id}
+        name={this.props.name}
         value={this.props.value}
-        ref={this.props.reference}
+        ref={this.input}
+        disabled={this.props.isDisabled}
         data-testid="SubmitInput"
       />
     );
