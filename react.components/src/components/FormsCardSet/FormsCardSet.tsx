@@ -1,9 +1,9 @@
 import React from 'react';
 import FormsCard from '../FormsCard/FormsCard';
 import ItemStyles from './FormsCardSet.module.css';
-import { IFormsCardSetProps, IFormsCardSetState } from '../../types/interfaces';
+import { IFormsCardSetProps } from '../../types/interfaces';
 
-class FormsCardSet extends React.Component<IFormsCardSetProps, IFormsCardSetState> {
+class FormsCardSet extends React.Component<IFormsCardSetProps> {
   constructor(props: IFormsCardSetProps) {
     super(props);
   }

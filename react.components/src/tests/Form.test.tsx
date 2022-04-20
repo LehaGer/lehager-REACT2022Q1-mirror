@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import Form from '../components/Form/Form';
 import userEvent from '@testing-library/user-event/dist';
 import createShiftedDate from './functions/createShiftedDate';
@@ -146,10 +146,17 @@ describe('Form testing', () => {
   });
 
   describe('does Errors showed correctly', () => {
-    global.URL.createObjectURL = jest.fn(() => 'details');
+    const wrapToPromiseWithTimeout = async (clBck: () => void) => {
+      await new Promise((resolve) => {
+        setTimeout(() => {
+          clBck();
+          resolve(null);
+        }, 0);
+      });
+    };
 
     describe('on firstName', () => {
-      test('entering right', () => {
+      test('entering right', async () => {
         render(<Form />);
 
         const firstNameInput = screen.getByLabelText('First Name:');
@@ -162,9 +169,11 @@ describe('Form testing', () => {
         userEvent.type(firstNameInput, 'CorrectFirstname');
         expect(firstNameErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(firstNameErrorMsg).not.toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(firstNameErrorMsg).not.toHaveClass('showed');
+        });
       });
-      test('entering wrong', () => {
+      test('entering wrong', async () => {
         render(<Form />);
 
         const firstNameInput = screen.getByLabelText('First Name:');
@@ -177,9 +186,11 @@ describe('Form testing', () => {
         userEvent.type(firstNameInput, 'IncorrectFirstname123');
         expect(firstNameErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(firstNameErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(firstNameErrorMsg).toHaveClass('showed');
+        });
       });
-      test('correcting', () => {
+      test('correcting', async () => {
         render(<Form />);
 
         const firstNameInput = screen.getByLabelText('First Name:');
@@ -190,13 +201,15 @@ describe('Form testing', () => {
 
         userEvent.type(firstNameInput, 'IncorrectFirstname123');
         userEvent.click(submitInput);
-        expect(firstNameErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(firstNameErrorMsg).toHaveClass('showed');
+        });
         userEvent.clear(firstNameInput);
         expect(firstNameErrorMsg).not.toHaveClass('showed');
       });
     });
     describe('on lastName', () => {
-      test('entering right', () => {
+      test('entering right', async () => {
         render(<Form />);
 
         const lastNameInput = screen.getByLabelText('Last Name:');
@@ -209,9 +222,11 @@ describe('Form testing', () => {
         userEvent.type(lastNameInput, 'CorrectLastname');
         expect(lastNameErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(lastNameErrorMsg).not.toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(lastNameErrorMsg).not.toHaveClass('showed');
+        });
       });
-      test('entering wrong', () => {
+      test('entering wrong', async () => {
         render(<Form />);
 
         const lastNameInput = screen.getByLabelText('Last Name:');
@@ -224,9 +239,11 @@ describe('Form testing', () => {
         userEvent.type(lastNameInput, 'IncorrectLastname123');
         expect(lastNameErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(lastNameErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(lastNameErrorMsg).toHaveClass('showed');
+        });
       });
-      test('correcting', () => {
+      test('correcting', async () => {
         render(<Form />);
 
         const lastNameInput = screen.getByLabelText('Last Name:');
@@ -237,13 +254,15 @@ describe('Form testing', () => {
 
         userEvent.type(lastNameInput, 'IncorrectLastname123');
         userEvent.click(submitInput);
-        expect(lastNameErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(lastNameErrorMsg).toHaveClass('showed');
+        });
         userEvent.clear(lastNameInput);
         expect(lastNameErrorMsg).not.toHaveClass('showed');
       });
     });
     describe('on zipCode', () => {
-      test('entering right', () => {
+      test('entering right', async () => {
         render(<Form />);
 
         const zipCodeInput = screen.getByLabelText('Zip-code:');
@@ -256,9 +275,11 @@ describe('Form testing', () => {
         userEvent.type(zipCodeInput, '12345-1234');
         expect(zipCodeErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(zipCodeErrorMsg).not.toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(zipCodeErrorMsg).not.toHaveClass('showed');
+        });
       });
-      test('entering wrong', () => {
+      test('entering wrong', async () => {
         render(<Form />);
 
         const zipCodeInput = screen.getByLabelText('Zip-code:');
@@ -271,9 +292,11 @@ describe('Form testing', () => {
         userEvent.type(zipCodeInput, '12345-12345');
         expect(zipCodeErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(zipCodeErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(zipCodeErrorMsg).toHaveClass('showed');
+        });
       });
-      test('correcting', () => {
+      test('correcting', async () => {
         render(<Form />);
 
         const zipCodeInput = screen.getByLabelText('Zip-code:');
@@ -284,13 +307,15 @@ describe('Form testing', () => {
 
         userEvent.type(zipCodeInput, '12345-12345');
         userEvent.click(submitInput);
-        expect(zipCodeErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(zipCodeErrorMsg).toHaveClass('showed');
+        });
         userEvent.clear(zipCodeInput);
         expect(zipCodeErrorMsg).not.toHaveClass('showed');
       });
     });
     describe('on birthday', () => {
-      test('entering right', () => {
+      test('entering right', async () => {
         render(<Form />);
 
         const birthdayInput = screen.getByLabelText('birthday:');
@@ -301,9 +326,11 @@ describe('Form testing', () => {
         userEvent.type(birthdayInput, createShiftedDate(-1));
         expect(birthdayErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(birthdayErrorMsg).not.toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(birthdayErrorMsg).not.toHaveClass('showed');
+        });
       });
-      test('entering wrong', () => {
+      test('entering wrong', async () => {
         render(<Form />);
 
         const birthdayInput = screen.getByLabelText('birthday:');
@@ -314,9 +341,11 @@ describe('Form testing', () => {
         userEvent.type(birthdayInput, createShiftedDate(1));
         expect(birthdayErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(birthdayErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(birthdayErrorMsg).toHaveClass('showed');
+        });
       });
-      test('correcting', () => {
+      test('correcting', async () => {
         render(<Form />);
 
         const birthdayInput = screen.getByLabelText('birthday:');
@@ -325,13 +354,15 @@ describe('Form testing', () => {
 
         userEvent.type(birthdayInput, createShiftedDate(1));
         userEvent.click(submitInput);
-        expect(birthdayErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(birthdayErrorMsg).toHaveClass('showed');
+        });
         userEvent.clear(birthdayInput);
         expect(birthdayErrorMsg).not.toHaveClass('showed');
       });
     });
     describe('on arrivingDate', () => {
-      test('entering right', () => {
+      test('entering right', async () => {
         render(<Form />);
 
         const arrivingDateInput = screen.getByLabelText('arriving date:');
@@ -342,9 +373,11 @@ describe('Form testing', () => {
         userEvent.type(arrivingDateInput, createShiftedDate(1));
         expect(arrivingDateErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(arrivingDateErrorMsg).not.toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(arrivingDateErrorMsg).not.toHaveClass('showed');
+        });
       });
-      test('entering wrong', () => {
+      test('entering wrong', async () => {
         render(<Form />);
 
         const arrivingDateInput = screen.getByLabelText('arriving date:');
@@ -355,9 +388,11 @@ describe('Form testing', () => {
         userEvent.type(arrivingDateInput, createShiftedDate(-1));
         expect(arrivingDateErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(arrivingDateErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(arrivingDateErrorMsg).toHaveClass('showed');
+        });
       });
-      test('correcting', () => {
+      test('correcting', async () => {
         render(<Form />);
 
         const arrivingDateInput = screen.getByLabelText('arriving date:');
@@ -366,13 +401,15 @@ describe('Form testing', () => {
 
         userEvent.type(arrivingDateInput, createShiftedDate(-1));
         userEvent.click(submitInput);
-        expect(arrivingDateErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(arrivingDateErrorMsg).toHaveClass('showed');
+        });
         userEvent.clear(arrivingDateInput);
         expect(arrivingDateErrorMsg).not.toHaveClass('showed');
       });
     });
     describe('on country', () => {
-      test('entering right', () => {
+      test('entering right', async () => {
         render(<Form />);
 
         const countryInput = screen.getByLabelText('country:');
@@ -383,9 +420,11 @@ describe('Form testing', () => {
         userEvent.selectOptions(countryInput, 'Belarus');
         expect(countryErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(countryErrorMsg).not.toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(countryErrorMsg).not.toHaveClass('showed');
+        });
       });
-      test('entering wrong', () => {
+      test('entering wrong', async () => {
         render(<Form />);
 
         const countryInput = screen.getByLabelText('country:');
@@ -396,9 +435,11 @@ describe('Form testing', () => {
         userEvent.selectOptions(countryInput, '');
         expect(countryErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(countryErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(countryErrorMsg).toHaveClass('showed');
+        });
       });
-      test('correcting', () => {
+      test('correcting', async () => {
         render(<Form />);
 
         const countryInput = screen.getByLabelText('country:');
@@ -407,60 +448,94 @@ describe('Form testing', () => {
 
         userEvent.selectOptions(countryInput, '');
         userEvent.click(submitInput);
-        expect(countryErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(countryErrorMsg).toHaveClass('showed');
+        });
         userEvent.selectOptions(countryInput, 'Belarus');
         expect(countryErrorMsg).not.toHaveClass('showed');
       });
     });
     describe('on profilePicture', () => {
+      let fileCorrect: File;
+      let fileIncorrect: File;
+
+      beforeEach(() => {
+        window.URL.createObjectURL = jest.fn((file: File) => {
+          console.log('window.URL.createObjectURL msg');
+          if (file.type || file.name || file.size) {
+            return 'blob:http://localhost:3000/f1fc20dc-94e3-4953-a569-aec5ac1adcd2';
+          } else {
+            return '';
+          }
+        });
+        fileCorrect = new File(['hello'], 'hello.png', { type: 'image/png' });
+        fileIncorrect = new File([], '', { type: undefined });
+      });
+
       test('entering right', async () => {
         render(<Form />);
 
-        const profilePictureInput = screen.getByLabelText('profile picture:');
+        const profilePictureInput: HTMLInputElement = screen.getByLabelText('profile picture:');
         const profilePictureErrorMsg = screen.getByText('pick correct img');
         const submitInput = screen.getByTestId('SubmitInput');
-        const file = new File(['hello'], 'hello.png', { type: 'image/png' });
 
         expect(profilePictureErrorMsg).not.toHaveClass('showed');
-        await userEvent.upload(profilePictureInput, file);
+        await act(async () => {
+          await waitFor(() => {
+            userEvent.upload(profilePictureInput, fileCorrect);
+          });
+        });
         expect(profilePictureErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        //expect(profilePictureErrorMsg).not.toHaveClass('showed');
-
-        // ERROR... WHY???
+        await wrapToPromiseWithTimeout(() => {
+          expect(profilePictureErrorMsg).not.toHaveClass('showed');
+        });
       });
-      test('entering wrong', () => {
+      test('entering wrong', async () => {
         render(<Form />);
 
         const profilePictureInput = screen.getByLabelText('profile picture:');
         const profilePictureErrorMsg = screen.getByText('pick correct img');
         const submitInput = screen.getByTestId('SubmitInput');
-        const file = new File([], '', { type: undefined });
 
         expect(profilePictureErrorMsg).not.toHaveClass('showed');
-        userEvent.upload(profilePictureInput, file);
+        await act(async () => {
+          await waitFor(() => {
+            userEvent.upload(profilePictureInput, fileIncorrect);
+          });
+        });
         expect(profilePictureErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(profilePictureErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(profilePictureErrorMsg).toHaveClass('showed');
+        });
       });
-      test('correcting', () => {
+      test('correcting', async () => {
         render(<Form />);
 
         const profilePictureInput = screen.getByLabelText('profile picture:');
         const profilePictureErrorMsg = screen.getByText('pick correct img');
         const submitInput = screen.getByTestId('SubmitInput');
-        const fileIncorrect = new File([], '', { type: undefined });
-        const fileCorrect = new File(['hello'], 'hello.png', { type: 'image/png' });
 
-        userEvent.upload(profilePictureInput, fileIncorrect);
+        await act(async () => {
+          await waitFor(() => {
+            userEvent.upload(profilePictureInput, fileIncorrect);
+          });
+        });
         userEvent.click(submitInput);
-        expect(profilePictureErrorMsg).toHaveClass('showed');
-        userEvent.upload(profilePictureInput, fileCorrect);
+        await wrapToPromiseWithTimeout(() => {
+          expect(profilePictureErrorMsg).toHaveClass('showed');
+        });
+        await act(async () => {
+          await waitFor(() => {
+            userEvent.upload(profilePictureInput, fileCorrect);
+          });
+        });
         expect(profilePictureErrorMsg).not.toHaveClass('showed');
       });
     });
     describe('on agreeToProcessingMyData', () => {
-      test('entering right', () => {
+      test('entering right', async () => {
         render(<Form />);
 
         const agreeToProcessingMyDataInput = screen.getByLabelText('- agree to processing my data');
@@ -471,9 +546,11 @@ describe('Form testing', () => {
         userEvent.click(agreeToProcessingMyDataInput);
         expect(agreeToProcessingMyDataErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(agreeToProcessingMyDataErrorMsg).not.toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(agreeToProcessingMyDataErrorMsg).not.toHaveClass('showed');
+        });
       });
-      test('entering wrong', () => {
+      test('entering wrong', async () => {
         render(<Form />);
 
         const agreeToProcessingMyDataInput = screen.getByLabelText('- agree to processing my data');
@@ -484,9 +561,11 @@ describe('Form testing', () => {
         userEvent.click(agreeToProcessingMyDataInput);
         expect(agreeToProcessingMyDataErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(agreeToProcessingMyDataErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(agreeToProcessingMyDataErrorMsg).toHaveClass('showed');
+        });
       });
-      test('correcting', () => {
+      test('correcting', async () => {
         render(<Form />);
 
         const agreeToProcessingMyDataInput = screen.getByLabelText('- agree to processing my data');
@@ -496,13 +575,15 @@ describe('Form testing', () => {
         userEvent.click(agreeToProcessingMyDataInput);
         userEvent.click(agreeToProcessingMyDataInput);
         userEvent.click(submitInput);
-        expect(agreeToProcessingMyDataErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(agreeToProcessingMyDataErrorMsg).toHaveClass('showed');
+        });
         userEvent.click(agreeToProcessingMyDataInput);
         expect(agreeToProcessingMyDataErrorMsg).not.toHaveClass('showed');
       });
     });
     describe('on agreeReceiveAdvertisement', () => {
-      test('entering right', () => {
+      test('entering right', async () => {
         render(<Form />);
 
         const agreeReceiveAdvertisementInput = screen.getByLabelText('- receive advertisement');
@@ -513,9 +594,11 @@ describe('Form testing', () => {
         userEvent.click(agreeReceiveAdvertisementInput);
         expect(agreeReceiveAdvertisementErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(agreeReceiveAdvertisementErrorMsg).not.toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(agreeReceiveAdvertisementErrorMsg).not.toHaveClass('showed');
+        });
       });
-      test('entering wrong', () => {
+      test('entering wrong', async () => {
         render(<Form />);
 
         const agreeReceiveAdvertisementInput = screen.getByLabelText('- receive advertisement');
@@ -527,9 +610,11 @@ describe('Form testing', () => {
         userEvent.click(agreeReceiveAdvertisementInput);
         expect(agreeReceiveAdvertisementErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(agreeReceiveAdvertisementErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(agreeReceiveAdvertisementErrorMsg).toHaveClass('showed');
+        });
       });
-      test('correcting', () => {
+      test('correcting', async () => {
         render(<Form />);
 
         const agreeReceiveAdvertisementInput = screen.getByLabelText('- receive advertisement');
@@ -539,13 +624,15 @@ describe('Form testing', () => {
         userEvent.click(agreeReceiveAdvertisementInput);
         userEvent.click(agreeReceiveAdvertisementInput);
         userEvent.click(submitInput);
-        expect(agreeReceiveAdvertisementErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(agreeReceiveAdvertisementErrorMsg).toHaveClass('showed');
+        });
         userEvent.click(agreeReceiveAdvertisementInput);
         expect(agreeReceiveAdvertisementErrorMsg).not.toHaveClass('showed');
       });
     });
     describe('on switcherMaleOption', () => {
-      test('entering right', () => {
+      test('entering right', async () => {
         render(<Form />);
 
         const switcherMaleOptionInput = screen.getByLabelText('- Male');
@@ -556,9 +643,11 @@ describe('Form testing', () => {
         userEvent.click(switcherMaleOptionInput);
         expect(switcherMaleOptionErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(switcherMaleOptionErrorMsg).not.toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(switcherMaleOptionErrorMsg).not.toHaveClass('showed');
+        });
       });
-      test('entering wrong', () => {
+      test('entering wrong', async () => {
         render(<Form />);
 
         const agreeReceiveAdvertisementInput = screen.getByLabelText('- receive advertisement');
@@ -569,9 +658,11 @@ describe('Form testing', () => {
         userEvent.click(agreeReceiveAdvertisementInput);
         expect(switcherMaleOptionErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(switcherMaleOptionErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(switcherMaleOptionErrorMsg).toHaveClass('showed');
+        });
       });
-      test('correcting', () => {
+      test('correcting', async () => {
         render(<Form />);
 
         const agreeReceiveAdvertisementInput = screen.getByLabelText('- receive advertisement');
@@ -581,13 +672,15 @@ describe('Form testing', () => {
 
         userEvent.click(agreeReceiveAdvertisementInput);
         userEvent.click(submitInput);
-        expect(switcherMaleOptionErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(switcherMaleOptionErrorMsg).toHaveClass('showed');
+        });
         userEvent.click(switcherMaleOptionInput);
         expect(switcherMaleOptionErrorMsg).not.toHaveClass('showed');
       });
     });
     describe('on switcherFemaleOption', () => {
-      test('entering right', () => {
+      test('entering right', async () => {
         render(<Form />);
 
         const switcherFemaleOptionInput = screen.getByLabelText('- Female');
@@ -598,9 +691,11 @@ describe('Form testing', () => {
         userEvent.click(switcherFemaleOptionInput);
         expect(switcherFemaleOptionErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(switcherFemaleOptionErrorMsg).not.toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(switcherFemaleOptionErrorMsg).not.toHaveClass('showed');
+        });
       });
-      test('entering wrong', () => {
+      test('entering wrong', async () => {
         render(<Form />);
 
         const agreeReceiveAdvertisementInput = screen.getByLabelText('- receive advertisement');
@@ -611,9 +706,11 @@ describe('Form testing', () => {
         userEvent.click(agreeReceiveAdvertisementInput);
         expect(switcherFemaleOptionErrorMsg).not.toHaveClass('showed');
         userEvent.click(submitInput);
-        expect(switcherFemaleOptionErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(switcherFemaleOptionErrorMsg).toHaveClass('showed');
+        });
       });
-      test('correcting', () => {
+      test('correcting', async () => {
         render(<Form />);
 
         const agreeReceiveAdvertisementInput = screen.getByLabelText('- receive advertisement');
@@ -623,7 +720,9 @@ describe('Form testing', () => {
 
         userEvent.click(agreeReceiveAdvertisementInput);
         userEvent.click(submitInput);
-        expect(switcherFemaleOptionErrorMsg).toHaveClass('showed');
+        await wrapToPromiseWithTimeout(() => {
+          expect(switcherFemaleOptionErrorMsg).toHaveClass('showed');
+        });
         userEvent.click(switcherFemaleOptionInput);
         expect(switcherFemaleOptionErrorMsg).not.toHaveClass('showed');
       });

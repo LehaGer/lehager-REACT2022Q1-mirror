@@ -4,12 +4,9 @@ import { ISwitcherInputProps } from '../../../../types/interfaces';
 
 class SwitcherInput extends React.Component<ISwitcherInputProps> {
   private readonly optionsRefs = this.props.options.map(() => React.createRef<HTMLInputElement>());
-  private readonly errorMsg = React.createRef<HTMLDivElement>();
 
   constructor(props: ISwitcherInputProps) {
     super(props);
-
-    this.setStatus = this.setStatus.bind(this);
   }
 
   getValue(): string | undefined {
@@ -18,14 +15,6 @@ class SwitcherInput extends React.Component<ISwitcherInputProps> {
       if (el.current?.checked) value = el.current?.id;
     });
     return value;
-  }
-
-  setStatus(isCorrect: boolean) {
-    if (isCorrect) {
-      if (this.errorMsg.current) this.errorMsg.current.className = 'hidden';
-    } else {
-      if (this.errorMsg.current) this.errorMsg.current.className = 'showed';
-    }
   }
 
   render() {
@@ -46,7 +35,7 @@ class SwitcherInput extends React.Component<ISwitcherInputProps> {
             </div>
           ))}
         </div>
-        <div ref={this.errorMsg} className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
+        <div className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
           {this.props.formatInstruction}
         </div>
       </div>

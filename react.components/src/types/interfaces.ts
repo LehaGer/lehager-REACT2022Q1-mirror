@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, RefObject } from 'react';
+import React, { MouseEventHandler } from 'react';
 
 export interface ICharacterRowInfo {
   id: number;
@@ -67,36 +67,27 @@ export interface IShareButtonProps {
   name?: string;
 }
 
-export interface IShareButtonState {
-  anchorEl: null | Element | ((element: Element) => Element);
-}
-
 export interface IFavouriteButtonProps {
   onClick?: MouseEventHandler;
   isFavorite?: boolean;
 }
 
-export interface IPopoverShareBtnGroupProps {
-  anchorEl: null | Element | ((element: Element) => Element);
-  onClick: MouseEventHandler;
-  onClose: MouseEventHandler;
-}
-
-export interface IPopoverCustomProps {
-  anchorEl: null | Element | ((element: Element) => Element);
-  isOpen: boolean;
-  onClick?: MouseEventHandler;
-  onClose?: MouseEventHandler;
-  arrowOffset?: string | number;
-}
-
 export interface IFormProps {
-  name?: string;
   addNewCard?: (card: IFormsCardProps) => void;
 }
 
 export interface IFormState {
-  name?: string;
+  isFirstNameCorrect: boolean;
+  isLastNameCorrect: boolean;
+  isZipCodeCorrect: boolean;
+  isBirthdayCorrect: boolean;
+  isArrivingDateCorrect: boolean;
+  isCountryCorrect: boolean;
+  isAgreementToProcConfDataCorrect: boolean;
+  isAgreementToGetAdvToEmail: boolean;
+  isGenderCorrect: boolean;
+  isProfilePictureCorrect: boolean;
+  isSubmitButtonDisabled: boolean;
 }
 
 export enum genderTypes {
@@ -118,87 +109,76 @@ export interface IFormsCardProps {
   profilePicture: string;
 }
 
-export interface IFormsCardState {
-  name?: string;
-}
-
 export interface IFormsCardSetProps {
   name?: string;
   cardSetArray?: IFormsCardProps[];
 }
 
-export interface IFormsCardSetState {
-  name?: string;
+export interface IInputWhole {
+  name: string;
 }
 
-export interface ISwitcherOptionProps {
+export interface IInputSelfField {
   id: string;
   label: string;
-  defaultChecked: boolean | false;
 }
 
-export interface ISwitcherInputProps {
-  name: string;
+export interface IInputVerifiable {
   formatInstruction: string;
-  isCorrectFormat: boolean | true;
-  options: ISwitcherOptionProps[];
+  isCorrectFormat: boolean;
   onChange: (a: React.ChangeEvent) => void;
 }
 
-export interface ISubmitInput {
-  value: string;
-  reference: RefObject<HTMLInputElement>;
+export interface IInputCheckable {
+  defaultChecked: boolean;
 }
 
-export interface IFileUploadInputProps {
-  id: string;
-  name: string;
+export interface IInputValueable {
   defaultValue: string;
-  formatInstruction: string;
-  isCorrectFormat: boolean | true;
-  label: string;
-  onChange: (a: React.ChangeEvent) => void;
 }
 
-export interface IDropdownInputProps {
-  id: string;
-  name: string;
-  defaultValue: string | '';
-  formatInstruction: string;
-  isCorrectFormat: boolean | true;
-  label: string;
+export interface ITextInputProps
+  extends IInputWhole,
+    IInputSelfField,
+    IInputVerifiable,
+    IInputValueable {}
+
+export interface IDateInputProps
+  extends IInputWhole,
+    IInputSelfField,
+    IInputVerifiable,
+    IInputValueable {}
+
+export interface IDropdownInputProps
+  extends IInputWhole,
+    IInputSelfField,
+    IInputVerifiable,
+    IInputValueable {
   options: string[];
-  onChange: (a: React.ChangeEvent) => void;
 }
 
-export interface IDateInputProps {
-  id: string;
-  name: string;
-  defaultValue: string | '';
-  formatInstruction: string;
-  isCorrectFormat: boolean | true;
-  label: string;
-  onChange: (a: React.ChangeEvent) => void;
+export interface IFileUploadInputProps
+  extends IInputWhole,
+    IInputSelfField,
+    IInputVerifiable,
+    IInputValueable {}
+
+export interface ICheckboxInputProps
+  extends IInputWhole,
+    IInputSelfField,
+    IInputVerifiable,
+    IInputCheckable {}
+
+export interface ISwitcherOptionProps extends IInputSelfField, IInputCheckable {}
+
+export interface ISwitcherInputProps extends IInputWhole, IInputVerifiable {
+  options: ISwitcherOptionProps[];
 }
 
-export interface ICheckboxInputProps {
+export interface ISubmitInputProps extends IInputWhole {
   id: string;
-  name: string;
-  defaultChecked: boolean | false;
-  formatInstruction: string;
-  isCorrectFormat: boolean | true;
-  label: string;
-  onChange: (a: React.ChangeEvent) => void;
-}
-
-export interface ITextInputProps {
-  id: string;
-  name: string;
-  defaultValue: string | '';
-  formatInstruction: string;
-  isCorrectFormat: boolean | true;
-  label: string;
-  onChange: (a: React.ChangeEvent) => void;
+  value: string;
+  isDisabled: boolean;
 }
 
 export interface IFormsPageProps {
