@@ -1,40 +1,27 @@
 import React from 'react';
 import ItemStyles from './FileUploadInput.module.css';
 import { IFileUploadInputProps } from '../../../../types/interfaces';
+import { FieldError } from 'react-hook-form';
 
-class FileUploadInput extends React.Component<IFileUploadInputProps> {
-  private readonly input = React.createRef<HTMLInputElement>();
-
-  constructor(props: IFileUploadInputProps) {
-    super(props);
-  }
-
-  getValue(): string | undefined {
-    if (this.input.current && this.input.current?.files && this.input.current?.files[0]) {
-      return URL.createObjectURL(this.input.current?.files[0]);
-    } else return undefined;
-  }
-
-  render() {
-    return (
-      <div className={ItemStyles.fileUploadInput} data-testid="FileUploadInput">
-        <div>
-          <label htmlFor={this.props.id}>{this.props.label}</label>
-          <input
-            type="file"
-            defaultValue={this.props.defaultValue}
-            id={this.props.id}
-            name={this.props.name}
-            ref={this.input}
-            onChange={this.props.onChange}
-          />
-        </div>
-        <div className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
-          {this.props.formatInstruction}
-        </div>
+const FileUploadInput = <TFormValues extends Record<string, unknown>>({
+  id,
+  name,
+  label,
+  register,
+  rules,
+  errors,
+}: IFileUploadInputProps<TFormValues>) => {
+  return (
+    <div className={ItemStyles.fileUploadInput} data-testid="FileUploadInput">
+      <div>
+        <label htmlFor={id}>{label}</label>
+        <input type="file" id={id} {...register(name, rules)} />
       </div>
-    );
-  }
-}
+      <div className={errors?.[name] ? 'showed' : 'hidden'}>
+        {(errors?.[name] as unknown as FieldError)?.message}
+      </div>
+    </div>
+  );
+};
 
 export default FileUploadInput;

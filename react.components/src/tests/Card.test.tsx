@@ -55,6 +55,8 @@ describe('Card testing', () => {
     expect(screen.queryByTestId('Loader')).not.toBeInTheDocument();
     userEvent.click(screen.getByTestId('learnMore'));
     expect(screen.getByTestId('Loader')).toBeInTheDocument();
+
+    expect(await screen.findByTestId('Loader')).not.toBeInTheDocument();
   });
 
   test('does Card open FullCard', async () => {

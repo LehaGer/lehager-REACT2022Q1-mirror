@@ -1,4 +1,8 @@
 import React, { MouseEventHandler } from 'react';
+import { UseFormRegister } from 'react-hook-form/dist/types/form';
+import { DeepMap, FieldError, Path, RegisterOptions } from 'react-hook-form';
+import { FieldErrors } from 'react-hook-form/dist/types/errors';
+import { DeepPartial } from 'react-hook-form/dist/types/utils';
 
 export interface ICharacterRowInfo {
   id: number;
@@ -26,7 +30,7 @@ export interface ISearchBarProps {
   type?: string;
   placeholder?: string;
   className?: string;
-  updateCharactersByName: (name?: string) => Promise<void>;
+  updateCharactersByName?: (name?: string) => Promise<void>;
 }
 
 export interface ISearchBarState {
@@ -61,15 +65,6 @@ export enum characterStatus {
   Alive = 'Alive',
   Dead = 'Dead',
   unknown = 'unknown',
-}
-
-export interface IShareButtonProps {
-  name?: string;
-}
-
-export interface IFavouriteButtonProps {
-  onClick?: MouseEventHandler;
-  isFavorite?: boolean;
 }
 
 export interface IFormProps {
@@ -110,7 +105,6 @@ export interface IFormsCardProps {
 }
 
 export interface IFormsCardSetProps {
-  name?: string;
   cardSetArray?: IFormsCardProps[];
 }
 
@@ -137,41 +131,38 @@ export interface IInputValueable {
   defaultValue: string;
 }
 
-export interface ITextInputProps
-  extends IInputWhole,
-    IInputSelfField,
-    IInputVerifiable,
-    IInputValueable {}
+export interface IInputUnderFormHook<TFormValues> extends IInputWhole {
+  name: Path<TFormValues>;
+  register: UseFormRegister<TFormValues>;
+  rules?: RegisterOptions;
+  errors?: FieldErrors<TFormValues>;
+}
 
-export interface IDateInputProps
-  extends IInputWhole,
-    IInputSelfField,
-    IInputVerifiable,
-    IInputValueable {}
+export interface ITextInputProps<TFormValues>
+  extends IInputSelfField,
+    IInputUnderFormHook<TFormValues> {}
 
-export interface IDropdownInputProps
-  extends IInputWhole,
-    IInputSelfField,
-    IInputVerifiable,
-    IInputValueable {
+export interface IDateInputProps<TFormValues>
+  extends IInputSelfField,
+    IInputUnderFormHook<TFormValues> {}
+
+export interface IDropdownInputProps<TFormValues>
+  extends IInputSelfField,
+    IInputUnderFormHook<TFormValues> {
   options: string[];
 }
 
-export interface IFileUploadInputProps
-  extends IInputWhole,
-    IInputSelfField,
-    IInputVerifiable,
-    IInputValueable {}
+export interface IFileUploadInputProps<TFormValues>
+  extends IInputSelfField,
+    IInputUnderFormHook<TFormValues> {}
 
-export interface ICheckboxInputProps
-  extends IInputWhole,
-    IInputSelfField,
-    IInputVerifiable,
-    IInputCheckable {}
+export interface ICheckboxInputProps<TFormValues>
+  extends IInputSelfField,
+    IInputUnderFormHook<TFormValues> {}
 
 export interface ISwitcherOptionProps extends IInputSelfField, IInputCheckable {}
 
-export interface ISwitcherInputProps extends IInputWhole, IInputVerifiable {
+export interface ISwitcherInputProps<TFormValues> extends IInputUnderFormHook<TFormValues> {
   options: ISwitcherOptionProps[];
 }
 
@@ -181,16 +172,8 @@ export interface ISubmitInputProps extends IInputWhole {
   isDisabled: boolean;
 }
 
-export interface IFormsPageProps {
-  name?: string;
-}
-
 export interface IFormsPageState {
   cardSet: IFormsCardProps[];
-}
-
-export interface IMainProps {
-  name?: string;
 }
 
 export interface IMainState<ICharacterRowInfo> {
@@ -214,10 +197,6 @@ export interface ICharacterQueryAttributes {
   gender?: characterQueryGender;
 }
 
-export interface IAppProps {
-  name?: string;
-}
-
 export interface IAppState {
   isLoading: boolean;
 }
@@ -231,12 +210,7 @@ export interface ICardFullProps {
   character: ICharacterRowInfo;
 }
 
-export interface IAppRouter {
-  name?: string;
-}
-
-export interface IButtonCustom {
-  name?: string;
+export interface IButtonCustomProps {
   onClick?: (event: React.MouseEvent) => void;
   'data-testid'?: string;
 }

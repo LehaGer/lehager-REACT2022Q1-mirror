@@ -1,68 +1,50 @@
-import React from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import ItemStyles from './SearchBar.module.css';
-import { ISearchBarProps, ISearchBarState } from '../../types/interfaces';
+import { ISearchBarProps } from '../../types/interfaces';
 
-class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
-  constructor(props: ISearchBarProps) {
-    super(props);
+const SearchBar: FC<ISearchBarProps> = ({
+  name = 'default-name',
+  type = 'text',
+  placeholder = 'default searching request',
+  className = ItemStyles.searchBar,
+  updateCharactersByName = () => {
+    return new Promise(() => {});
+  },
+}) => {
+  const [searchRequest, setSearchRequest] = useState<string>('');
 
-    this.state = {
-      searchRequest: '',
-    };
-  }
+  useEffect(() => {
+    const savedRequest = localStorage.getItem(name) || '';
 
-  static defaultProps: ISearchBarProps = {
-    name: 'default-name',
-    type: 'text',
-    placeholder: 'default searching request',
-    className: ItemStyles.searchBar,
-    updateCharactersByName: () => {
-      return new Promise(() => {});
-    },
-  };
+    setSearchRequest(savedRequest);
+    (async () => {
+      await updateCharactersByName(savedRequest);
+    })();
+  }, []);
 
-  async componentDidMount(): Promise<void> {
-    await this.setState({
-      searchRequest: localStorage.getItem(this.props.name) || '',
-    });
-    await this.props.updateCharactersByName(this.state.searchRequest);
-  }
-
-  componentWillUnmount(): void {
-    this.handleSavingCurrentState();
-  }
-
-  handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    this.setState({
-      searchRequest: value,
-    });
-    localStorage.setItem(this.props.name, value);
+    localStorage.setItem(name, value);
+    setSearchRequest(value);
   };
 
-  handleSubmit = async (event: React.KeyboardEvent) => {
+  const handleSubmit = async (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      this.props.updateCharactersByName(this.state.searchRequest);
+      await updateCharactersByName(searchRequest);
     }
   };
 
-  handleSavingCurrentState = () => {
-    localStorage.setItem(this.props.name, this.state.searchRequest as string);
-  };
-
-  render() {
-    return (
-      <input
-        type={this.props.type}
-        placeholder={this.props.placeholder}
-        className={this.props.className}
-        value={this.state.searchRequest}
-        onInput={this.handleChangeValue}
-        onKeyUp={this.handleSubmit}
-        data-testid="searchBar"
-      />
-    );
-  }
-}
+  return (
+    <input
+      type={type}
+      placeholder={placeholder}
+      className={className}
+      value={searchRequest}
+      onInput={handleChangeValue}
+      onKeyUp={handleSubmit}
+      data-testid="searchBar"
+    />
+  );
+};
 
 export default SearchBar;

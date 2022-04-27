@@ -1,44 +1,35 @@
 import React from 'react';
 import ItemStyles from './DropdownInput.module.css';
 import { IDropdownInputProps } from '../../../../types/interfaces';
+import { FieldError } from 'react-hook-form';
 
-class DropdownInput extends React.Component<IDropdownInputProps> {
-  private readonly select = React.createRef<HTMLSelectElement>();
-
-  constructor(props: IDropdownInputProps) {
-    super(props);
-  }
-
-  getValue() {
-    return this.select.current?.value;
-  }
-
-  render() {
-    return (
-      <div className={ItemStyles.dropdownInput} data-testid="DropdownInput">
-        <div>
-          <label htmlFor={this.props.id}>{this.props.label}</label>
-          <select
-            name={this.props.name}
-            id={this.props.id}
-            ref={this.select}
-            defaultValue={this.props.defaultValue}
-            onChange={this.props.onChange}
-          >
-            <option value=""> </option>
-            {this.props.options.map((el, key) => (
-              <option key={key} value={el}>
-                {el}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className={this.props.isCorrectFormat ? 'hidden' : 'showed'}>
-          {this.props.formatInstruction}
-        </div>
+const DropdownInput = <TFormValues extends Record<string, unknown>>({
+  id,
+  name,
+  label,
+  options,
+  register,
+  rules,
+  errors,
+}: IDropdownInputProps<TFormValues>) => {
+  return (
+    <div className={ItemStyles.dropdownInput} data-testid="DropdownInput">
+      <div>
+        <label htmlFor={id}>{label}</label>
+        <select id={id} {...register(name, rules)}>
+          <option value=""> </option>
+          {options.map((el, key) => (
+            <option key={key} value={el}>
+              {el}
+            </option>
+          ))}
+        </select>
       </div>
-    );
-  }
-}
+      <div className={errors?.[name] ? 'showed' : 'hidden'}>
+        {(errors?.[name] as unknown as FieldError)?.message}
+      </div>
+    </div>
+  );
+};
 
 export default DropdownInput;

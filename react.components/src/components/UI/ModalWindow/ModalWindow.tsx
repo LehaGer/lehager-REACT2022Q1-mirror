@@ -1,35 +1,29 @@
-import React from 'react';
+import React, { FC } from 'react';
 import ItemStyles from './ModalWindow.module.css';
 import { IModalWindowProps } from '../../../types/interfaces';
 
-class ModalWindow extends React.Component<IModalWindowProps> {
-  constructor(props: IModalWindowProps) {
-    super(props);
-  }
-
-  render() {
-    return (
+const ModalWindow: FC<IModalWindowProps> = ({ visible, setVisible, children }) => {
+  return (
+    <div
+      className={ItemStyles.modalWindow + (visible ? ' ' + ItemStyles.active : '')}
+      onClick={() => setVisible(false)}
+      data-testid="ModalWindow"
+    >
       <div
-        className={ItemStyles.modalWindow + (this.props.visible ? ' ' + ItemStyles.active : '')}
-        onClick={() => this.props.setVisible(false)}
-        data-testid="ModalWindow"
+        className={ItemStyles.modalWindowContent}
+        onClick={(e: React.MouseEvent) => e.stopPropagation()}
       >
-        <div
-          className={ItemStyles.modalWindowContent}
-          onClick={(e: React.MouseEvent) => e.stopPropagation()}
+        {children}
+        <span
+          className={ItemStyles.closeBtn}
+          onClick={() => setVisible(false)}
+          data-testid="ModalWindowCloseBtn"
         >
-          {this.props.children}
-          <span
-            className={ItemStyles.closeBtn}
-            onClick={() => this.props.setVisible(false)}
-            data-testid="ModalWindowCloseBtn"
-          >
-            &times;
-          </span>
-        </div>
+          &times;
+        </span>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default ModalWindow;

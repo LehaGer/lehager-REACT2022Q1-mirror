@@ -1,23 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import ItemStyles from './ButtonCustom.module.css';
-import { IButtonCustom } from '../../../../types/interfaces';
+import { IButtonCustomProps } from '../../../../types/interfaces';
 
-class ButtonCustom extends React.Component<IButtonCustom> {
-  constructor(props: IButtonCustom) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <button
-        className={ItemStyles.btnCustom}
-        onClick={this.props.onClick}
-        data-testid={this.props['data-testid']}
-      >
-        {this.props.children}
-      </button>
-    );
-  }
-}
+const ButtonCustom: FC<IButtonCustomProps> = ({ onClick, children, ...props }) => {
+  return (
+    <button className={ItemStyles.btnCustom} onClick={onClick} data-testid={props['data-testid']}>
+      {children}
+    </button>
+  );
+};
 
 export default ButtonCustom;

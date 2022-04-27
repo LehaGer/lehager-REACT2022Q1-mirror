@@ -9,7 +9,7 @@ import Main from '../pages/Main/Main';
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-describe('Card testing', () => {
+describe('Main testing', () => {
   let response: ICharacterRowInfo[];
   let mockedResponse: AxiosResponse;
   let mockedResponseSearchByName: AxiosResponse;
@@ -35,6 +35,8 @@ describe('Card testing', () => {
     render(<Main />);
     expect(screen.queryByTestId('CardSet')).not.toBeInTheDocument();
     expect(screen.queryByTestId('Loader')).toBeInTheDocument();
+
+    expect(await screen.findByTestId('Loader')).not.toBeInTheDocument();
   });
 
   test('does Main hide Loader of CardSet', async () => {
