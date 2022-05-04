@@ -1,6 +1,6 @@
-import { ICharacterRowInfo } from '../../types/interfaces';
+import { ICharacterInfo } from '../../types/interfaces';
 
-const MockDataSet: ICharacterRowInfo[] = [
+const MockDataSet: ICharacterInfo[] = [
   {
     id: 1,
     name: 'Rick Sanchez',

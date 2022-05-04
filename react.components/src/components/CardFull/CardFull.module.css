@@ -70,3 +70,13 @@
 a {
     color: var(--color-default);
 }
+
+.notFoundMsg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8em;
+    color: #ccc;
+    height: 5em;
+    width: 15em;
+}

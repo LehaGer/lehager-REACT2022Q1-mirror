@@ -1,6 +1,6 @@
 import React from 'react';
 import ShareButton from '../UI/Buttons/ShareButton/ShareButton';
-import { ICardProps, ICardState, ICharacterRowInfo } from '../../types/interfaces';
+import { ICardProps, ICardState } from '../../types/interfaces';
 import FavouriteButton from '../UI/Buttons/FavouriteButton/FavouriteButton';
 import ButtonCustom from '../UI/Buttons/ButtonCustom/ButtonCustom';
 import ItemStyles from './Card.module.css';
@@ -14,66 +14,25 @@ class Card extends React.Component<ICardProps, ICardState> {
     super(props);
 
     this.state = {
-      isOpened: false,
+      isFullCardOpened: false,
       isFullCardLoading: true,
-      isThere: false,
-      characterFullInfo: {} as ICharacterRowInfo,
+      characterFullInfo: null,
     };
   }
 
   toggleFullCard = async (newState: boolean) => {
-    await this.setState({
-      isOpened: newState,
-    });
-
+    this.setState({ isFullCardOpened: newState });
     if (newState) {
-      await this.setState({
-        isFullCardLoading: true,
-      });
-      try {
-        const response = await CharacterService.getCharacterById(Number(this.props.id));
-        await this.setState({
-          isThere: true,
-          characterFullInfo: response.data,
-        });
-      } catch (e) {
-        // console.log(e);
-        await this.setState({
-          isThere: false,
-          characterFullInfo: {} as ICharacterRowInfo,
-        });
-      } finally {
-        await this.setState({
-          isFullCardLoading: false,
-        });
-      }
+      this.setState({ isFullCardLoading: true });
+      const response = await CharacterService.getCharacterById(Number(this.props.id));
+      this.setState({ isFullCardLoading: false });
+      this.setState({ characterFullInfo: response });
     } else {
-      await this.setState({
-        isThere: false,
-        characterFullInfo: {} as ICharacterRowInfo,
-      });
+      this.setState({ characterFullInfo: null });
     }
   };
 
   render() {
-    const notFoundMsg = (
-      <div className={ItemStyles.notFoundMsg} data-testid="CardNotFoundMsg">
-        <div>No info was found =( </div>
-      </div>
-    );
-
-    let contentElement;
-
-    if (this.state.isFullCardLoading) {
-      contentElement = <Loader />;
-    } else {
-      if (this.state.isThere) {
-        contentElement = <CardFull character={this.state.characterFullInfo as ICharacterRowInfo} />;
-      } else {
-        contentElement = notFoundMsg;
-      }
-    }
-
     return (
       <>
         <div className={ItemStyles.card}>
@@ -94,9 +53,9 @@ class Card extends React.Component<ICardProps, ICardState> {
             <FavouriteButton />
             <ShareButton />
             <ButtonCustom
-              onClick={(event: React.MouseEvent) => {
+              onClick={async (event: React.MouseEvent) => {
                 event.preventDefault();
-                this.toggleFullCard(true);
+                await this.toggleFullCard(true);
               }}
               data-testid="learnMore"
             >
@@ -104,8 +63,14 @@ class Card extends React.Component<ICardProps, ICardState> {
             </ButtonCustom>
           </div>
         </div>
-        <ModalWindow visible={this.state.isOpened} setVisible={this.toggleFullCard}>
-          {this.state.isOpened ? contentElement : ''}
+        <ModalWindow visible={this.state.isFullCardOpened} setVisible={this.toggleFullCard}>
+          {this.state.isFullCardOpened ? (
+            this.state.isFullCardLoading ? (
+              <Loader />
+            ) : (
+              <CardFull character={this.state.characterFullInfo} />
+            )
+          ) : null}
         </ModalWindow>
       </>
     );

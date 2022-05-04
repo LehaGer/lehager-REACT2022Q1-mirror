@@ -3,13 +3,13 @@ import { render, screen } from '@testing-library/react';
 import CardSet from './CardSet';
 import axios, { AxiosResponse } from 'axios';
 import MockDataSet from '../../tests/data/cardsData';
-import { ICharacterRowInfo } from '../../types/interfaces';
+import { ICharacterInfo } from '../../types/interfaces';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('CardSet testing', () => {
-  let response: ICharacterRowInfo[];
+  let response: ICharacterInfo[];
   let mockedResponse: AxiosResponse;
   beforeEach(() => {
     response = MockDataSet;

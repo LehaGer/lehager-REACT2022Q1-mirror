@@ -4,12 +4,12 @@ import userEvent from '@testing-library/user-event/dist';
 import ModalWindow from './ModalWindow';
 import Card from '../../Card/Card';
 import MockDataSet from '../../../tests/data/cardsData';
-import { ICharacterRowInfo } from '../../../types/interfaces';
+import { ICharacterInfo } from '../../../types/interfaces';
 
 jest.mock('axios');
 
 describe('ModalWindow testing', () => {
-  let response: ICharacterRowInfo[];
+  let response: ICharacterInfo[];
   beforeEach(() => {
     response = MockDataSet;
   });

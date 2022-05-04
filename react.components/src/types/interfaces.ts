@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from 'react';
 
-export interface ICharacterRowInfo {
+export interface ICharacterInfo {
   id: number;
   name: string;
   status: string;
@@ -22,15 +22,15 @@ export interface ICharacterRowInfo {
 }
 
 export interface ISearchBarProps {
-  name: string;
+  name?: string | 'default-name';
   type?: string;
   placeholder?: string;
   className?: string;
-  updateCharactersByName: (name?: string) => Promise<void>;
+  updateCharactersByName: (name?: string) => void;
 }
 
 export interface ISearchBarState {
-  searchRequest?: string;
+  searchRequest: string;
 }
 
 export interface ICardSetProps<ICharacterRowInfo> {
@@ -51,10 +51,9 @@ export interface ICardProps {
 }
 
 export interface ICardState {
-  isOpened: boolean;
+  isFullCardOpened: boolean;
   isFullCardLoading: boolean;
-  isThere: boolean;
-  characterFullInfo: ICharacterRowInfo;
+  characterFullInfo: ICharacterInfo | null;
 }
 
 export enum characterStatus {
@@ -193,10 +192,9 @@ export interface IMainProps {
   name?: string;
 }
 
-export interface IMainState<ICharacterRowInfo> {
-  dataSet: ICharacterRowInfo[];
+export interface IMainState {
+  dataSet: ICharacterInfo[];
   isDataLoading: boolean;
-  isThereCharacter: boolean;
 }
 
 export enum characterQueryGender {
@@ -228,7 +226,7 @@ export interface IModalWindowProps {
 }
 
 export interface ICardFullProps {
-  character: ICharacterRowInfo;
+  character: ICharacterInfo | null;
 }
 
 export interface IAppRouter {

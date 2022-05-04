@@ -8,7 +8,7 @@ class CardFull extends React.Component<ICardFullProps> {
   }
 
   render() {
-    return (
+    return this.props?.character ? (
       <div className={ItemStyles.card} data-testid="CardFull">
         <div className={ItemStyles.cardImg}>
           <img src={this.props.character.image} alt="character's image" />
@@ -56,6 +56,10 @@ class CardFull extends React.Component<ICardFullProps> {
             </div>
           </div>
         </div>
+      </div>
+    ) : (
+      <div className={ItemStyles.notFoundMsg} data-testid="CardNotFoundMsg">
+        <div>No info was found =( </div>
       </div>
     );
   }
