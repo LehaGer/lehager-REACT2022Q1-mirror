@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { ICharacterQueryAttributes } from '../types/interfaces';
+import { API_SERVER_URL } from '../costants/constants';
 
 export default class getAllCharacters {
   static async getAllCharacters(page = 1) {
-    return await axios.get('https://rickandmortyapi.com/api/character', {
+    const response = await axios.get(`${API_SERVER_URL}/character`, {
       params: {
         page: page,
       },
@@ -13,10 +14,12 @@ export default class getAllCharacters {
         Expires: '0',
       },
     });
+
+    return response?.data?.results || [];
   }
 
   static async getCharacterByAttributes(attributes: ICharacterQueryAttributes) {
-    return await axios.get('https://rickandmortyapi.com/api/character', {
+    const response = await axios.get(`${API_SERVER_URL}/character`, {
       params: attributes,
       headers: {
         'Cache-Control': 'no-cache',
@@ -24,21 +27,25 @@ export default class getAllCharacters {
         Expires: '0',
       },
     });
+
+    return response?.data?.results || [];
   }
 
   static async getCharacterById(id: number) {
-    return await axios.get(`https://rickandmortyapi.com/api/character/${id}`, {
+    const response = await axios.get(`${API_SERVER_URL}/character/${id}`, {
       headers: {
         'Cache-Control': 'no-cache',
         Pragma: 'no-cache',
         Expires: '0',
       },
     });
+
+    return response?.data?.results || [];
   }
 
   static async getMultipleCharactersById(arrayId: number[]) {
-    return await axios.get(
-      `https://rickandmortyapi.com/api/character/[${arrayId.map((el) => `${el},`)}]`,
+    const response = await axios.get(
+      `${API_SERVER_URL}/character/[${arrayId.map((el) => `${el},`)}]`,
       {
         headers: {
           'Cache-Control': 'no-cache',
@@ -47,5 +54,7 @@ export default class getAllCharacters {
         },
       }
     );
+
+    return response?.data?.results || [];
   }
 }
