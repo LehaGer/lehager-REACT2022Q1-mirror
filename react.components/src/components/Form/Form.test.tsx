@@ -1,8 +1,8 @@
 import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react';
-import Form from '../components/Form/Form';
+import Form from './Form';
 import userEvent from '@testing-library/user-event/dist';
-import createShiftedDate from './functions/createShiftedDate';
+import createShiftedDate from '../../tests/functions/createShiftedDate';
 
 describe('Form testing', () => {
   test('does Form have all required elements', () => {

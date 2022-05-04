@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event/dist';
-import { createWithRouter } from './functions/createRouter';
-import Navbar from '../components/Navbar/Navbar';
-import { createWithLoadContext } from './functions/createLoadContext';
+import { createWithRouter } from '../tests/functions/createRouter';
+import Navbar from './Navbar/Navbar';
+import { createWithLoadContext } from '../tests/functions/createLoadContext';
 
 describe('Router testing', () => {
   test('is Loader showed before loading main page', () => {

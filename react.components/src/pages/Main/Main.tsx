@@ -8,7 +8,6 @@ import { LoadContext } from '../../context/LoadContext';
 import CharacterService from '../../API/CharacterService';
 
 class Main extends React.Component<IMainProps, IMainState<ICharacterRowInfo>> {
-  _isMounted = false;
   static contextType = LoadContext;
   constructor(props: IMainProps) {
     super(props);
@@ -21,11 +20,9 @@ class Main extends React.Component<IMainProps, IMainState<ICharacterRowInfo>> {
   }
 
   loadCards = async (newCardSetData: ICharacterRowInfo[]) => {
-    if (this._isMounted) {
-      this.setState({
-        dataSet: newCardSetData,
-      });
-    }
+    this.setState({
+      dataSet: newCardSetData,
+    });
   };
 
   updateCardSet = async (name?: string) => {
@@ -45,21 +42,11 @@ class Main extends React.Component<IMainProps, IMainState<ICharacterRowInfo>> {
         isThereCharacter: false,
       });
     } finally {
-      if (this._isMounted) {
-        await this.setState({
-          isDataLoading: false,
-        });
-      }
+      await this.setState({
+        isDataLoading: false,
+      });
     }
   };
-
-  componentDidMount(): void {
-    this._isMounted = true;
-  }
-
-  componentWillUnmount(): void {
-    this._isMounted = false;
-  }
 
   render() {
     const notFoundMsg = (
