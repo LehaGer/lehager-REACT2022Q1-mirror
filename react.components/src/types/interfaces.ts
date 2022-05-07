@@ -3,7 +3,7 @@ import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { Path, RegisterOptions } from 'react-hook-form';
 import { FieldErrors } from 'react-hook-form/dist/types/errors';
 
-export interface ICharacterRowInfo {
+export interface ICharacterInfo {
   id: number;
   name: string;
   status: string;
@@ -29,11 +29,11 @@ export interface ISearchBarProps {
   type?: string;
   placeholder?: string;
   className?: string;
-  updateCharactersByName?: (name?: string) => Promise<void>;
+  updateCharactersByName?: (name?: string) => void;
 }
 
-export interface ICardSetProps<ICharacterRowInfo> {
-  dataSet: ICharacterRowInfo[];
+export interface ICardSetProps<ICharacterInfo> {
+  dataSet: ICharacterInfo[];
 }
 
 export interface ICardProps {
@@ -153,7 +153,7 @@ export interface IModalWindowProps {
 }
 
 export interface ICardFullProps {
-  character: ICharacterRowInfo;
+  character: ICharacterInfo | null;
 }
 
 export interface IButtonCustomProps {

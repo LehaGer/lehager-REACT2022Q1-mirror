@@ -7,14 +7,11 @@ import { characterQueryReducerActionVariants } from '../../reducers/characterQue
 const SearchBar: FC<ISearchBarProps> = ({
   name = 'search-bar',
   type = 'text',
-  placeholder = 'default searching request',
+  placeholder = 'Search...',
   className = ItemStyles.searchBar,
-  updateCharactersByName = () => {
-    return new Promise(() => {});
-  },
+  updateCharactersByName = () => null,
 }) => {
   const [searchRequest, setSearchRequest] = useState<string>('');
-
   const { state, dispatch } = useContext(AppContext);
 
   useEffect(() => {
@@ -27,23 +24,23 @@ const SearchBar: FC<ISearchBarProps> = ({
       });
     };
   }, []);
-
   /*useEffect(() => {
     const savedRequest = localStorage.getItem(name) || '';
-
     setSearchRequest(savedRequest);
-    (async () => {
-      await updateCharactersByName(savedRequest);
-    })();
+    updateCharactersByName(savedRequest);
   }, []);*/
+  useEffect(() => {
+    return () => {
+      localStorage.setItem(name, searchRequest);
+    };
+  }, [searchRequest]);
 
-  const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    // localStorage.setItem(name, value);
     setSearchRequest(value);
+    // localStorage.setItem(name, value);
   };
-
-  const handleSubmit = async (event: React.KeyboardEvent) => {
+  const handleKeyUp = async (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
       await updateCharactersByName(searchRequest);
     }
@@ -55,8 +52,8 @@ const SearchBar: FC<ISearchBarProps> = ({
       placeholder={placeholder}
       className={className}
       value={searchRequest}
-      onInput={handleChangeValue}
-      onKeyUp={handleSubmit}
+      onInput={handleInput}
+      onKeyUp={handleKeyUp}
       data-testid="searchBar"
     />
   );

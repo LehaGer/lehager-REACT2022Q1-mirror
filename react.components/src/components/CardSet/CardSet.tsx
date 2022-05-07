@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import Card from '../Card/Card';
 import ItemStyles from './CardSet.module.css';
-import { ICardSetProps, ICharacterRowInfo } from '../../types/interfaces';
+import { ICardSetProps, ICharacterInfo } from '../../types/interfaces';
 
-const CardSet: FC<ICardSetProps<ICharacterRowInfo>> = ({ dataSet }) => {
-  return (
+const CardSet: FC<ICardSetProps<ICharacterInfo>> = ({ dataSet }) => {
+  return dataSet.length ? (
     <div className={ItemStyles.cardSet} data-testid="CardSet">
       {dataSet.map((dataSetElement) => (
         <Card
@@ -17,6 +17,10 @@ const CardSet: FC<ICardSetProps<ICharacterRowInfo>> = ({ dataSet }) => {
           image={dataSetElement.image}
         />
       ))}
+    </div>
+  ) : (
+    <div className={ItemStyles.notFoundMsg} data-testid="MainNotFoundMsg">
+      <div>No matches were found =( </div>
     </div>
   );
 };

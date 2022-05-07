@@ -3,7 +3,7 @@ import { ICardFullProps } from '../../types/interfaces';
 import ItemStyles from './CardFull.module.css';
 
 const CardFull: FC<ICardFullProps> = ({ character }) => {
-  return (
+  return character ? (
     <div className={ItemStyles.card} data-testid="CardFull">
       <div className={ItemStyles.cardImg}>
         <img src={character.image} alt="character's image" />
@@ -51,6 +51,10 @@ const CardFull: FC<ICardFullProps> = ({ character }) => {
           </div>
         </div>
       </div>
+    </div>
+  ) : (
+    <div className={ItemStyles.notFoundMsg} data-testid="CardNotFoundMsg">
+      <div>No info was found =( </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import ShareButton from '../UI/Buttons/ShareButton/ShareButton';
-import { ICardProps, ICharacterRowInfo } from '../../types/interfaces';
+import { ICardProps, ICharacterInfo } from '../../types/interfaces';
 import FavouriteButton from '../UI/Buttons/FavouriteButton/FavouriteButton';
 import ButtonCustom from '../UI/Buttons/ButtonCustom/ButtonCustom';
 import ItemStyles from './Card.module.css';
@@ -10,51 +10,21 @@ import CharacterService from '../../API/CharacterService';
 import Loader from '../UI/Loader/Loader';
 
 const Card: FC<ICardProps> = ({ id, name, status, origin, location, image }) => {
-  const [isOpened, setIsOpened] = useState<boolean>(false);
+  const [isFullCardOpened, setIsFullCardOpened] = useState<boolean>(false);
   const [isFullCardLoading, setIsFullCardLoading] = useState<boolean>(true);
-  const [isThere, setIsThere] = useState<boolean>(false);
-  const [characterFullInfo, setICharacterFullInfo] = useState<ICharacterRowInfo>(
-    {} as ICharacterRowInfo
-  );
+  const [characterFullInfo, setCharacterFullInfo] = useState<ICharacterInfo | null>(null);
 
   const toggleFullCard = async (newState: boolean) => {
-    await setIsOpened(newState);
-
+    setIsFullCardOpened(newState);
     if (newState) {
-      await setIsFullCardLoading(true);
-      try {
-        const response = await CharacterService.getCharacterById(Number(id));
-        setIsThere(true);
-        setICharacterFullInfo(response.data);
-      } catch (e) {
-        setIsThere(false);
-        setICharacterFullInfo({} as ICharacterRowInfo);
-      } finally {
-        setIsFullCardLoading(false);
-      }
+      setIsFullCardLoading(true);
+      const response = await CharacterService.getCharacterById(Number(id));
+      setIsFullCardLoading(false);
+      setCharacterFullInfo(response);
     } else {
-      setIsThere(false);
-      setICharacterFullInfo({} as ICharacterRowInfo);
+      setCharacterFullInfo(null);
     }
   };
-
-  const notFoundMsg = (
-    <div className={ItemStyles.notFoundMsg} data-testid="CardNotFoundMsg">
-      <div>No info was found =( </div>
-    </div>
-  );
-
-  let contentElement;
-
-  if (isFullCardLoading) {
-    contentElement = <Loader />;
-  } else {
-    if (isThere) {
-      contentElement = <CardFull character={characterFullInfo as ICharacterRowInfo} />;
-    } else {
-      contentElement = notFoundMsg;
-    }
-  }
 
   return (
     <>
@@ -86,8 +56,14 @@ const Card: FC<ICardProps> = ({ id, name, status, origin, location, image }) => 
           </ButtonCustom>
         </div>
       </div>
-      <ModalWindow visible={isOpened} setVisible={toggleFullCard}>
-        {isOpened ? contentElement : ''}
+      <ModalWindow visible={isFullCardOpened} setVisible={toggleFullCard}>
+        {isFullCardOpened ? (
+          isFullCardLoading ? (
+            <Loader />
+          ) : (
+            <CardFull character={characterFullInfo} />
+          )
+        ) : null}
       </ModalWindow>
     </>
   );
