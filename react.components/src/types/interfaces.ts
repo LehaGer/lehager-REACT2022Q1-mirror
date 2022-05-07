@@ -163,7 +163,7 @@ export interface IButtonCustomProps {
 
 export interface ICharacterContext {
   searchBarValue: string;
-  cards: ICharacterRowInfo[];
+  cards: ICharacterInfo[];
 }
 
 export interface IFormContext {
@@ -173,7 +173,7 @@ export interface IFormContext {
 
 export interface IInitialState {
   characterQuery: string;
-  characterCards: ICharacterRowInfo[];
+  characterCards: ICharacterInfo[];
   formFields: IFormsCardProps;
   formCards: IFormsCardProps[];
 }

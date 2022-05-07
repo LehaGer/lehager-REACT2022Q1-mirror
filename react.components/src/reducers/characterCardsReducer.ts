@@ -1,4 +1,4 @@
-import { ICharacterRowInfo } from '../types/interfaces';
+import { ICharacterInfo } from '../types/interfaces';
 
 export enum characterCardsReducerActionVariants {
   SET_CARDS = 'SET_CARDS',
@@ -6,11 +6,11 @@ export enum characterCardsReducerActionVariants {
 
 export interface ICharacterCardsReducerAction {
   type: characterCardsReducerActionVariants;
-  payload: ICharacterRowInfo[];
+  payload: ICharacterInfo[];
 }
 
 export const characterCardsReducer = (
-  state: ICharacterRowInfo[],
+  state: ICharacterInfo[],
   action: ICharacterCardsReducerAction
 ) => {
   switch (action.type) {
