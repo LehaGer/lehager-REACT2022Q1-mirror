@@ -10,19 +10,19 @@ const Main: FC = () => {
   const [dataSet, setDataSet] = useState<ICharacterInfo[]>([]);
   const [isDataLoading, setIsDataLoading] = useState<boolean>(true);
 
-  updateCardSet = async (name?: string) => {
+  const updateCardSet = async (name?: string) => {
     setIsDataLoading(true);
     const dataSetFormAPI = await CharacterService.getCharacterByAttributes({ name: name });
     setIsDataLoading(false);
     setDataSet(dataSetFormAPI);
   };
 
-    return (
-      <div className={ItemStyles.Main} data-testid="mainPage">
-        <SearchBar updateCharactersByName={updateCardSet} />
-        {isDataLoading ? <Loader /> : <CardSet dataSet={dataSet} />}
-      </div>
-    );
-}
+  return (
+    <div className={ItemStyles.Main} data-testid="mainPage">
+      <SearchBar updateCharactersByName={updateCardSet} />
+      {isDataLoading ? <Loader /> : <CardSet dataSet={dataSet} />}
+    </div>
+  );
+};
 
 export default Main;

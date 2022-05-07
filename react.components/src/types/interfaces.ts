@@ -29,11 +29,11 @@ export interface ISearchBarProps {
   type?: string;
   placeholder?: string;
   className?: string;
-  updateCharactersByName: (name?: string) => void;
+  updateCharactersByName?: (name?: string) => void;
 }
 
-export interface ICardSetProps<ICharacterRowInfo> {
-  dataSet: ICharacterRowInfo[];
+export interface ICardSetProps<ICharacterInfo> {
+  dataSet: ICharacterInfo[];
 }
 
 export interface ICardProps {

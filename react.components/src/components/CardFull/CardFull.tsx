@@ -51,10 +51,10 @@ const CardFull: FC<ICardFullProps> = ({ character }) => {
           </div>
         </div>
       </div>
-      </div>
-    ) : (
-      <div className={ItemStyles.notFoundMsg} data-testid="CardNotFoundMsg">
-        <div>No info was found =( </div>
+    </div>
+  ) : (
+    <div className={ItemStyles.notFoundMsg} data-testid="CardNotFoundMsg">
+      <div>No info was found =( </div>
     </div>
   );
 };
