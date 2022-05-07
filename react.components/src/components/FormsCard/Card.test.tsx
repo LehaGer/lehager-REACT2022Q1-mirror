@@ -1,16 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import axios, { AxiosResponse } from 'axios';
-import MockDataSet from './data/cardsData';
-import { ICharacterRowInfo } from '../types/interfaces';
-import Card from '../components/Card/Card';
+import MockDataSet from '../../tests/data/cardsData';
+import { ICharacterInfo } from '../../types/interfaces';
+import Card from '../Card/Card';
 import userEvent from '@testing-library/user-event/dist';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('Card testing', () => {
-  let response: ICharacterRowInfo[];
+  let response: ICharacterInfo[];
   let mockedResponseCardFull: AxiosResponse;
   beforeEach(() => {
     response = MockDataSet;
@@ -72,8 +72,8 @@ describe('Card testing', () => {
       />
     );
     expect(screen.queryByTestId('CardFull')).not.toBeInTheDocument();
-    userEvent.click(screen.getByTestId('learnMore'));
     mockedAxios.get.mockResolvedValue(mockedResponseCardFull);
+    userEvent.click(screen.getByTestId('learnMore'));
     expect(await screen.findByTestId('CardFull')).toBeInTheDocument();
     expect(await screen.findByTestId('CardFullName')).toHaveTextContent(
       String(screen.getByTestId('CardName').textContent)

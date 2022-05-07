@@ -3,48 +3,50 @@ import ItemStyles from './SearchBar.module.css';
 import { ISearchBarProps } from '../../types/interfaces';
 
 const SearchBar: FC<ISearchBarProps> = ({
-  name = 'default-name',
-  type = 'text',
-  placeholder = 'default searching request',
-  className = ItemStyles.searchBar,
-  updateCharactersByName = () => {
-    return new Promise(() => {});
-  },
+  name: 'search-bar',
+  type: 'text',
+  placeholder: 'Search...',
+  className: ItemStyles.searchBar,
+  updateCharactersByName: () => null,
 }) => {
+
   const [searchRequest, setSearchRequest] = useState<string>('');
 
   useEffect(() => {
     const savedRequest = localStorage.getItem(name) || '';
-
     setSearchRequest(savedRequest);
-    (async () => {
-      await updateCharactersByName(savedRequest);
-    })();
+    updateCharactersByName(savedRequest)
   }, []);
 
-  const handleChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    return () => {
+      localStorage.setItem(name, searchRequest);
+    }
+  })
+
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    localStorage.setItem(name, value);
     setSearchRequest(value);
+    localStorage.setItem(name, value);
   };
 
-  const handleSubmit = async (event: React.KeyboardEvent) => {
+ const handleKeyUp = async (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      await updateCharactersByName(searchRequest);
+     await updateCharactersByName(searchRequest);
     }
   };
 
-  return (
-    <input
-      type={type}
-      placeholder={placeholder}
-      className={className}
-      value={searchRequest}
-      onInput={handleChangeValue}
-      onKeyUp={handleSubmit}
-      data-testid="searchBar"
-    />
-  );
-};
+    return (
+      <input
+        type={type}
+        placeholder={placeholder}
+        className={className}
+        value={searchRequest}
+        onInput={handleInput}
+        onKeyUp={handleKeyUp}
+        data-testid="searchBar"
+      />
+    );
+}
 
 export default SearchBar;

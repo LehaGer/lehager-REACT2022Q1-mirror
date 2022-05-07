@@ -1,16 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import axios, { AxiosResponse } from 'axios';
-import MockDataSet from './data/cardsData';
-import { ICharacterRowInfo } from '../types/interfaces';
+import MockDataSet from '../../tests/data/cardsData';
+import { ICharacterInfo } from '../../types/interfaces';
 import userEvent from '@testing-library/user-event/dist';
-import Main from '../pages/Main/Main';
+import Main from './Main';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('Main testing', () => {
-  let response: ICharacterRowInfo[];
+  let response: ICharacterInfo[];
   let mockedResponse: AxiosResponse;
   let mockedResponseSearchByName: AxiosResponse;
   beforeEach(() => {
@@ -61,9 +61,8 @@ describe('Main testing', () => {
     let cards = await screen.findAllByTestId('Card');
     expect(cards.length).toBe(7);
 
-    userEvent.type(await screen.findByTestId('searchBar'), 'Rick Sanchez{enter}');
-
     mockedAxios.get.mockResolvedValue(mockedResponseSearchByName);
+    userEvent.type(await screen.findByTestId('searchBar'), 'Rick Sanchez{enter}');
 
     cards = await screen.findAllByTestId('Card');
     expect(cards.length).toBe(1);
