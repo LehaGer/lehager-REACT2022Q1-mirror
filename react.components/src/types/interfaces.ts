@@ -1,8 +1,7 @@
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
-import { DeepMap, FieldError, Path, RegisterOptions } from 'react-hook-form';
+import { Path, RegisterOptions } from 'react-hook-form';
 import { FieldErrors } from 'react-hook-form/dist/types/errors';
-import { DeepPartial } from 'react-hook-form/dist/types/utils';
 
 export interface ICharacterRowInfo {
   id: number;
@@ -26,23 +25,15 @@ export interface ICharacterRowInfo {
 }
 
 export interface ISearchBarProps {
-  name: string;
+  name?: string | 'default-name';
   type?: string;
   placeholder?: string;
   className?: string;
   updateCharactersByName?: (name?: string) => Promise<void>;
 }
 
-export interface ISearchBarState {
-  searchRequest?: string;
-}
-
 export interface ICardSetProps<ICharacterRowInfo> {
   dataSet: ICharacterRowInfo[];
-}
-
-export interface ICardSetState<ICharacterRowInfo> {
-  cards?: ICharacterRowInfo[];
 }
 
 export interface ICardProps {
@@ -54,13 +45,6 @@ export interface ICardProps {
   image: string;
 }
 
-export interface ICardState {
-  isOpened: boolean;
-  isFullCardLoading: boolean;
-  isThere: boolean;
-  characterFullInfo: ICharacterRowInfo;
-}
-
 export enum characterStatus {
   Alive = 'Alive',
   Dead = 'Dead',
@@ -69,20 +53,6 @@ export enum characterStatus {
 
 export interface IFormProps {
   addNewCard?: (card: IFormsCardProps) => void;
-}
-
-export interface IFormState {
-  isFirstNameCorrect: boolean;
-  isLastNameCorrect: boolean;
-  isZipCodeCorrect: boolean;
-  isBirthdayCorrect: boolean;
-  isArrivingDateCorrect: boolean;
-  isCountryCorrect: boolean;
-  isAgreementToProcConfDataCorrect: boolean;
-  isAgreementToGetAdvToEmail: boolean;
-  isGenderCorrect: boolean;
-  isProfilePictureCorrect: boolean;
-  isSubmitButtonDisabled: boolean;
 }
 
 export enum genderTypes {
@@ -117,18 +87,8 @@ export interface IInputSelfField {
   label: string;
 }
 
-export interface IInputVerifiable {
-  formatInstruction: string;
-  isCorrectFormat: boolean;
-  onChange: (a: React.ChangeEvent) => void;
-}
-
 export interface IInputCheckable {
   defaultChecked: boolean;
-}
-
-export interface IInputValueable {
-  defaultValue: string;
 }
 
 export interface IInputUnderFormHook<TFormValues> extends IInputWhole {
@@ -172,16 +132,6 @@ export interface ISubmitInputProps extends IInputWhole {
   isDisabled: boolean;
 }
 
-export interface IFormsPageState {
-  cardSet: IFormsCardProps[];
-}
-
-export interface IMainState<ICharacterRowInfo> {
-  dataSet: ICharacterRowInfo[];
-  isDataLoading: boolean;
-  isThereCharacter: boolean;
-}
-
 export enum characterQueryGender {
   female = 'female',
   male = 'male',
@@ -195,10 +145,6 @@ export interface ICharacterQueryAttributes {
   species?: string;
   type?: string;
   gender?: characterQueryGender;
-}
-
-export interface IAppState {
-  isLoading: boolean;
 }
 
 export interface IModalWindowProps {
@@ -215,6 +161,19 @@ export interface IButtonCustomProps {
   'data-testid'?: string;
 }
 
-export interface IFavouriteButton {
-  isLiked: boolean;
+export interface ICharacterContext {
+  searchBarValue: string;
+  cards: ICharacterRowInfo[];
+}
+
+export interface IFormContext {
+  formsFields: IFormsCardProps;
+  cards: IFormsCardProps[];
+}
+
+export interface IInitialState {
+  characterQuery: string;
+  characterCards: ICharacterRowInfo[];
+  formFields: IFormsCardProps;
+  formCards: IFormsCardProps[];
 }

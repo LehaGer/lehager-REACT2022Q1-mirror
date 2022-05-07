@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event/dist';
-import ModalWindow from '../components/UI/ModalWindow/ModalWindow';
-import Card from '../components/Card/Card';
-import MockDataSet from './data/cardsData';
-import { ICharacterRowInfo } from '../types/interfaces';
+import ModalWindow from './ModalWindow';
+import Card from '../../Card/Card';
+import MockDataSet from '../../../tests/data/cardsData';
+import { ICharacterRowInfo } from '../../../types/interfaces';
 
 jest.mock('axios');
 

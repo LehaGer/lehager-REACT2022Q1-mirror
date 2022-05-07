@@ -4,6 +4,7 @@ import AppRouter from './components/AppRouter';
 import Navbar from './components/Navbar/Navbar';
 import { LoadContext } from './context/LoadContext';
 import { BrowserRouter } from 'react-router-dom';
+import { AppProvider } from './components/ContextProviders/AppContext';
 
 const App: FC = () => {
   const [isLoading, setLoading] = useState(true);
@@ -14,12 +15,14 @@ const App: FC = () => {
 
   return (
     <LoadContext.Provider value={isLoading}>
-      <BrowserRouter>
-        <div className={'App'}>
-          <Navbar />
-          <AppRouter />
-        </div>
-      </BrowserRouter>
+      <AppProvider>
+        <BrowserRouter>
+          <div className={'App'}>
+            <Navbar />
+            <AppRouter />
+          </div>
+        </BrowserRouter>
+      </AppProvider>
     </LoadContext.Provider>
   );
 };

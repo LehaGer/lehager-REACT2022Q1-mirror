@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import axios, { AxiosResponse } from 'axios';
-import MockDataSet from './data/cardsData';
-import { ICharacterRowInfo } from '../types/interfaces';
-import Card from '../components/Card/Card';
+import MockDataSet from '../../tests/data/cardsData';
+import { ICharacterRowInfo } from '../../types/interfaces';
+import Card from './Card';
 import userEvent from '@testing-library/user-event/dist';
 
 jest.mock('axios');
