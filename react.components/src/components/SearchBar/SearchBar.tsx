@@ -13,16 +13,13 @@ const SearchBar: FC<ISearchBarProps> = ({
 
   useEffect(() => {
     const savedRequest = localStorage.getItem(name) || '';
-    console.log(1, savedRequest, name, localStorage);
     setSearchRequest(savedRequest);
     updateCharactersByName(savedRequest);
   }, []);
 
   useEffect(() => {
     return () => {
-      console.log(3.1, localStorage.getItem(name), name, localStorage);
       localStorage.setItem(name, searchRequest);
-      console.log(3.2, localStorage.getItem(name), name, localStorage);
     };
   }, [searchRequest]);
 
