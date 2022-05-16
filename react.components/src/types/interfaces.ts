@@ -1,6 +1,6 @@
 import React from 'react';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
-import { Path, RegisterOptions } from 'react-hook-form';
+import { FieldError, Path, RegisterOptions } from 'react-hook-form';
 import { FieldErrors } from 'react-hook-form/dist/types/errors';
 
 export interface ICharacterInfo {
@@ -32,8 +32,8 @@ export interface ISearchBarProps {
   updateCharactersByName?: (name?: string) => void;
 }
 
-export interface ICardSetProps<ICharacterInfo> {
-  dataSet: ICharacterInfo[];
+export interface ICardSetProps<ICardInfo> {
+  dataSet: ICardInfo[];
 }
 
 export interface ICardProps {
@@ -74,8 +74,48 @@ export interface IFormsCardProps {
   profilePicture: string;
 }
 
-export interface IFormsCardSetProps {
-  cardSetArray?: IFormsCardProps[];
+export interface IFormsState {
+  firstName: {
+    value: string;
+    hasError: FieldError | undefined;
+  };
+  lastName: {
+    value: string;
+    hasError: FieldError | undefined;
+  };
+  zipCode: {
+    value: string;
+    hasError: FieldError | undefined;
+  };
+  birthday: {
+    value: string;
+    hasError: FieldError | undefined;
+  };
+  arrivingDate: {
+    value: string;
+    hasError: FieldError | undefined;
+  };
+  country: {
+    value: string;
+    hasError: FieldError | undefined;
+  };
+  isAgreeToProcConfData: {
+    value: boolean;
+    hasError: FieldError | undefined;
+  };
+  isAgreeToGetAdvToEmail: {
+    value: boolean;
+    hasError: FieldError | undefined;
+  };
+  gender: {
+    value: genderTypes | null;
+    hasError: FieldError | undefined;
+  };
+  profilePicture: {
+    value: FileList | null;
+    hasError: FieldError | undefined;
+  };
+  isSubmitButtonDisabled: boolean;
 }
 
 export interface IInputWhole {
@@ -167,13 +207,13 @@ export interface ICharacterContext {
 }
 
 export interface IFormContext {
-  formsFields: IFormsCardProps;
+  formsFields: IFormsState;
   cards: IFormsCardProps[];
 }
 
 export interface IInitialState {
   characterQuery: string;
   characterCards: ICharacterInfo[];
-  formFields: IFormsCardProps;
+  formFields: IFormsState;
   formCards: IFormsCardProps[];
 }

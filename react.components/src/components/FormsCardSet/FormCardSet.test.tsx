@@ -8,7 +8,7 @@ import createShiftedDate from '../../tests/functions/createShiftedDate';
 
 describe('FormsCardSet testing', () => {
   test('does FormsCardSet correspond to cards count', async () => {
-    render(<FormsCardSet cardSetArray={MockDataSet} />);
+    render(<FormsCardSet dataSet={MockDataSet} />);
     const cards = await screen.findAllByTestId('FormsCard');
     expect(cards.length).toBe(5);
     cards.forEach((el) => {

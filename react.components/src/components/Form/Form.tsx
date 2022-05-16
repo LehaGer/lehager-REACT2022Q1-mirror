@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useContext, useEffect } from 'react';
 import ItemStyles from './Form.module.css';
 import TextInput from '../UI/Inputs/TextInput/TextInput';
 import DateInput from '../UI/Inputs/DateInput/DateInput';
@@ -10,9 +10,21 @@ import SubmitInput from '../UI/Inputs/SubmiInput/SubmitInput';
 import { genderTypes, IFormProps } from '../../types/interfaces';
 import { useForm } from 'react-hook-form';
 import { FieldPath } from 'react-hook-form/dist/types/path';
+import { AppContext } from '../../context/AppContext';
+import { formFieldsReducerActionVariants } from '../../reducers/formFieldsReducer';
 
 const Form: FC<IFormProps> = ({ addNewCard }) => {
-  const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState<boolean>(true);
+  const { state, dispatch } = useContext(AppContext);
+
+  const setIsSubmitButtonDisabled = (newBtnState: boolean) => {
+    dispatch({
+      type: formFieldsReducerActionVariants.SET_FORMS_FIELDS,
+      payload: {
+        ...state.formFields,
+        isSubmitButtonDisabled: newBtnState,
+      },
+    });
+  };
 
   type FormFields = {
     firstName: string;
@@ -23,20 +35,214 @@ const Form: FC<IFormProps> = ({ addNewCard }) => {
     country: string;
     isAgreeToProcConfData: boolean;
     isAgreeToGetAdvToEmail: boolean;
-    gender: string;
-    profilePicture: FileList;
+    gender: string | null;
+    profilePicture: FileList | null;
   };
 
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
+    setError,
     clearErrors,
     reset,
   } = useForm<FormFields>({
     mode: 'onSubmit',
     reValidateMode: 'onSubmit',
   });
+
+  useEffect(() => {
+    reset({
+      firstName: state.formFields.firstName.value,
+      lastName: state.formFields.lastName.value,
+      zipCode: state.formFields.zipCode.value,
+      birthday: state.formFields.birthday.value,
+      arrivingDate: state.formFields.arrivingDate.value,
+      country: state.formFields.country.value,
+      isAgreeToProcConfData: state.formFields.isAgreeToProcConfData.value,
+      isAgreeToGetAdvToEmail: state.formFields.isAgreeToGetAdvToEmail.value,
+      gender: state.formFields.gender.value,
+      profilePicture: state.formFields.profilePicture.value,
+    });
+
+    if (state.formFields.firstName.hasError) {
+      setError('firstName', {
+        type: state.formFields.firstName.hasError?.type,
+        message: state.formFields.firstName.hasError?.message,
+      });
+    }
+    if (state.formFields.lastName.hasError) {
+      setError('lastName', {
+        type: state.formFields.lastName.hasError?.type,
+        message: state.formFields.lastName.hasError?.message,
+      });
+    }
+    if (state.formFields.zipCode.hasError) {
+      setError('zipCode', {
+        type: state.formFields.zipCode.hasError?.type,
+        message: state.formFields.zipCode.hasError?.message,
+      });
+    }
+    if (state.formFields.birthday.hasError) {
+      setError('birthday', {
+        type: state.formFields.birthday.hasError?.type,
+        message: state.formFields.birthday.hasError?.message,
+      });
+    }
+    if (state.formFields.arrivingDate.hasError) {
+      setError('arrivingDate', {
+        type: state.formFields.arrivingDate.hasError?.type,
+        message: state.formFields.arrivingDate.hasError?.message,
+      });
+    }
+    if (state.formFields.country.hasError) {
+      setError('country', {
+        type: state.formFields.country.hasError?.type,
+        message: state.formFields.country.hasError?.message,
+      });
+    }
+    if (state.formFields.isAgreeToProcConfData.hasError) {
+      setError('isAgreeToProcConfData', {
+        type: state.formFields.isAgreeToProcConfData.hasError?.type,
+        message: state.formFields.isAgreeToProcConfData.hasError?.message,
+      });
+    }
+    if (state.formFields.isAgreeToGetAdvToEmail.hasError) {
+      setError('isAgreeToGetAdvToEmail', {
+        type: state.formFields.isAgreeToGetAdvToEmail.hasError?.type,
+        message: state.formFields.isAgreeToGetAdvToEmail.hasError?.message,
+      });
+    }
+    if (state.formFields.gender.hasError) {
+      setError('gender', {
+        type: state.formFields.gender.hasError?.type,
+        message: state.formFields.gender.hasError?.message,
+      });
+    }
+    if (state.formFields.profilePicture.hasError) {
+      setError('profilePicture', {
+        type: state.formFields.profilePicture.hasError?.type,
+        message: state.formFields.profilePicture.hasError?.message,
+      });
+    }
+
+    console.log(state.formFields);
+  }, []);
+
+  useEffect(() => {
+    const subscription = watch((data) => {
+      dispatch({
+        type: formFieldsReducerActionVariants.SET_FORMS_FIELDS,
+        payload: {
+          firstName: {
+            ...state.formFields.firstName,
+            value: data.firstName ?? '',
+          },
+          lastName: {
+            ...state.formFields.lastName,
+            value: data.lastName ?? '',
+          },
+          zipCode: {
+            ...state.formFields.zipCode,
+            value: data.zipCode ?? '',
+          },
+          birthday: {
+            ...state.formFields.birthday,
+            value: data.birthday ?? '',
+          },
+          arrivingDate: {
+            ...state.formFields.arrivingDate,
+            value: data.arrivingDate ?? '',
+          },
+          country: {
+            ...state.formFields.country,
+            value: data.country ?? '',
+          },
+          isAgreeToProcConfData: {
+            ...state.formFields.isAgreeToProcConfData,
+            value: data.isAgreeToProcConfData ?? false,
+          },
+          isAgreeToGetAdvToEmail: {
+            ...state.formFields.isAgreeToGetAdvToEmail,
+            value: data.isAgreeToGetAdvToEmail ?? false,
+          },
+          gender: {
+            ...state.formFields.gender,
+            value: data.gender as genderTypes,
+          },
+          profilePicture: {
+            ...state.formFields.profilePicture,
+            value: (data.profilePicture ?? []) as FileList,
+          },
+          isSubmitButtonDisabled: false,
+        },
+      });
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
+  useEffect(() => {
+    console.log('errors-2', errors);
+    dispatch({
+      type: formFieldsReducerActionVariants.SET_FORMS_FIELDS,
+      payload: {
+        firstName: {
+          ...state.formFields.firstName,
+          hasError: errors.firstName,
+        },
+        lastName: {
+          ...state.formFields.lastName,
+          hasError: errors.lastName,
+        },
+        zipCode: {
+          ...state.formFields.zipCode,
+          hasError: errors.zipCode,
+        },
+        birthday: {
+          ...state.formFields.birthday,
+          hasError: errors.birthday,
+        },
+        arrivingDate: {
+          ...state.formFields.arrivingDate,
+          hasError: errors.arrivingDate,
+        },
+        country: {
+          ...state.formFields.country,
+          hasError: errors.country,
+        },
+        isAgreeToProcConfData: {
+          ...state.formFields.isAgreeToProcConfData,
+          hasError: errors.isAgreeToProcConfData,
+        },
+        isAgreeToGetAdvToEmail: {
+          ...state.formFields.isAgreeToGetAdvToEmail,
+          hasError: errors.isAgreeToGetAdvToEmail,
+        },
+        gender: {
+          ...state.formFields.gender,
+          hasError: errors.gender,
+        },
+        profilePicture: {
+          ...state.formFields.profilePicture,
+          hasError: errors.profilePicture,
+        },
+        isSubmitButtonDisabled: state.formFields.isSubmitButtonDisabled,
+      },
+    });
+  }, [
+    errors.firstName,
+    errors.lastName,
+    errors.zipCode,
+    errors.birthday,
+    errors.arrivingDate,
+    errors.country,
+    errors.isAgreeToProcConfData,
+    errors.isAgreeToGetAdvToEmail,
+    errors.gender,
+    errors.profilePicture,
+  ]);
 
   const createCard = (data: FormFields): void => {
     if (addNewCard) {
@@ -49,7 +255,9 @@ const Form: FC<IFormProps> = ({ addNewCard }) => {
         isAgreeToGetAdvToEmail: data.isAgreeToGetAdvToEmail,
         isAgreeToProcConfData: data.isAgreeToProcConfData,
         lastName: data.lastName,
-        profilePicture: URL.createObjectURL(data.profilePicture?.[0]),
+        profilePicture: data.profilePicture?.[0]
+          ? URL.createObjectURL(data.profilePicture?.[0])
+          : '',
         zipCode: data.zipCode,
       });
     }
@@ -58,8 +266,8 @@ const Form: FC<IFormProps> = ({ addNewCard }) => {
   const onSubmit = handleSubmit(
     (data) => {
       createCard(data);
-      reset();
       setIsSubmitButtonDisabled(true);
+      reset();
       alert('SUCCESS! The new card has been created!');
     },
     (errors, e) => {
@@ -112,12 +320,11 @@ const Form: FC<IFormProps> = ({ addNewCard }) => {
       return !!data || 'u musk pick one of these';
     },
     isProfilePictureCorrect: (data: string) => {
-      return !!data.length || 'pick correct img';
+      return !!data?.length || 'pick correct img';
     },
   };
   const onFieldChange = (name: FieldPath<FormFields>) => {
     clearErrors(name);
-    setIsSubmitButtonDisabled(false);
   };
 
   return (
@@ -282,7 +489,7 @@ const Form: FC<IFormProps> = ({ addNewCard }) => {
           id={'submit'}
           name={'submit'}
           value={'Submit'}
-          isDisabled={isSubmitButtonDisabled}
+          isDisabled={state.formFields.isSubmitButtonDisabled}
         />
       </div>
     </form>

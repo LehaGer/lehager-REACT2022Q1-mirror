@@ -9,7 +9,7 @@ import CardFull from '../CardFull/CardFull';
 import CharacterService from '../../API/CharacterService';
 import Loader from '../UI/Loader/Loader';
 
-const Card: FC<ICardProps> = ({ id, name, status, origin, location, image }) => {
+const Card: FC<ICardProps> = ({ id, name, origin, location, image }) => {
   const [isFullCardOpened, setIsFullCardOpened] = useState<boolean>(false);
   const [isFullCardLoading, setIsFullCardLoading] = useState<boolean>(true);
   const [characterFullInfo, setCharacterFullInfo] = useState<ICharacterInfo | null>(null);

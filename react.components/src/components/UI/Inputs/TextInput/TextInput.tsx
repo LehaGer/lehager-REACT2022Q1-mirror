@@ -11,6 +11,7 @@ const TextInput = <TFormValues extends Record<string, unknown>>({
   rules,
   errors,
 }: ITextInputProps<TFormValues>) => {
+  console.log('errors', errors);
   return (
     <div className={ItemStyles.textInput} data-testid="TextInput">
       <div>

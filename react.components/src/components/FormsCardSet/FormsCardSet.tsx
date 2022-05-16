@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 import FormsCard from '../FormsCard/FormsCard';
 import ItemStyles from './FormsCardSet.module.css';
-import { IFormsCardSetProps } from '../../types/interfaces';
+import { ICardSetProps, IFormsCardProps } from '../../types/interfaces';
 
-const FormsCardSet: FC<IFormsCardSetProps> = ({ cardSetArray }) => {
+const FormsCardSet: FC<ICardSetProps<IFormsCardProps>> = ({ dataSet }) => {
   return (
     <div className={ItemStyles.formCardSet} data-testid="FormsCardSet">
-      {cardSetArray?.map((dataSetElement, key) => (
+      {dataSet?.map((dataSetElement, key) => (
         <FormsCard
           key={key}
           arrivingDate={dataSetElement.arrivingDate}

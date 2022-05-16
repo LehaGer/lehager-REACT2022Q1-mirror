@@ -2,6 +2,8 @@ import { ICharacterInfo } from '../types/interfaces';
 
 export enum characterCardsReducerActionVariants {
   SET_CARDS = 'SET_CARDS',
+  ADD_CARDS = 'ADD_CARDS',
+  CLEAR = 'CLEAR',
 }
 
 export interface ICharacterCardsReducerAction {
@@ -15,7 +17,11 @@ export const characterCardsReducer = (
 ) => {
   switch (action.type) {
     case characterCardsReducerActionVariants.SET_CARDS:
+      return [...action.payload];
+    case characterCardsReducerActionVariants.ADD_CARDS:
       return [...state, ...action.payload];
+    case characterCardsReducerActionVariants.CLEAR:
+      return [];
     default:
       return state;
   }
