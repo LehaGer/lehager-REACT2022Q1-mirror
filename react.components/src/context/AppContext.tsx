@@ -49,6 +49,10 @@ export const initialState: IInitialState = {
     isSubmitButtonDisabled: true,
   },
   formCards: [],
+  cardFilter: {},
+  pagination: {
+    pageCapacity: 20,
+  },
 };
 
 export const AppContext = createContext<{

@@ -126,8 +126,6 @@ const Form: FC<IFormProps> = ({ addNewCard }) => {
         message: state.formFields.profilePicture.hasError?.message,
       });
     }
-
-    console.log(state.formFields);
   }, []);
 
   useEffect(() => {

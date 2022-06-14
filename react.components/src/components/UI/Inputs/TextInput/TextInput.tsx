@@ -16,7 +16,7 @@ const TextInput = <TFormValues extends Record<string, unknown>>({
     <div className={ItemStyles.textInput} data-testid="TextInput">
       <div>
         <label htmlFor={id}>{label}</label>
-        <input id={id} {...register(name, rules)} />
+        <input id={id} {...(register ? register(name, rules) : [])} />
       </div>
       <div className={errors?.[name] ? 'showed' : 'hidden'}>
         {(errors?.[name] as unknown as FieldError)?.message}

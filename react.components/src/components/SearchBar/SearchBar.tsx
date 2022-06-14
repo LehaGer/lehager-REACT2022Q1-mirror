@@ -21,7 +21,12 @@ const SearchBar: FC<ISearchBarProps> = ({
   };
   const handleKeyUp = async (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      await updateCharactersByName(state.characterQuery);
+      await updateCharactersByName({
+        name: state.characterQuery,
+        status: state.cardFilter.status,
+        gender: state.cardFilter.gender,
+        species: state.cardFilter.species,
+      });
     }
   };
 

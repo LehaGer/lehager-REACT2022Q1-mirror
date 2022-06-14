@@ -16,7 +16,7 @@ const DropdownInput = <TFormValues extends Record<string, unknown>>({
     <div className={ItemStyles.dropdownInput} data-testid="DropdownInput">
       <div>
         <label htmlFor={id}>{label}</label>
-        <select id={id} {...register(name, rules)}>
+        <select id={id} {...(register ? register(name, rules) : [])}>
           <option value=""> </option>
           {options.map((el, key) => (
             <option key={key} value={el}>

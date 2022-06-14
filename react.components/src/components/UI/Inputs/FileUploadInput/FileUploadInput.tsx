@@ -15,7 +15,7 @@ const FileUploadInput = <TFormValues extends Record<string, unknown>>({
     <div className={ItemStyles.fileUploadInput} data-testid="FileUploadInput">
       <div>
         <label htmlFor={id}>{label}</label>
-        <input type="file" id={id} {...register(name, rules)} />
+        <input type="file" id={id} {...(register ? register(name, rules) : [])} />
       </div>
       <div className={errors?.[name] ? 'showed' : 'hidden'}>
         {(errors?.[name] as unknown as FieldError)?.message}

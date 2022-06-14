@@ -3,6 +3,13 @@ import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { FieldError, Path, RegisterOptions } from 'react-hook-form';
 import { FieldErrors } from 'react-hook-form/dist/types/errors';
 
+export interface ICharacterNavigationInfo {
+  count: number;
+  pages: number;
+  next: string | null;
+  prev: string | null;
+}
+
 export interface ICharacterInfo {
   id: number;
   name: string;
@@ -29,7 +36,7 @@ export interface ISearchBarProps {
   type?: string;
   placeholder?: string;
   className?: string;
-  updateCharactersByName?: (name?: string) => void;
+  updateCharactersByName?: (attributes?: ICharacterQueryAttributes) => void;
 }
 
 export interface ICardSetProps<ICardInfo> {
@@ -133,7 +140,7 @@ export interface IInputCheckable {
 
 export interface IInputUnderFormHook<TFormValues> extends IInputWhole {
   name: Path<TFormValues>;
-  register: UseFormRegister<TFormValues>;
+  register?: UseFormRegister<TFormValues>;
   rules?: RegisterOptions;
   errors?: FieldErrors<TFormValues>;
 }
@@ -185,6 +192,7 @@ export interface ICharacterQueryAttributes {
   species?: string;
   type?: string;
   gender?: characterQueryGender;
+  page?: number;
 }
 
 export interface IModalWindowProps {
@@ -216,4 +224,19 @@ export interface IInitialState {
   characterCards: ICharacterInfo[];
   formFields: IFormsState;
   formCards: IFormsCardProps[];
+  cardFilter: ICardFilter;
+  pagination: IPagination;
+}
+
+export interface ICardFilter {
+  status?: characterStatus;
+  gender?: characterQueryGender;
+  species?: string;
+}
+
+export interface IPagination {
+  pageCapacity: number;
+  pagesCount?: number;
+  currentPage?: number;
+  navigationInfo?: ICharacterNavigationInfo;
 }

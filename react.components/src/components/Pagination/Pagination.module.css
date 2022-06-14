@@ -1,0 +1,64 @@
+.pageBtnsWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.pageBtnsWrapper * {
+    user-select: none;
+}
+
+.pageBtnsWrapper .pageBtn,
+.pageBtnsWrapper .pageBtnCurrent {
+    transition: .2s ease-in-out;
+
+}
+
+.pageBtn {
+    min-width: 1.5em;
+    height: 1.5em;
+    padding: 0.5em;
+    margin: 0.5em;
+    border: 3px solid #e5e5e5;
+    border-radius: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.pageBtn:hover {
+    border: 3px solid rgba(255, 200, 99, 0.5);
+}
+
+.pageBtnCurrent {
+    min-width: 1.5em;
+    height: 1.5em;
+    padding: 0.5em;
+    margin: 0.5em;
+    border: 3px solid #ffc863;
+    border-radius: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.firstPageBtnWrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.lastPageBtnWrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.othersPages {
+    margin: 0 1em;
+}

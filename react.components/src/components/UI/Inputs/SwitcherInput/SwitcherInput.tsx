@@ -15,7 +15,12 @@ const SwitcherInput = <TFormValues extends Record<string, unknown>>({
       <div>
         {options.map((el, key) => (
           <div key={key}>
-            <input type="radio" id={el.id} value={el.id} {...register(name, rules)} />
+            <input
+              type="radio"
+              id={el.id}
+              value={el.id}
+              {...(register ? register(name, rules) : [])}
+            />
             <label htmlFor={el.id}>{el.label}</label>
           </div>
         ))}
