@@ -1,8 +1,8 @@
 .card {
-    width: 50%;
-    margin: auto auto 15% auto;
+    width: 50vw;
+    height: 50vh;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 50vh 1fr;
 }
 
 .cardImg {
@@ -79,27 +79,4 @@ a {
     color: #ccc;
     height: 5em;
     width: 15em;
-    margin: 3em auto auto auto;
-}
-
-.goBack {
-    padding: 1em;
-    color: #7f7f7f;
-    border-radius: .5em;
-    background-color: rgba(0, 0, 0, 0.05);
-    transition: all .5s;
-    width: max-content;
-    cursor: pointer;
-    margin-left: 2em;
-    position: absolute;
-    user-select: none;
-}
-
-.goBack:hover {
-    color: #535353;
-    background-color: rgba(0, 0, 0, 0.25);
-}
-
-.CardFullWrapper {
-
 }

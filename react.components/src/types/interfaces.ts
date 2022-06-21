@@ -201,7 +201,7 @@ export interface IModalWindowProps {
 }
 
 export interface ICardFullProps {
-  character: ICharacterInfo | null;
+  character?: ICharacterInfo;
 }
 
 export interface IButtonCustomProps {
