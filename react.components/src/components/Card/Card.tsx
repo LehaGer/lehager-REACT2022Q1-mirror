@@ -1,28 +1,23 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useContext } from 'react';
 import ShareButton from '../UI/Buttons/ShareButton/ShareButton';
-import { ICardProps, ICharacterInfo } from '../../types/interfaces';
+import { ICardProps } from '../../types/interfaces';
 import FavouriteButton from '../UI/Buttons/FavouriteButton/FavouriteButton';
 import ButtonCustom from '../UI/Buttons/ButtonCustom/ButtonCustom';
 import ItemStyles from './Card.module.css';
-import ModalWindow from '../UI/ModalWindow/ModalWindow';
-import CardFull from '../CardFull/CardFull';
-import CharacterService from '../../API/CharacterService';
-import Loader from '../UI/Loader/Loader';
+import { useNavigate } from 'react-router-dom';
+import { AppContext } from '../../context/AppContext';
 
 const Card: FC<ICardProps> = ({ id, name, origin, location, image }) => {
-  const [isFullCardOpened, setIsFullCardOpened] = useState<boolean>(false);
-  const [isFullCardLoading, setIsFullCardLoading] = useState<boolean>(true);
-  const [characterFullInfo, setCharacterFullInfo] = useState<ICharacterInfo | null>(null);
+  const { state } = useContext(AppContext);
+
+  const navigate = useNavigate();
 
   const toggleFullCard = async (newState: boolean) => {
-    setIsFullCardOpened(newState);
-    if (newState) {
-      setIsFullCardLoading(true);
-      const response = await CharacterService.getCharacterById(Number(id));
-      setIsFullCardLoading(false);
-      setCharacterFullInfo(response);
+    const isStateContains = state.characterCards.some((e) => e.id === id);
+    if (isStateContains) {
+      navigate(`character/${id}`);
     } else {
-      setCharacterFullInfo(null);
+      navigate(`/`);
     }
   };
 
@@ -56,15 +51,6 @@ const Card: FC<ICardProps> = ({ id, name, origin, location, image }) => {
           </ButtonCustom>
         </div>
       </div>
-      <ModalWindow visible={isFullCardOpened} setVisible={toggleFullCard}>
-        {isFullCardOpened ? (
-          isFullCardLoading ? (
-            <Loader />
-          ) : (
-            <CardFull character={characterFullInfo} />
-          )
-        ) : null}
-      </ModalWindow>
     </>
   );
 };
