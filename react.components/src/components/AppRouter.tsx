@@ -6,6 +6,7 @@ import NotFound from '../pages/NotFound/NotFound';
 import FormsPage from '../pages/Forms/FormsPage';
 import { LoadContext } from '../context/LoadContext';
 import Loader from './UI/Loader/Loader';
+import CardFull from './CardFull/CardFull';
 
 const AppRouter: FC = () => {
   const isLoading = useContext(LoadContext);
@@ -15,6 +16,7 @@ const AppRouter: FC = () => {
   ) : (
     <Routes>
       <Route path="" element={<Main />} />
+      <Route path="character/:id" element={<CardFull />} />
       <Route path="about" element={<About />} />
       <Route path="forms" element={<FormsPage />} />
       <Route path="*" element={<NotFound />} />
