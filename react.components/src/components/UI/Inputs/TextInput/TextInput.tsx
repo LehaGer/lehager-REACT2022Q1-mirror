@@ -17,9 +17,11 @@ const TextInput = <TFormValues extends Record<string, unknown>>({
         <label htmlFor={id}>{label}</label>
         <input id={id} {...register(name, rules)} />
       </div>
-      <div className={errors?.[name] ? 'showed' : 'hidden'}>
-        {(errors?.[name] as unknown as FieldError)?.message}
-      </div>
+      {errors?.[name] && (
+        <div className={errors?.[name] ? 'showed' : 'hidden'}>
+          {(errors?.[name] as unknown as FieldError)?.message}
+        </div>
+      )}
     </div>
   );
 };

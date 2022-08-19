@@ -9,21 +9,22 @@ import CardFull from '../CardFull/CardFull';
 import CharacterService from '../../API/CharacterService';
 import Loader from '../UI/Loader/Loader';
 
-const Card: FC<ICardProps> = ({ id, name, status, origin, location, image }) => {
+const Card: FC<ICardProps> = ({ id, name, origin, location, image }) => {
   const [isFullCardOpened, setIsFullCardOpened] = useState<boolean>(false);
   const [isFullCardLoading, setIsFullCardLoading] = useState<boolean>(true);
   const [characterFullInfo, setCharacterFullInfo] = useState<ICharacterInfo | null>(null);
 
-  const toggleFullCard = async (newState: boolean) => {
-    setIsFullCardOpened(newState);
-    if (newState) {
-      setIsFullCardLoading(true);
-      const response = await CharacterService.getCharacterById(Number(id));
-      setIsFullCardLoading(false);
-      setCharacterFullInfo(response);
-    } else {
-      setCharacterFullInfo(null);
-    }
+  const handleClose = async () => {
+    setIsFullCardOpened(false);
+  };
+
+  const handleMoreInfoClick = async (event: React.MouseEvent) => {
+    event.preventDefault();
+    setIsFullCardOpened(true);
+    setIsFullCardLoading(true);
+    const response = await CharacterService.getCharacterById(Number(id));
+    setIsFullCardLoading(false);
+    setCharacterFullInfo(response);
   };
 
   return (
@@ -45,26 +46,16 @@ const Card: FC<ICardProps> = ({ id, name, status, origin, location, image }) => 
         <div className={ItemStyles.cardControls}>
           <FavouriteButton />
           <ShareButton />
-          <ButtonCustom
-            onClick={async (event: React.MouseEvent) => {
-              event.preventDefault();
-              await toggleFullCard(true);
-            }}
-            data-testid="learnMore"
-          >
+          <ButtonCustom onClick={handleMoreInfoClick} data-testid="learnMore">
             Learn more
           </ButtonCustom>
         </div>
       </div>
-      <ModalWindow visible={isFullCardOpened} setVisible={toggleFullCard}>
-        {isFullCardOpened ? (
-          isFullCardLoading ? (
-            <Loader />
-          ) : (
-            <CardFull character={characterFullInfo} />
-          )
-        ) : null}
-      </ModalWindow>
+      {isFullCardOpened && (
+        <ModalWindow onClose={handleClose}>
+          {isFullCardLoading ? <Loader /> : <CardFull character={characterFullInfo} />}
+        </ModalWindow>
+      )}
     </>
   );
 };

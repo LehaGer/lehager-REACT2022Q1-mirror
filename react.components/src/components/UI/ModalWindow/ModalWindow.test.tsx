@@ -15,16 +15,16 @@ describe('ModalWindow testing', () => {
   });
 
   test('does ModalWindow contains corresponding class', async () => {
-    const { unmount } = render(<ModalWindow visible={true} setVisible={() => {}} />);
+    const { unmount } = render(<ModalWindow onClose={() => {}} />);
     expect(screen.getByTestId('ModalWindow')).toHaveClass('active');
     unmount();
-    render(<ModalWindow visible={false} setVisible={() => {}} />);
+    render(<ModalWindow onClose={() => {}} />);
     expect(screen.queryByTestId('ModalWindow')).not.toHaveClass('active');
   });
 
   test('does ModalWindow contains children', async () => {
     render(
-      <ModalWindow visible={true} setVisible={() => {}}>
+      <ModalWindow onClose={() => {}}>
         <div data-testid="testingChildElement" />
       </ModalWindow>
     );
@@ -37,7 +37,6 @@ describe('ModalWindow testing', () => {
         key={response[0].id}
         id={response[0].id}
         name={response[0].name}
-        status={response[0].status}
         origin={response[0].origin.name}
         location={response[0].location.name}
         image={response[0].image}
@@ -55,7 +54,6 @@ describe('ModalWindow testing', () => {
         key={response[0].id}
         id={response[0].id}
         name={response[0].name}
-        status={response[0].status}
         origin={response[0].origin.name}
         location={response[0].location.name}
         image={response[0].image}

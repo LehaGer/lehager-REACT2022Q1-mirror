@@ -11,7 +11,6 @@ const CardSet: FC<ICardSetProps<ICharacterInfo>> = ({ dataSet }) => {
           key={dataSetElement.id}
           id={dataSetElement.id}
           name={dataSetElement.name}
-          status={dataSetElement.status}
           origin={dataSetElement.origin.name}
           location={dataSetElement.location.name}
           image={dataSetElement.image}
