@@ -46,7 +46,6 @@ export interface ICardSetProps<ICardInfo> {
 export interface ICardProps {
   id: string | number;
   name: string;
-  status: string;
   origin: string;
   location: string;
   image: string;
@@ -196,8 +195,7 @@ export interface ICharacterQueryAttributes {
 }
 
 export interface IModalWindowProps {
-  visible: boolean;
-  setVisible: (newState: boolean) => void;
+  onClose: () => void;
 }
 
 export interface ICardFullProps {

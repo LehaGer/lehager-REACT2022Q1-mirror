@@ -12,7 +12,8 @@ const Card: FC<ICardProps> = ({ id, name, origin, location, image }) => {
 
   const navigate = useNavigate();
 
-  const toggleFullCard = async (newState: boolean) => {
+  const handleMoreInfoClick = async (event: React.MouseEvent) => {
+    event.preventDefault();
     const isStateContains = state.characterCards.some((e) => e.id === id);
     if (isStateContains) {
       navigate(`character/${id}`);
@@ -40,13 +41,7 @@ const Card: FC<ICardProps> = ({ id, name, origin, location, image }) => {
         <div className={ItemStyles.cardControls}>
           <FavouriteButton />
           <ShareButton />
-          <ButtonCustom
-            onClick={async (event: React.MouseEvent) => {
-              event.preventDefault();
-              await toggleFullCard(true);
-            }}
-            data-testid="learnMore"
-          >
+          <ButtonCustom onClick={handleMoreInfoClick} data-testid="learnMore">
             Learn more
           </ButtonCustom>
         </div>

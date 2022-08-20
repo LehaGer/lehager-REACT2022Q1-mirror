@@ -25,9 +25,9 @@ const DropdownInput = <TFormValues extends Record<string, unknown>>({
           ))}
         </select>
       </div>
-      <div className={errors?.[name] ? 'showed' : 'hidden'}>
-        {(errors?.[name] as unknown as FieldError)?.message}
-      </div>
+      {errors?.[name] && (
+        <div className={'showed'}>{(errors?.[name] as unknown as FieldError).message}</div>
+      )}
     </div>
   );
 };
