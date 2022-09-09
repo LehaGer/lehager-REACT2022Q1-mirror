@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import ItemStyles from './Form.module.css';
 import TextInput from '../UI/Inputs/TextInput/TextInput';
 import DateInput from '../UI/Inputs/DateInput/DateInput';
@@ -10,20 +10,16 @@ import SubmitInput from '../UI/Inputs/SubmiInput/SubmitInput';
 import { genderTypes, IFormProps } from '../../types/interfaces';
 import { useForm } from 'react-hook-form';
 import { FieldPath } from 'react-hook-form/dist/types/path';
-import { AppContext } from '../../context/AppContext';
-import { formFieldsReducerActionVariants } from '../../reducers/formFieldsReducer';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { formFieldsSlice } from '../../store/reducers/formFieldsSlice';
 
 const Form: FC<IFormProps> = ({ addNewCard }) => {
-  const { state, dispatch } = useContext(AppContext);
+  const dispatch = useAppDispatch();
+  const formFields = useAppSelector((state) => state.formFieldsReducer);
+  const { setFormsFields } = formFieldsSlice.actions;
 
   const setIsSubmitButtonDisabled = (newBtnState: boolean) => {
-    dispatch({
-      type: formFieldsReducerActionVariants.SET_FORMS_FIELDS,
-      payload: {
-        ...state.formFields,
-        isSubmitButtonDisabled: newBtnState,
-      },
-    });
+    dispatch(setFormsFields({ ...formFields, isSubmitButtonDisabled: newBtnState }));
   };
 
   type FormFields = {
@@ -54,128 +50,127 @@ const Form: FC<IFormProps> = ({ addNewCard }) => {
 
   useEffect(() => {
     reset({
-      firstName: state.formFields.firstName.value,
-      lastName: state.formFields.lastName.value,
-      zipCode: state.formFields.zipCode.value,
-      birthday: state.formFields.birthday.value,
-      arrivingDate: state.formFields.arrivingDate.value,
-      country: state.formFields.country.value,
-      isAgreeToProcConfData: state.formFields.isAgreeToProcConfData.value,
-      isAgreeToGetAdvToEmail: state.formFields.isAgreeToGetAdvToEmail.value,
-      gender: state.formFields.gender.value,
-      profilePicture: state.formFields.profilePicture.value,
+      firstName: formFields.firstName.value,
+      lastName: formFields.lastName.value,
+      zipCode: formFields.zipCode.value,
+      birthday: formFields.birthday.value,
+      arrivingDate: formFields.arrivingDate.value,
+      country: formFields.country.value,
+      isAgreeToProcConfData: formFields.isAgreeToProcConfData.value,
+      isAgreeToGetAdvToEmail: formFields.isAgreeToGetAdvToEmail.value,
+      gender: formFields.gender.value,
+      profilePicture: formFields.profilePicture.value,
     });
 
-    if (state.formFields.firstName.hasError) {
+    if (formFields.firstName.hasError) {
       setError('firstName', {
-        type: state.formFields.firstName.hasError?.type,
-        message: state.formFields.firstName.hasError?.message,
+        type: formFields.firstName.hasError?.type,
+        message: formFields.firstName.hasError?.message,
       });
     }
-    if (state.formFields.lastName.hasError) {
+    if (formFields.lastName.hasError) {
       setError('lastName', {
-        type: state.formFields.lastName.hasError?.type,
-        message: state.formFields.lastName.hasError?.message,
+        type: formFields.lastName.hasError?.type,
+        message: formFields.lastName.hasError?.message,
       });
     }
-    if (state.formFields.zipCode.hasError) {
+    if (formFields.zipCode.hasError) {
       setError('zipCode', {
-        type: state.formFields.zipCode.hasError?.type,
-        message: state.formFields.zipCode.hasError?.message,
+        type: formFields.zipCode.hasError?.type,
+        message: formFields.zipCode.hasError?.message,
       });
     }
-    if (state.formFields.birthday.hasError) {
+    if (formFields.birthday.hasError) {
       setError('birthday', {
-        type: state.formFields.birthday.hasError?.type,
-        message: state.formFields.birthday.hasError?.message,
+        type: formFields.birthday.hasError?.type,
+        message: formFields.birthday.hasError?.message,
       });
     }
-    if (state.formFields.arrivingDate.hasError) {
+    if (formFields.arrivingDate.hasError) {
       setError('arrivingDate', {
-        type: state.formFields.arrivingDate.hasError?.type,
-        message: state.formFields.arrivingDate.hasError?.message,
+        type: formFields.arrivingDate.hasError?.type,
+        message: formFields.arrivingDate.hasError?.message,
       });
     }
-    if (state.formFields.country.hasError) {
+    if (formFields.country.hasError) {
       setError('country', {
-        type: state.formFields.country.hasError?.type,
-        message: state.formFields.country.hasError?.message,
+        type: formFields.country.hasError?.type,
+        message: formFields.country.hasError?.message,
       });
     }
-    if (state.formFields.isAgreeToProcConfData.hasError) {
+    if (formFields.isAgreeToProcConfData.hasError) {
       setError('isAgreeToProcConfData', {
-        type: state.formFields.isAgreeToProcConfData.hasError?.type,
-        message: state.formFields.isAgreeToProcConfData.hasError?.message,
+        type: formFields.isAgreeToProcConfData.hasError?.type,
+        message: formFields.isAgreeToProcConfData.hasError?.message,
       });
     }
-    if (state.formFields.isAgreeToGetAdvToEmail.hasError) {
+    if (formFields.isAgreeToGetAdvToEmail.hasError) {
       setError('isAgreeToGetAdvToEmail', {
-        type: state.formFields.isAgreeToGetAdvToEmail.hasError?.type,
-        message: state.formFields.isAgreeToGetAdvToEmail.hasError?.message,
+        type: formFields.isAgreeToGetAdvToEmail.hasError?.type,
+        message: formFields.isAgreeToGetAdvToEmail.hasError?.message,
       });
     }
-    if (state.formFields.gender.hasError) {
+    if (formFields.gender.hasError) {
       setError('gender', {
-        type: state.formFields.gender.hasError?.type,
-        message: state.formFields.gender.hasError?.message,
+        type: formFields.gender.hasError?.type,
+        message: formFields.gender.hasError?.message,
       });
     }
-    if (state.formFields.profilePicture.hasError) {
+    if (formFields.profilePicture.hasError) {
       setError('profilePicture', {
-        type: state.formFields.profilePicture.hasError?.type,
-        message: state.formFields.profilePicture.hasError?.message,
+        type: formFields.profilePicture.hasError?.type,
+        message: formFields.profilePicture.hasError?.message,
       });
     }
   }, []);
 
   useEffect(() => {
     const subscription = watch((data) => {
-      dispatch({
-        type: formFieldsReducerActionVariants.SET_FORMS_FIELDS,
-        payload: {
+      dispatch(
+        setFormsFields({
           firstName: {
-            ...state.formFields.firstName,
+            ...formFields.firstName,
             value: data.firstName ?? '',
           },
           lastName: {
-            ...state.formFields.lastName,
+            ...formFields.lastName,
             value: data.lastName ?? '',
           },
           zipCode: {
-            ...state.formFields.zipCode,
+            ...formFields.zipCode,
             value: data.zipCode ?? '',
           },
           birthday: {
-            ...state.formFields.birthday,
+            ...formFields.birthday,
             value: data.birthday ?? '',
           },
           arrivingDate: {
-            ...state.formFields.arrivingDate,
+            ...formFields.arrivingDate,
             value: data.arrivingDate ?? '',
           },
           country: {
-            ...state.formFields.country,
+            ...formFields.country,
             value: data.country ?? '',
           },
           isAgreeToProcConfData: {
-            ...state.formFields.isAgreeToProcConfData,
+            ...formFields.isAgreeToProcConfData,
             value: data.isAgreeToProcConfData ?? false,
           },
           isAgreeToGetAdvToEmail: {
-            ...state.formFields.isAgreeToGetAdvToEmail,
+            ...formFields.isAgreeToGetAdvToEmail,
             value: data.isAgreeToGetAdvToEmail ?? false,
           },
           gender: {
-            ...state.formFields.gender,
+            ...formFields.gender,
             value: data.gender as genderTypes,
           },
           profilePicture: {
-            ...state.formFields.profilePicture,
+            ...formFields.profilePicture,
             value: (data.profilePicture ?? []) as FileList,
           },
           isSubmitButtonDisabled: false,
-        },
-      });
+        })
+      );
     });
 
     return () => subscription.unsubscribe();
@@ -183,52 +178,51 @@ const Form: FC<IFormProps> = ({ addNewCard }) => {
 
   useEffect(() => {
     console.log('errors-2', errors);
-    dispatch({
-      type: formFieldsReducerActionVariants.SET_FORMS_FIELDS,
-      payload: {
+    dispatch(
+      setFormsFields({
         firstName: {
-          ...state.formFields.firstName,
+          ...formFields.firstName,
           hasError: errors.firstName,
         },
         lastName: {
-          ...state.formFields.lastName,
+          ...formFields.lastName,
           hasError: errors.lastName,
         },
         zipCode: {
-          ...state.formFields.zipCode,
+          ...formFields.zipCode,
           hasError: errors.zipCode,
         },
         birthday: {
-          ...state.formFields.birthday,
+          ...formFields.birthday,
           hasError: errors.birthday,
         },
         arrivingDate: {
-          ...state.formFields.arrivingDate,
+          ...formFields.arrivingDate,
           hasError: errors.arrivingDate,
         },
         country: {
-          ...state.formFields.country,
+          ...formFields.country,
           hasError: errors.country,
         },
         isAgreeToProcConfData: {
-          ...state.formFields.isAgreeToProcConfData,
+          ...formFields.isAgreeToProcConfData,
           hasError: errors.isAgreeToProcConfData,
         },
         isAgreeToGetAdvToEmail: {
-          ...state.formFields.isAgreeToGetAdvToEmail,
+          ...formFields.isAgreeToGetAdvToEmail,
           hasError: errors.isAgreeToGetAdvToEmail,
         },
         gender: {
-          ...state.formFields.gender,
+          ...formFields.gender,
           hasError: errors.gender,
         },
         profilePicture: {
-          ...state.formFields.profilePicture,
+          ...formFields.profilePicture,
           hasError: errors.profilePicture,
         },
-        isSubmitButtonDisabled: state.formFields.isSubmitButtonDisabled,
-      },
-    });
+        isSubmitButtonDisabled: formFields.isSubmitButtonDisabled,
+      })
+    );
   }, [
     errors.firstName,
     errors.lastName,
@@ -487,7 +481,7 @@ const Form: FC<IFormProps> = ({ addNewCard }) => {
           id={'submit'}
           name={'submit'}
           value={'Submit'}
-          isDisabled={state.formFields.isSubmitButtonDisabled}
+          isDisabled={formFields.isSubmitButtonDisabled}
         />
       </div>
     </form>

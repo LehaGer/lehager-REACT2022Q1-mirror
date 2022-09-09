@@ -1,14 +1,14 @@
-import React, { FC, useContext, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { ICardFullProps } from '../../types/interfaces';
 import ItemStyles from './CardFull.module.css';
-import { AppContext } from '../../context/AppContext';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/redux';
 
 const CardFull: FC<ICardFullProps> = ({ character }) => {
-  const { state } = useContext(AppContext);
+  const characterCards = useAppSelector((state) => state.characterCardsReducer);
   const { id } = useParams();
   const navigate = useNavigate();
-  const isStateContains = state.characterCards.some((e) => e.id === Number(id));
+  const isStateContains = characterCards.some((e) => e.id === Number(id));
 
   useEffect(() => {
     if (!isStateContains) {
@@ -16,7 +16,7 @@ const CardFull: FC<ICardFullProps> = ({ character }) => {
     }
   }, [isStateContains, navigate]);
 
-  state.characterCards.forEach((el) => {
+  characterCards.forEach((el) => {
     if (el.id === Number(id)) {
       character = el;
     }

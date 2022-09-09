@@ -83,43 +83,43 @@ export interface IFormsCardProps {
 export interface IFormsState {
   firstName: {
     value: string;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   lastName: {
     value: string;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   zipCode: {
     value: string;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   birthday: {
     value: string;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   arrivingDate: {
     value: string;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   country: {
     value: string;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   isAgreeToProcConfData: {
     value: boolean;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   isAgreeToGetAdvToEmail: {
     value: boolean;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   gender: {
     value: genderTypes | null;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   profilePicture: {
     value: FileList | null;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   isSubmitButtonDisabled: boolean;
 }
