@@ -14,7 +14,7 @@ const Card: FC<ICardProps> = ({ id, name, origin, location, image }) => {
 
   const handleMoreInfoClick = async (event: React.MouseEvent) => {
     event.preventDefault();
-    const isStateContains = characterCards.some((e) => e.id === id);
+    const isStateContains = characterCards.data.some((e) => e.id === id);
     if (isStateContains) {
       navigate(`character/${id}`);
     } else {

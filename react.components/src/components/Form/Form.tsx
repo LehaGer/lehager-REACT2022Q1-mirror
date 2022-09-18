@@ -177,7 +177,6 @@ const Form: FC<IFormProps> = ({ addNewCard }) => {
   }, [watch]);
 
   useEffect(() => {
-    console.log('errors-2', errors);
     dispatch(
       setFormsFields({
         firstName: {

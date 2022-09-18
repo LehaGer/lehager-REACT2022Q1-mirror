@@ -12,7 +12,7 @@ const Navbar = () => {
   const characterId = matchesResult?.[0]?.params?.id;
 
   let character: ICharacterInfo | undefined;
-  characterCards.forEach((el) => {
+  characterCards.data.forEach((el) => {
     if (el.id === Number(characterId)) {
       character = el;
     }

@@ -8,7 +8,7 @@ const CardFull: FC<ICardFullProps> = ({ character }) => {
   const characterCards = useAppSelector((state) => state.characterCardsReducer);
   const { id } = useParams();
   const navigate = useNavigate();
-  const isStateContains = characterCards.some((e) => e.id === Number(id));
+  const isStateContains = characterCards.data.some((e) => e.id === Number(id));
 
   useEffect(() => {
     if (!isStateContains) {
@@ -16,7 +16,7 @@ const CardFull: FC<ICardFullProps> = ({ character }) => {
     }
   }, [isStateContains, navigate]);
 
-  characterCards.forEach((el) => {
+  characterCards.data.forEach((el) => {
     if (el.id === Number(id)) {
       character = el;
     }
