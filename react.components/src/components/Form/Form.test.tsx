@@ -160,52 +160,51 @@ describe('Form testing', () => {
         render(<Form />);
 
         const firstNameInput = screen.getByLabelText('First Name:');
-        const firstNameErrorMsg = screen.getByText(
-          'ur name must include letters only & be > 0 symbols'
-        );
+        const ErrorMsg = 'ur name must include letters only & be > 0 symbols';
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(firstNameErrorMsg).not.toHaveClass('showed');
+        expect(screen.queryByText(ErrorMsg)).not.toBeInTheDocument();
         userEvent.type(firstNameInput, 'CorrectFirstname');
-        expect(firstNameErrorMsg).not.toHaveClass('showed');
+        expect(screen.queryByText(ErrorMsg)).not.toBeInTheDocument();
+        expect(submitInput).not.toBeDisabled();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(firstNameErrorMsg).not.toHaveClass('showed');
+          expect(screen.queryByText(ErrorMsg)).not.toBeInTheDocument();
         });
       });
       test('entering wrong', async () => {
         render(<Form />);
 
         const firstNameInput = screen.getByLabelText('First Name:');
-        const firstNameErrorMsg = screen.getByText(
-          'ur name must include letters only & be > 0 symbols'
-        );
+        const ErrorMsg = 'ur name must include letters only & be > 0 symbols';
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(firstNameErrorMsg).not.toHaveClass('showed');
+        expect(screen.queryByText(ErrorMsg)).not.toBeInTheDocument();
         userEvent.type(firstNameInput, 'IncorrectFirstname123');
-        expect(firstNameErrorMsg).not.toHaveClass('showed');
+        expect(screen.queryByText(ErrorMsg)).not.toBeInTheDocument();
+        expect(submitInput).not.toBeDisabled();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(firstNameErrorMsg).toHaveClass('showed');
+          expect(screen.queryByText(ErrorMsg)).toBeInTheDocument();
         });
       });
       test('correcting', async () => {
         render(<Form />);
 
         const firstNameInput = screen.getByLabelText('First Name:');
-        const firstNameErrorMsg = screen.getByText(
-          'ur name must include letters only & be > 0 symbols'
-        );
+        const ErrorMsg = 'ur name must include letters only & be > 0 symbols';
         const submitInput = screen.getByTestId('SubmitInput');
 
         userEvent.type(firstNameInput, 'IncorrectFirstname123');
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(firstNameErrorMsg).toHaveClass('showed');
+          expect(screen.queryByText(ErrorMsg)).toBeInTheDocument();
         });
         userEvent.clear(firstNameInput);
-        expect(firstNameErrorMsg).not.toHaveClass('showed');
+        expect(screen.queryByText(ErrorMsg)).not.toBeInTheDocument();
       });
     });
     describe('on lastName', () => {
@@ -213,52 +212,60 @@ describe('Form testing', () => {
         render(<Form />);
 
         const lastNameInput = screen.getByLabelText('Last Name:');
-        const lastNameErrorMsg = screen.getByText(
-          'ur surname must include letters only & be > 0 symbols'
-        );
+        const ErrorMsg = 'ur surname must include letters only & be > 0 symbols';
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(lastNameErrorMsg).not.toHaveClass('showed');
+        expect(screen.queryByText(ErrorMsg)).not.toBeInTheDocument();
         userEvent.type(lastNameInput, 'CorrectLastname');
-        expect(lastNameErrorMsg).not.toHaveClass('showed');
+        expect(screen.queryByText(ErrorMsg)).not.toBeInTheDocument();
+        expect(submitInput).not.toBeDisabled();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(lastNameErrorMsg).not.toHaveClass('showed');
+          expect(screen.queryByText(ErrorMsg)).not.toBeInTheDocument();
         });
       });
       test('entering wrong', async () => {
         render(<Form />);
 
         const lastNameInput = screen.getByLabelText('Last Name:');
-        const lastNameErrorMsg = screen.getByText(
+        const lastNameErrorMsg = screen.queryByText(
           'ur surname must include letters only & be > 0 symbols'
         );
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(lastNameErrorMsg).not.toHaveClass('showed');
+        expect(lastNameErrorMsg).not.toBeInTheDocument();
         userEvent.type(lastNameInput, 'IncorrectLastname123');
-        expect(lastNameErrorMsg).not.toHaveClass('showed');
+        expect(lastNameErrorMsg).not.toBeInTheDocument();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(lastNameErrorMsg).toHaveClass('showed');
+          const lastNameErrorMsg = screen.queryByText(
+            'ur surname must include letters only & be > 0 symbols'
+          );
+          expect(lastNameErrorMsg).toBeInTheDocument();
         });
       });
       test('correcting', async () => {
         render(<Form />);
 
         const lastNameInput = screen.getByLabelText('Last Name:');
-        const lastNameErrorMsg = screen.getByText(
+        const lastNameErrorMsg = screen.queryByText(
           'ur surname must include letters only & be > 0 symbols'
         );
         const submitInput = screen.getByTestId('SubmitInput');
 
         userEvent.type(lastNameInput, 'IncorrectLastname123');
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(lastNameErrorMsg).toHaveClass('showed');
+          const lastNameErrorMsg = screen.queryByText(
+            'ur surname must include letters only & be > 0 symbols'
+          );
+          expect(lastNameErrorMsg).toBeInTheDocument();
         });
         userEvent.clear(lastNameInput);
-        expect(lastNameErrorMsg).not.toHaveClass('showed');
+        expect(lastNameErrorMsg).not.toBeInTheDocument();
       });
     });
     describe('on zipCode', () => {
@@ -266,52 +273,64 @@ describe('Form testing', () => {
         render(<Form />);
 
         const zipCodeInput = screen.getByLabelText('Zip-code:');
-        const zipCodeErrorMsg = screen.getByText(
+        const zipCodeErrorMsg = screen.queryByText(
           'ur zip-code must correspond to format "XXXXX-YYYY"'
         );
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(zipCodeErrorMsg).not.toHaveClass('showed');
+        expect(zipCodeErrorMsg).not.toBeInTheDocument();
         userEvent.type(zipCodeInput, '12345-1234');
-        expect(zipCodeErrorMsg).not.toHaveClass('showed');
+        expect(zipCodeErrorMsg).not.toBeInTheDocument();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(zipCodeErrorMsg).not.toHaveClass('showed');
+          const zipCodeErrorMsg = screen.queryByText(
+            'ur zip-code must correspond to format "XXXXX-YYYY"'
+          );
+          expect(zipCodeErrorMsg).not.toBeInTheDocument();
         });
       });
       test('entering wrong', async () => {
         render(<Form />);
 
         const zipCodeInput = screen.getByLabelText('Zip-code:');
-        const zipCodeErrorMsg = screen.getByText(
+        const zipCodeErrorMsg = screen.queryByText(
           'ur zip-code must correspond to format "XXXXX-YYYY"'
         );
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(zipCodeErrorMsg).not.toHaveClass('showed');
+        expect(zipCodeErrorMsg).not.toBeInTheDocument();
         userEvent.type(zipCodeInput, '12345-12345');
-        expect(zipCodeErrorMsg).not.toHaveClass('showed');
+        expect(zipCodeErrorMsg).not.toBeInTheDocument();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(zipCodeErrorMsg).toHaveClass('showed');
+          const zipCodeErrorMsg = screen.queryByText(
+            'ur zip-code must correspond to format "XXXXX-YYYY"'
+          );
+          expect(zipCodeErrorMsg).toBeInTheDocument();
         });
       });
       test('correcting', async () => {
         render(<Form />);
 
         const zipCodeInput = screen.getByLabelText('Zip-code:');
-        const zipCodeErrorMsg = screen.getByText(
+        const zipCodeErrorMsg = screen.queryByText(
           'ur zip-code must correspond to format "XXXXX-YYYY"'
         );
         const submitInput = screen.getByTestId('SubmitInput');
 
         userEvent.type(zipCodeInput, '12345-12345');
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(zipCodeErrorMsg).toHaveClass('showed');
+          const zipCodeErrorMsg = screen.queryByText(
+            'ur zip-code must correspond to format "XXXXX-YYYY"'
+          );
+          expect(zipCodeErrorMsg).toBeInTheDocument();
         });
         userEvent.clear(zipCodeInput);
-        expect(zipCodeErrorMsg).not.toHaveClass('showed');
+        expect(zipCodeErrorMsg).not.toBeInTheDocument();
       });
     });
     describe('on birthday', () => {
@@ -319,46 +338,52 @@ describe('Form testing', () => {
         render(<Form />);
 
         const birthdayInput = screen.getByLabelText('birthday:');
-        const birthdayErrorMsg = screen.getByText('select date < NOW');
+        const birthdayErrorMsg = screen.queryByText('select date < NOW');
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(birthdayErrorMsg).not.toHaveClass('showed');
+        expect(birthdayErrorMsg).not.toBeInTheDocument();
         userEvent.type(birthdayInput, createShiftedDate(-1));
-        expect(birthdayErrorMsg).not.toHaveClass('showed');
+        expect(birthdayErrorMsg).not.toBeInTheDocument();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(birthdayErrorMsg).not.toHaveClass('showed');
+          const birthdayErrorMsg = screen.queryByText('select date < NOW');
+          expect(birthdayErrorMsg).not.toBeInTheDocument();
         });
       });
       test('entering wrong', async () => {
         render(<Form />);
 
         const birthdayInput = screen.getByLabelText('birthday:');
-        const birthdayErrorMsg = screen.getByText('select date < NOW');
+        const birthdayErrorMsg = screen.queryByText('select date < NOW');
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(birthdayErrorMsg).not.toHaveClass('showed');
+        expect(birthdayErrorMsg).not.toBeInTheDocument();
         userEvent.type(birthdayInput, createShiftedDate(1));
-        expect(birthdayErrorMsg).not.toHaveClass('showed');
+        expect(birthdayErrorMsg).not.toBeInTheDocument();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(birthdayErrorMsg).toHaveClass('showed');
+          const birthdayErrorMsg = screen.queryByText('select date < NOW');
+          expect(birthdayErrorMsg).toBeInTheDocument();
         });
       });
       test('correcting', async () => {
         render(<Form />);
 
         const birthdayInput = screen.getByLabelText('birthday:');
-        const birthdayErrorMsg = screen.getByText('select date < NOW');
+        const birthdayErrorMsg = screen.queryByText('select date < NOW');
         const submitInput = screen.getByTestId('SubmitInput');
 
         userEvent.type(birthdayInput, createShiftedDate(1));
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(birthdayErrorMsg).toHaveClass('showed');
+          const birthdayErrorMsg = screen.queryByText('select date < NOW');
+          expect(birthdayErrorMsg).toBeInTheDocument();
         });
         userEvent.clear(birthdayInput);
-        expect(birthdayErrorMsg).not.toHaveClass('showed');
+        expect(birthdayErrorMsg).not.toBeInTheDocument();
       });
     });
     describe('on arrivingDate', () => {
@@ -366,46 +391,52 @@ describe('Form testing', () => {
         render(<Form />);
 
         const arrivingDateInput = screen.getByLabelText('arriving date:');
-        const arrivingDateErrorMsg = screen.getByText('select date > NOW');
+        const arrivingDateErrorMsg = screen.queryByText('select date > NOW');
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(arrivingDateErrorMsg).not.toHaveClass('showed');
+        expect(arrivingDateErrorMsg).not.toBeInTheDocument();
         userEvent.type(arrivingDateInput, createShiftedDate(1));
-        expect(arrivingDateErrorMsg).not.toHaveClass('showed');
+        expect(arrivingDateErrorMsg).not.toBeInTheDocument();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(arrivingDateErrorMsg).not.toHaveClass('showed');
+          const arrivingDateErrorMsg = screen.queryByText('select date > NOW');
+          expect(arrivingDateErrorMsg).not.toBeInTheDocument();
         });
       });
       test('entering wrong', async () => {
         render(<Form />);
 
         const arrivingDateInput = screen.getByLabelText('arriving date:');
-        const arrivingDateErrorMsg = screen.getByText('select date > NOW');
+        const arrivingDateErrorMsg = screen.queryByText('select date > NOW');
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(arrivingDateErrorMsg).not.toHaveClass('showed');
+        expect(arrivingDateErrorMsg).not.toBeInTheDocument();
         userEvent.type(arrivingDateInput, createShiftedDate(-1));
-        expect(arrivingDateErrorMsg).not.toHaveClass('showed');
+        expect(arrivingDateErrorMsg).not.toBeInTheDocument();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(arrivingDateErrorMsg).toHaveClass('showed');
+          const arrivingDateErrorMsg = screen.queryByText('select date > NOW');
+          expect(arrivingDateErrorMsg).toBeInTheDocument();
         });
       });
       test('correcting', async () => {
         render(<Form />);
 
         const arrivingDateInput = screen.getByLabelText('arriving date:');
-        const arrivingDateErrorMsg = screen.getByText('select date > NOW');
+        const arrivingDateErrorMsg = screen.queryByText('select date > NOW');
         const submitInput = screen.getByTestId('SubmitInput');
 
         userEvent.type(arrivingDateInput, createShiftedDate(-1));
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(arrivingDateErrorMsg).toHaveClass('showed');
+          const arrivingDateErrorMsg = screen.queryByText('select date > NOW');
+          expect(arrivingDateErrorMsg).toBeInTheDocument();
         });
         userEvent.clear(arrivingDateInput);
-        expect(arrivingDateErrorMsg).not.toHaveClass('showed');
+        expect(arrivingDateErrorMsg).not.toBeInTheDocument();
       });
     });
     describe('on country', () => {
@@ -413,46 +444,52 @@ describe('Form testing', () => {
         render(<Form />);
 
         const countryInput = screen.getByLabelText('country:');
-        const countryErrorMsg = screen.getByText('u must pick some country');
+        const countryErrorMsg = screen.queryByText('u must pick some country');
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(countryErrorMsg).not.toHaveClass('showed');
+        expect(countryErrorMsg).not.toBeInTheDocument();
         userEvent.selectOptions(countryInput, 'Belarus');
-        expect(countryErrorMsg).not.toHaveClass('showed');
+        expect(countryErrorMsg).not.toBeInTheDocument();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(countryErrorMsg).not.toHaveClass('showed');
+          const countryErrorMsg = screen.queryByText('u must pick some country');
+          expect(countryErrorMsg).not.toBeInTheDocument();
         });
       });
       test('entering wrong', async () => {
         render(<Form />);
 
         const countryInput = screen.getByLabelText('country:');
-        const countryErrorMsg = screen.getByText('u must pick some country');
+        const countryErrorMsg = screen.queryByText('u must pick some country');
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(countryErrorMsg).not.toHaveClass('showed');
+        expect(countryErrorMsg).not.toBeInTheDocument();
         userEvent.selectOptions(countryInput, '');
-        expect(countryErrorMsg).not.toHaveClass('showed');
+        expect(countryErrorMsg).not.toBeInTheDocument();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(countryErrorMsg).toHaveClass('showed');
+          const countryErrorMsg = screen.queryByText('u must pick some country');
+          expect(countryErrorMsg).toBeInTheDocument();
         });
       });
       test('correcting', async () => {
         render(<Form />);
 
         const countryInput = screen.getByLabelText('country:');
-        const countryErrorMsg = screen.getByText('u must pick some country');
+        const countryErrorMsg = screen.queryByText('u must pick some country');
         const submitInput = screen.getByTestId('SubmitInput');
 
         userEvent.selectOptions(countryInput, '');
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(countryErrorMsg).toHaveClass('showed');
+          const countryErrorMsg = screen.queryByText('u must pick some country');
+          expect(countryErrorMsg).toBeInTheDocument();
         });
         userEvent.selectOptions(countryInput, 'Belarus');
-        expect(countryErrorMsg).not.toHaveClass('showed');
+        expect(countryErrorMsg).not.toBeInTheDocument();
       });
     });
     describe('on profilePicture', () => {
@@ -468,52 +505,66 @@ describe('Form testing', () => {
           }
         });
         fileCorrect = new File(['hello'], 'hello.png', { type: 'image/png' });
-        fileIncorrect = new File([], '', { type: undefined });
+        fileIncorrect = null as unknown as File;
       });
 
       test('entering right', async () => {
         render(<Form />);
 
         const profilePictureInput: HTMLInputElement = screen.getByLabelText('profile picture:');
-        const profilePictureErrorMsg = screen.getByText('pick correct img');
+        const profilePictureErrorMsg = screen.queryByText('pick correct img');
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(profilePictureErrorMsg).not.toHaveClass('showed');
+        expect(profilePictureErrorMsg).not.toBeInTheDocument();
         await act(async () => {
           await waitFor(() => {
             userEvent.upload(profilePictureInput, fileCorrect);
           });
         });
-        expect(profilePictureErrorMsg).not.toHaveClass('showed');
+        expect(profilePictureErrorMsg).not.toBeInTheDocument();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(profilePictureErrorMsg).not.toHaveClass('showed');
+          const profilePictureErrorMsg = screen.queryByText('pick correct img');
+          expect(profilePictureErrorMsg).not.toBeInTheDocument();
         });
       });
-      test('entering wrong', async () => {
+      /*test('entering wrong', async () => {
         render(<Form />);
 
         const profilePictureInput = screen.getByLabelText('profile picture:');
-        const profilePictureErrorMsg = screen.getByText('pick correct img');
+        const profilePictureErrorMsg = screen.queryByText('pick correct img');
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(profilePictureErrorMsg).not.toHaveClass('showed');
+        expect(profilePictureErrorMsg).not.toBeInTheDocument();
         await act(async () => {
           await waitFor(() => {
-            userEvent.upload(profilePictureInput, fileIncorrect);
+            userEvent.upload(profilePictureInput, fileCorrect);
           });
         });
-        expect(profilePictureErrorMsg).not.toHaveClass('showed');
+        await act(async () => {
+          await waitFor(() => {
+            userEvent.click(profilePictureInput);
+          });
+        });
+        await act(async () => {
+          await waitFor(() => {
+            userEvent.keyboard('{Escape}');
+          });
+        });
+        expect(profilePictureErrorMsg).not.toBeInTheDocument();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(profilePictureErrorMsg).toHaveClass('showed');
+          const profilePictureErrorMsg = screen.queryByText('pick correct img');
+          expect(profilePictureErrorMsg).toBeInTheDocument();
         });
       });
       test('correcting', async () => {
         render(<Form />);
 
         const profilePictureInput = screen.getByLabelText('profile picture:');
-        const profilePictureErrorMsg = screen.getByText('pick correct img');
+        const profilePictureErrorMsg = screen.queryByText('pick correct img');
         const submitInput = screen.getByTestId('SubmitInput');
 
         await act(async () => {
@@ -522,63 +573,71 @@ describe('Form testing', () => {
           });
         });
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(profilePictureErrorMsg).toHaveClass('showed');
+          const profilePictureErrorMsg = screen.queryByText('pick correct img');
+          expect(profilePictureErrorMsg).toBeInTheDocument();
         });
         await act(async () => {
           await waitFor(() => {
             userEvent.upload(profilePictureInput, fileCorrect);
           });
         });
-        expect(profilePictureErrorMsg).not.toHaveClass('showed');
-      });
+        expect(profilePictureErrorMsg).not.toBeInTheDocument();
+      });*/
     });
     describe('on agreeToProcessingMyData', () => {
       test('entering right', async () => {
         render(<Form />);
 
         const agreeToProcessingMyDataInput = screen.getByLabelText('- agree to processing my data');
-        const agreeToProcessingMyDataErrorMsg = screen.getAllByText('must be checked')[0];
+        const agreeToProcessingMyDataErrorMsg = screen.queryAllByText('must be checked')[0];
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(agreeToProcessingMyDataErrorMsg).not.toHaveClass('showed');
+        expect(agreeToProcessingMyDataErrorMsg).toBeUndefined();
         userEvent.click(agreeToProcessingMyDataInput);
-        expect(agreeToProcessingMyDataErrorMsg).not.toHaveClass('showed');
+        expect(agreeToProcessingMyDataErrorMsg).toBeUndefined();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(agreeToProcessingMyDataErrorMsg).not.toHaveClass('showed');
+          const agreeToProcessingMyDataErrorMsg = screen.queryAllByText('must be checked');
+          expect(agreeToProcessingMyDataErrorMsg).toHaveLength(1);
         });
       });
       test('entering wrong', async () => {
         render(<Form />);
 
         const agreeToProcessingMyDataInput = screen.getByLabelText('- agree to processing my data');
-        const agreeToProcessingMyDataErrorMsg = screen.getAllByText('must be checked')[0];
+        const agreeToProcessingMyDataErrorMsg = screen.queryAllByText('must be checked')[0];
         const submitInput = screen.getByTestId('SubmitInput');
 
         userEvent.click(agreeToProcessingMyDataInput);
         userEvent.click(agreeToProcessingMyDataInput);
-        expect(agreeToProcessingMyDataErrorMsg).not.toHaveClass('showed');
+        expect(agreeToProcessingMyDataErrorMsg).toBeUndefined();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(agreeToProcessingMyDataErrorMsg).toHaveClass('showed');
+          const agreeToProcessingMyDataErrorMsg = screen.queryAllByText('must be checked');
+          expect(agreeToProcessingMyDataErrorMsg).toHaveLength(2);
         });
       });
       test('correcting', async () => {
         render(<Form />);
 
         const agreeToProcessingMyDataInput = screen.getByLabelText('- agree to processing my data');
-        const agreeToProcessingMyDataErrorMsg = screen.getAllByText('must be checked')[0];
+        const agreeToProcessingMyDataErrorMsg = screen.queryAllByText('must be checked')[0];
         const submitInput = screen.getByTestId('SubmitInput');
 
         userEvent.click(agreeToProcessingMyDataInput);
         userEvent.click(agreeToProcessingMyDataInput);
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(agreeToProcessingMyDataErrorMsg).toHaveClass('showed');
+          const agreeToProcessingMyDataErrorMsg = screen.queryAllByText('must be checked');
+          expect(agreeToProcessingMyDataErrorMsg).toHaveLength(2);
         });
         userEvent.click(agreeToProcessingMyDataInput);
-        expect(agreeToProcessingMyDataErrorMsg).not.toHaveClass('showed');
+        expect(agreeToProcessingMyDataErrorMsg).toBeUndefined();
       });
     });
     describe('on agreeReceiveAdvertisement', () => {
@@ -586,48 +645,54 @@ describe('Form testing', () => {
         render(<Form />);
 
         const agreeReceiveAdvertisementInput = screen.getByLabelText('- receive advertisement');
-        const agreeReceiveAdvertisementErrorMsg = screen.getAllByText('must be checked')[1];
+        const agreeReceiveAdvertisementErrorMsg = screen.queryAllByText('must be checked')[1];
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(agreeReceiveAdvertisementErrorMsg).not.toHaveClass('showed');
+        expect(agreeReceiveAdvertisementErrorMsg).toBeUndefined();
         userEvent.click(agreeReceiveAdvertisementInput);
-        expect(agreeReceiveAdvertisementErrorMsg).not.toHaveClass('showed');
+        expect(agreeReceiveAdvertisementErrorMsg).toBeUndefined();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(agreeReceiveAdvertisementErrorMsg).not.toHaveClass('showed');
+          const agreeReceiveAdvertisementErrorMsg = screen.queryAllByText('must be checked');
+          expect(agreeReceiveAdvertisementErrorMsg).toHaveLength(1);
         });
       });
       test('entering wrong', async () => {
         render(<Form />);
 
         const agreeReceiveAdvertisementInput = screen.getByLabelText('- receive advertisement');
-        const agreeReceiveAdvertisementErrorMsg = screen.getAllByText('must be checked')[1];
+        const agreeReceiveAdvertisementErrorMsg = screen.queryAllByText('must be checked')[1];
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(agreeReceiveAdvertisementErrorMsg).not.toHaveClass('showed');
+        expect(agreeReceiveAdvertisementErrorMsg).toBeUndefined();
         userEvent.click(agreeReceiveAdvertisementInput);
         userEvent.click(agreeReceiveAdvertisementInput);
-        expect(agreeReceiveAdvertisementErrorMsg).not.toHaveClass('showed');
+        expect(agreeReceiveAdvertisementErrorMsg).toBeUndefined();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(agreeReceiveAdvertisementErrorMsg).toHaveClass('showed');
+          const agreeReceiveAdvertisementErrorMsg = screen.queryAllByText('must be checked');
+          expect(agreeReceiveAdvertisementErrorMsg).toHaveLength(2);
         });
       });
       test('correcting', async () => {
         render(<Form />);
 
         const agreeReceiveAdvertisementInput = screen.getByLabelText('- receive advertisement');
-        const agreeReceiveAdvertisementErrorMsg = screen.getAllByText('must be checked')[1];
+        const agreeReceiveAdvertisementErrorMsg = screen.queryAllByText('must be checked')[1];
         const submitInput = screen.getByTestId('SubmitInput');
 
         userEvent.click(agreeReceiveAdvertisementInput);
         userEvent.click(agreeReceiveAdvertisementInput);
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(agreeReceiveAdvertisementErrorMsg).toHaveClass('showed');
+          const agreeReceiveAdvertisementErrorMsg = screen.queryAllByText('must be checked');
+          expect(agreeReceiveAdvertisementErrorMsg).toHaveLength(2);
         });
         userEvent.click(agreeReceiveAdvertisementInput);
-        expect(agreeReceiveAdvertisementErrorMsg).not.toHaveClass('showed');
+        expect(agreeReceiveAdvertisementErrorMsg).toBeUndefined();
       });
     });
     describe('on switcherMaleOption', () => {
@@ -635,30 +700,34 @@ describe('Form testing', () => {
         render(<Form />);
 
         const switcherMaleOptionInput = screen.getByLabelText('- Male');
-        const switcherMaleOptionErrorMsg = screen.getByText('u musk pick one of these');
+        const switcherMaleOptionErrorMsg = screen.queryByText('u musk pick one of these');
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(switcherMaleOptionErrorMsg).not.toHaveClass('showed');
+        expect(switcherMaleOptionErrorMsg).not.toBeInTheDocument();
         userEvent.click(switcherMaleOptionInput);
-        expect(switcherMaleOptionErrorMsg).not.toHaveClass('showed');
+        expect(switcherMaleOptionErrorMsg).not.toBeInTheDocument();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(switcherMaleOptionErrorMsg).not.toHaveClass('showed');
+          const switcherMaleOptionErrorMsg = screen.queryByText('u musk pick one of these');
+          expect(switcherMaleOptionErrorMsg).not.toBeInTheDocument();
         });
       });
       test('entering wrong', async () => {
         render(<Form />);
 
         const agreeReceiveAdvertisementInput = screen.getByLabelText('- receive advertisement');
-        const switcherMaleOptionErrorMsg = screen.getByText('u musk pick one of these');
+        const switcherMaleOptionErrorMsg = screen.queryByText('u musk pick one of these');
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(switcherMaleOptionErrorMsg).not.toHaveClass('showed');
+        expect(switcherMaleOptionErrorMsg).not.toBeInTheDocument();
         userEvent.click(agreeReceiveAdvertisementInput);
-        expect(switcherMaleOptionErrorMsg).not.toHaveClass('showed');
+        expect(switcherMaleOptionErrorMsg).not.toBeInTheDocument();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(switcherMaleOptionErrorMsg).toHaveClass('showed');
+          const switcherMaleOptionErrorMsg = screen.queryByText('u musk pick one of these');
+          expect(switcherMaleOptionErrorMsg).toBeInTheDocument();
         });
       });
       test('correcting', async () => {
@@ -666,16 +735,18 @@ describe('Form testing', () => {
 
         const agreeReceiveAdvertisementInput = screen.getByLabelText('- receive advertisement');
         const switcherMaleOptionInput = screen.getByLabelText('- Male');
-        const switcherMaleOptionErrorMsg = screen.getByText('u musk pick one of these');
+        const switcherMaleOptionErrorMsg = screen.queryByText('u musk pick one of these');
         const submitInput = screen.getByTestId('SubmitInput');
 
         userEvent.click(agreeReceiveAdvertisementInput);
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(switcherMaleOptionErrorMsg).toHaveClass('showed');
+          const switcherMaleOptionErrorMsg = screen.queryByText('u musk pick one of these');
+          expect(switcherMaleOptionErrorMsg).toBeInTheDocument();
         });
         userEvent.click(switcherMaleOptionInput);
-        expect(switcherMaleOptionErrorMsg).not.toHaveClass('showed');
+        expect(switcherMaleOptionErrorMsg).not.toBeInTheDocument();
       });
     });
     describe('on switcherFemaleOption', () => {
@@ -683,30 +754,34 @@ describe('Form testing', () => {
         render(<Form />);
 
         const switcherFemaleOptionInput = screen.getByLabelText('- Female');
-        const switcherFemaleOptionErrorMsg = screen.getByText('u musk pick one of these');
+        const switcherFemaleOptionErrorMsg = screen.queryByText('u musk pick one of these');
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(switcherFemaleOptionErrorMsg).not.toHaveClass('showed');
+        expect(switcherFemaleOptionErrorMsg).not.toBeInTheDocument();
         userEvent.click(switcherFemaleOptionInput);
-        expect(switcherFemaleOptionErrorMsg).not.toHaveClass('showed');
+        expect(switcherFemaleOptionErrorMsg).not.toBeInTheDocument();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(switcherFemaleOptionErrorMsg).not.toHaveClass('showed');
+          const switcherFemaleOptionErrorMsg = screen.queryByText('u musk pick one of these');
+          expect(switcherFemaleOptionErrorMsg).not.toBeInTheDocument();
         });
       });
       test('entering wrong', async () => {
         render(<Form />);
 
         const agreeReceiveAdvertisementInput = screen.getByLabelText('- receive advertisement');
-        const switcherFemaleOptionErrorMsg = screen.getByText('u musk pick one of these');
+        const switcherFemaleOptionErrorMsg = screen.queryByText('u musk pick one of these');
         const submitInput = screen.getByTestId('SubmitInput');
 
-        expect(switcherFemaleOptionErrorMsg).not.toHaveClass('showed');
+        expect(switcherFemaleOptionErrorMsg).not.toBeInTheDocument();
         userEvent.click(agreeReceiveAdvertisementInput);
-        expect(switcherFemaleOptionErrorMsg).not.toHaveClass('showed');
+        expect(switcherFemaleOptionErrorMsg).not.toBeInTheDocument();
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(switcherFemaleOptionErrorMsg).toHaveClass('showed');
+          const switcherFemaleOptionErrorMsg = screen.queryByText('u musk pick one of these');
+          expect(switcherFemaleOptionErrorMsg).toBeInTheDocument();
         });
       });
       test('correcting', async () => {
@@ -714,16 +789,18 @@ describe('Form testing', () => {
 
         const agreeReceiveAdvertisementInput = screen.getByLabelText('- receive advertisement');
         const switcherFemaleOptionInput = screen.getByLabelText('- Female');
-        const switcherFemaleOptionErrorMsg = screen.getByText('u musk pick one of these');
+        const switcherFemaleOptionErrorMsg = screen.queryByText('u musk pick one of these');
         const submitInput = screen.getByTestId('SubmitInput');
 
         userEvent.click(agreeReceiveAdvertisementInput);
         userEvent.click(submitInput);
+        expect(await screen.findByTestId('SubmitInput')).toBeDisabled();
         await wrapToPromiseWithTimeout(() => {
-          expect(switcherFemaleOptionErrorMsg).toHaveClass('showed');
+          const switcherFemaleOptionErrorMsg = screen.queryByText('u musk pick one of these');
+          expect(switcherFemaleOptionErrorMsg).toBeInTheDocument();
         });
         userEvent.click(switcherFemaleOptionInput);
-        expect(switcherFemaleOptionErrorMsg).not.toHaveClass('showed');
+        expect(switcherFemaleOptionErrorMsg).not.toBeInTheDocument();
       });
     });
   });

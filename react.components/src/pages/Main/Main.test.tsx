@@ -9,7 +9,7 @@ import Main from './Main';
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-describe('Card testing', () => {
+describe('Main testing', () => {
   let response: ICharacterInfo[];
   let mockedResponse: AxiosResponse;
   let mockedResponseSearchByName: AxiosResponse;

@@ -1,4 +1,7 @@
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
+import { UseFormRegister } from 'react-hook-form/dist/types/form';
+import { Path, RegisterOptions } from 'react-hook-form';
+import { FieldErrors } from 'react-hook-form/dist/types/errors';
 
 export interface ICharacterInfo {
   id: number;
@@ -26,34 +29,19 @@ export interface ISearchBarProps {
   type?: string;
   placeholder?: string;
   className?: string;
-  updateCharactersByName: (name?: string) => void;
+  updateCharactersByName?: (name?: string) => void;
 }
 
-export interface ISearchBarState {
-  searchRequest: string;
-}
-
-export interface ICardSetProps<ICharacterRowInfo> {
-  dataSet: ICharacterRowInfo[];
-}
-
-export interface ICardSetState<ICharacterRowInfo> {
-  cards?: ICharacterRowInfo[];
+export interface ICardSetProps<ICharacterInfo> {
+  dataSet: ICharacterInfo[];
 }
 
 export interface ICardProps {
   id: string | number;
   name: string;
-  status: string;
   origin: string;
   location: string;
   image: string;
-}
-
-export interface ICardState {
-  isFullCardOpened: boolean;
-  isFullCardLoading: boolean;
-  characterFullInfo: ICharacterInfo | null;
 }
 
 export enum characterStatus {
@@ -62,31 +50,8 @@ export enum characterStatus {
   unknown = 'unknown',
 }
 
-export interface IShareButtonProps {
-  name?: string;
-}
-
-export interface IFavouriteButtonProps {
-  onClick?: MouseEventHandler;
-  isFavorite?: boolean;
-}
-
 export interface IFormProps {
   addNewCard?: (card: IFormsCardProps) => void;
-}
-
-export interface IFormState {
-  isFirstNameCorrect: boolean;
-  isLastNameCorrect: boolean;
-  isZipCodeCorrect: boolean;
-  isBirthdayCorrect: boolean;
-  isArrivingDateCorrect: boolean;
-  isCountryCorrect: boolean;
-  isAgreementToProcConfDataCorrect: boolean;
-  isAgreementToGetAdvToEmail: boolean;
-  isGenderCorrect: boolean;
-  isProfilePictureCorrect: boolean;
-  isSubmitButtonDisabled: boolean;
 }
 
 export enum genderTypes {
@@ -109,7 +74,6 @@ export interface IFormsCardProps {
 }
 
 export interface IFormsCardSetProps {
-  name?: string;
   cardSetArray?: IFormsCardProps[];
 }
 
@@ -122,55 +86,42 @@ export interface IInputSelfField {
   label: string;
 }
 
-export interface IInputVerifiable {
-  formatInstruction: string;
-  isCorrectFormat: boolean;
-  onChange: (a: React.ChangeEvent) => void;
-}
-
 export interface IInputCheckable {
   defaultChecked: boolean;
 }
 
-export interface IInputValueable {
-  defaultValue: string;
+export interface IInputUnderFormHook<TFormValues> extends IInputWhole {
+  name: Path<TFormValues>;
+  register: UseFormRegister<TFormValues>;
+  rules?: RegisterOptions;
+  errors?: FieldErrors<TFormValues>;
 }
 
-export interface ITextInputProps
-  extends IInputWhole,
-    IInputSelfField,
-    IInputVerifiable,
-    IInputValueable {}
+export interface ITextInputProps<TFormValues>
+  extends IInputSelfField,
+    IInputUnderFormHook<TFormValues> {}
 
-export interface IDateInputProps
-  extends IInputWhole,
-    IInputSelfField,
-    IInputVerifiable,
-    IInputValueable {}
+export interface IDateInputProps<TFormValues>
+  extends IInputSelfField,
+    IInputUnderFormHook<TFormValues> {}
 
-export interface IDropdownInputProps
-  extends IInputWhole,
-    IInputSelfField,
-    IInputVerifiable,
-    IInputValueable {
+export interface IDropdownInputProps<TFormValues>
+  extends IInputSelfField,
+    IInputUnderFormHook<TFormValues> {
   options: string[];
 }
 
-export interface IFileUploadInputProps
-  extends IInputWhole,
-    IInputSelfField,
-    IInputVerifiable,
-    IInputValueable {}
+export interface IFileUploadInputProps<TFormValues>
+  extends IInputSelfField,
+    IInputUnderFormHook<TFormValues> {}
 
-export interface ICheckboxInputProps
-  extends IInputWhole,
-    IInputSelfField,
-    IInputVerifiable,
-    IInputCheckable {}
+export interface ICheckboxInputProps<TFormValues>
+  extends IInputSelfField,
+    IInputUnderFormHook<TFormValues> {}
 
 export interface ISwitcherOptionProps extends IInputSelfField, IInputCheckable {}
 
-export interface ISwitcherInputProps extends IInputWhole, IInputVerifiable {
+export interface ISwitcherInputProps<TFormValues> extends IInputUnderFormHook<TFormValues> {
   options: ISwitcherOptionProps[];
 }
 
@@ -178,23 +129,6 @@ export interface ISubmitInputProps extends IInputWhole {
   id: string;
   value: string;
   isDisabled: boolean;
-}
-
-export interface IFormsPageProps {
-  name?: string;
-}
-
-export interface IFormsPageState {
-  cardSet: IFormsCardProps[];
-}
-
-export interface IMainProps {
-  name?: string;
-}
-
-export interface IMainState {
-  dataSet: ICharacterInfo[];
-  isDataLoading: boolean;
 }
 
 export enum characterQueryGender {
@@ -212,33 +146,15 @@ export interface ICharacterQueryAttributes {
   gender?: characterQueryGender;
 }
 
-export interface IAppProps {
-  name?: string;
-}
-
-export interface IAppState {
-  isLoading: boolean;
-}
-
 export interface IModalWindowProps {
-  visible: boolean;
-  setVisible: (newState: boolean) => void;
+  onClose: () => void;
 }
 
 export interface ICardFullProps {
   character: ICharacterInfo | null;
 }
 
-export interface IAppRouter {
-  name?: string;
-}
-
-export interface IButtonCustom {
-  name?: string;
+export interface IButtonCustomProps {
   onClick?: (event: React.MouseEvent) => void;
   'data-testid'?: string;
-}
-
-export interface IFavouriteButton {
-  isLiked: boolean;
 }

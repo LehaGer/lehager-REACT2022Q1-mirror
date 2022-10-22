@@ -28,10 +28,10 @@ describe('SearchBar testing', () => {
     expect(window.localStorage.getItem(SearchBarName)).toEqual('some testing string');
   });
 
-  test('does searchBar load value from localStorage on mounting', () => {
+  test('does searchBar load value from localStorage on mounting', async () => {
     const SearchBarName = 'search-bar';
-    window.localStorage.setItem(SearchBarName, 'some testing string');
     render(<SearchBar name={SearchBarName} />);
+    await window.localStorage.setItem(SearchBarName, 'some testing string');
     expect(window.localStorage.getItem(SearchBarName)).toEqual('some testing string');
   });
 });

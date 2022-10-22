@@ -29,7 +29,6 @@ describe('Card testing', () => {
         key={response[0].id}
         id={response[0].id}
         name={response[0].name}
-        status={response[0].status}
         origin={response[0].origin.name}
         location={response[0].location.name}
         image={response[0].image}
@@ -46,7 +45,6 @@ describe('Card testing', () => {
         key={response[0].id}
         id={response[0].id}
         name={response[0].name}
-        status={response[0].status}
         origin={response[0].origin.name}
         location={response[0].location.name}
         image={response[0].image}
@@ -55,6 +53,8 @@ describe('Card testing', () => {
     expect(screen.queryByTestId('Loader')).not.toBeInTheDocument();
     userEvent.click(screen.getByTestId('learnMore'));
     expect(screen.getByTestId('Loader')).toBeInTheDocument();
+
+    expect(await screen.findByTestId('Loader')).not.toBeInTheDocument();
   });
 
   test('does Card open FullCard', async () => {
@@ -63,7 +63,6 @@ describe('Card testing', () => {
         key={response[0].id}
         id={response[0].id}
         name={response[0].name}
-        status={response[0].status}
         origin={response[0].origin.name}
         location={response[0].location.name}
         image={response[0].image}
@@ -84,7 +83,6 @@ describe('Card testing', () => {
         key={response[0].id}
         id={response[0].id}
         name={response[0].name}
-        status={response[0].status}
         origin={response[0].origin.name}
         location={response[0].location.name}
         image={response[0].image}
