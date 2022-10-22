@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import MockDataSet from './data/formCardsData';
-import FormsCardSet from '../components/FormsCardSet/FormsCardSet';
-import FormsPage from '../pages/Forms/FormsPage';
+import MockDataSet from '../../tests/data/formCardsData';
+import FormsCardSet from './FormsCardSet';
+import FormsPage from '../../pages/Forms/FormsPage';
 import userEvent from '@testing-library/user-event/dist';
-import createShiftedDate from './functions/createShiftedDate';
+import createShiftedDate from '../../tests/functions/createShiftedDate';
 
 describe('FormsCardSet testing', () => {
   test('does FormsCardSet correspond to cards count', async () => {

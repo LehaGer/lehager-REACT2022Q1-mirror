@@ -12,32 +12,34 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
   }
 
   static defaultProps: ISearchBarProps = {
-    name: 'default-name',
+    name: 'search-bar',
     type: 'text',
-    placeholder: 'default searching request',
+    placeholder: 'Search...',
     className: ItemStyles.searchBar,
+    updateCharactersByName: () => null,
   };
+  private searchBarName: string = this.props.name || 'search-bar';
 
   componentDidMount(): void {
-    this.setState({
-      searchRequest: localStorage.getItem(this.props.name) || '',
-    });
+    const searchRequest = localStorage.getItem(this.searchBarName) || '';
+    this.setState({ searchRequest: searchRequest });
+    this.props.updateCharactersByName(searchRequest);
   }
 
   componentWillUnmount(): void {
-    this.handleSavingCurrentState();
+    localStorage.setItem(this.searchBarName, this.state.searchRequest);
   }
 
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    this.setState({
-      searchRequest: value,
-    });
-    localStorage.setItem(this.props.name, value);
+    this.setState({ searchRequest: value });
+    localStorage.setItem(this.searchBarName, value);
   };
 
-  handleSavingCurrentState = () => {
-    localStorage.setItem(this.props.name, this.state.searchRequest as string);
+  handleKeyUp = async (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      await this.props.updateCharactersByName(this.state.searchRequest);
+    }
   };
 
   render() {
@@ -47,7 +49,8 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
         placeholder={this.props.placeholder}
         className={this.props.className}
         value={this.state.searchRequest}
-        onInput={this.handleChange}
+        onInput={this.handleInput}
+        onKeyUp={this.handleKeyUp}
         data-testid="searchBar"
       />
     );

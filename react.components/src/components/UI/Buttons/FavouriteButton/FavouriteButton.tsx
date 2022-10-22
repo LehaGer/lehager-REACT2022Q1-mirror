@@ -1,10 +1,7 @@
 import React from 'react';
-import { IFavouriteButtonProps } from '../../../../types/interfaces';
+import { IFavouriteButton, IFavouriteButtonProps } from '../../../../types/interfaces';
 import ItemStyles from './FavouriteButton.module.css';
 
-export interface IFavouriteButton {
-  isLiked: boolean;
-}
 class FavouriteButton extends React.Component<IFavouriteButtonProps, IFavouriteButton> {
   constructor(props: IFavouriteButtonProps) {
     super(props);

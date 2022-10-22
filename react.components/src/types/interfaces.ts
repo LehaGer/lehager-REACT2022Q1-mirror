@@ -1,6 +1,6 @@
-import { MouseEventHandler } from 'react';
+import React, { MouseEventHandler } from 'react';
 
-export interface ICharacterRowInfo {
+export interface ICharacterInfo {
   id: number;
   name: string;
   status: string;
@@ -22,22 +22,23 @@ export interface ICharacterRowInfo {
 }
 
 export interface ISearchBarProps {
-  name: string;
+  name?: string | 'default-name';
   type?: string;
   placeholder?: string;
   className?: string;
+  updateCharactersByName: (name?: string) => void;
 }
 
 export interface ISearchBarState {
-  searchRequest?: string;
+  searchRequest: string;
 }
 
 export interface ICardSetProps<ICharacterRowInfo> {
-  dataSet?: ICharacterRowInfo[];
+  dataSet: ICharacterRowInfo[];
 }
 
 export interface ICardSetState<ICharacterRowInfo> {
-  cards: ICharacterRowInfo[];
+  cards?: ICharacterRowInfo[];
 }
 
 export interface ICardProps {
@@ -50,8 +51,15 @@ export interface ICardProps {
 }
 
 export interface ICardState {
-  isFavorite: boolean;
-  isHovered: boolean;
+  isFullCardOpened: boolean;
+  isFullCardLoading: boolean;
+  characterFullInfo: ICharacterInfo | null;
+}
+
+export enum characterStatus {
+  Alive = 'Alive',
+  Dead = 'Dead',
+  unknown = 'unknown',
 }
 
 export interface IShareButtonProps {
@@ -170,4 +178,67 @@ export interface ISubmitInputProps extends IInputWhole {
   id: string;
   value: string;
   isDisabled: boolean;
+}
+
+export interface IFormsPageProps {
+  name?: string;
+}
+
+export interface IFormsPageState {
+  cardSet: IFormsCardProps[];
+}
+
+export interface IMainProps {
+  name?: string;
+}
+
+export interface IMainState {
+  dataSet: ICharacterInfo[];
+  isDataLoading: boolean;
+}
+
+export enum characterQueryGender {
+  female = 'female',
+  male = 'male',
+  genderless = 'genderless',
+  unknown = 'unknown',
+}
+
+export interface ICharacterQueryAttributes {
+  name?: string;
+  status?: characterStatus;
+  species?: string;
+  type?: string;
+  gender?: characterQueryGender;
+}
+
+export interface IAppProps {
+  name?: string;
+}
+
+export interface IAppState {
+  isLoading: boolean;
+}
+
+export interface IModalWindowProps {
+  visible: boolean;
+  setVisible: (newState: boolean) => void;
+}
+
+export interface ICardFullProps {
+  character: ICharacterInfo | null;
+}
+
+export interface IAppRouter {
+  name?: string;
+}
+
+export interface IButtonCustom {
+  name?: string;
+  onClick?: (event: React.MouseEvent) => void;
+  'data-testid'?: string;
+}
+
+export interface IFavouriteButton {
+  isLiked: boolean;
 }

@@ -1,9 +1,6 @@
 import React from 'react';
 import ItemStyles from './ButtonCustom.module.css';
-
-interface IButtonCustom {
-  name?: string;
-}
+import { IButtonCustom } from '../../../../types/interfaces';
 
 class ButtonCustom extends React.Component<IButtonCustom> {
   constructor(props: IButtonCustom) {
@@ -11,7 +8,15 @@ class ButtonCustom extends React.Component<IButtonCustom> {
   }
 
   render() {
-    return <button className={ItemStyles.btnCustom}>{this.props.children}</button>;
+    return (
+      <button
+        className={ItemStyles.btnCustom}
+        onClick={this.props.onClick}
+        data-testid={this.props['data-testid']}
+      >
+        {this.props.children}
+      </button>
+    );
   }
 }
 

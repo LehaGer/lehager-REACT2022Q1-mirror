@@ -1,48 +1,20 @@
 import React from 'react';
 import Card from '../Card/Card';
 import ItemStyles from './CardSet.module.css';
-import { ICharacterRowInfo, ICardSetProps, ICardSetState } from '../../types/interfaces';
-import axios from 'axios';
+import { ICardSetProps, ICardSetState, ICharacterInfo } from '../../types/interfaces';
 
 class CardSet extends React.Component<
-  ICardSetProps<ICharacterRowInfo>,
-  ICardSetState<ICharacterRowInfo>
+  ICardSetProps<ICharacterInfo>,
+  ICardSetState<ICharacterInfo>
 > {
-  _isMounted = false;
-  constructor(props: ICardSetProps<ICharacterRowInfo>) {
+  constructor(props: ICardSetProps<ICharacterInfo>) {
     super(props);
-
-    this.state = {
-      cards: [],
-    };
-  }
-
-  loadCards = async () => {
-    try {
-      const response = await axios.get('https://rickandmortyapi.com/api/character/?page=1');
-      if (this._isMounted) {
-        this.setState({
-          cards: response.data.results,
-        });
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  componentDidMount(): void {
-    this._isMounted = true;
-    this.loadCards().then();
-  }
-
-  componentWillUnmount(): void {
-    this._isMounted = false;
   }
 
   render() {
-    return (
-      <div className={ItemStyles.cardSet}>
-        {this.state.cards.map((dataSetElement) => (
+    return this.props.dataSet.length ? (
+      <div className={ItemStyles.cardSet} data-testid="CardSet">
+        {this.props.dataSet.map((dataSetElement) => (
           <Card
             key={dataSetElement.id}
             id={dataSetElement.id}
@@ -53,6 +25,10 @@ class CardSet extends React.Component<
             image={dataSetElement.image}
           />
         ))}
+      </div>
+    ) : (
+      <div className={ItemStyles.notFoundMsg} data-testid="MainNotFoundMsg">
+        <div>No matches were found =( </div>
       </div>
     );
   }
