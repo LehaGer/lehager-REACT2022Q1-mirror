@@ -1,18 +1,18 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { matchRoutes, NavLink, useLocation } from 'react-router-dom';
 import ItemStyles from './Navbar.module.css';
-import { AppContext } from '../../context/AppContext';
 import { ICharacterInfo } from '../../types/interfaces';
+import { useAppSelector } from '../../hooks/redux';
 
 const Navbar = () => {
-  const { state } = useContext(AppContext);
+  const characterCards = useAppSelector((state) => state.characterCardsReducer);
   const location = useLocation();
 
   const matchesResult = matchRoutes([{ path: '/character/:id' }], location);
   const characterId = matchesResult?.[0]?.params?.id;
 
   let character: ICharacterInfo | undefined;
-  state.characterCards.forEach((el) => {
+  characterCards.data.forEach((el) => {
     if (el.id === Number(characterId)) {
       character = el;
     }

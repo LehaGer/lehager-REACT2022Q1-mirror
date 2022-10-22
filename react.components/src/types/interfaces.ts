@@ -2,6 +2,7 @@ import React from 'react';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { FieldError, Path, RegisterOptions } from 'react-hook-form';
 import { FieldErrors } from 'react-hook-form/dist/types/errors';
+import { CARD_SET_STATUS } from '../store/reducers/characterCardsSlice';
 
 export interface ICharacterNavigationInfo {
   count: number;
@@ -36,7 +37,7 @@ export interface ISearchBarProps {
   type?: string;
   placeholder?: string;
   className?: string;
-  updateCharactersByName?: (attributes?: ICharacterQueryAttributes) => void;
+  updateCharactersByName?: (attributes?: ICharacterQueryAttributes, page?: IPagination) => void;
 }
 
 export interface ICardSetProps<ICardInfo> {
@@ -83,43 +84,43 @@ export interface IFormsCardProps {
 export interface IFormsState {
   firstName: {
     value: string;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   lastName: {
     value: string;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   zipCode: {
     value: string;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   birthday: {
     value: string;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   arrivingDate: {
     value: string;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   country: {
     value: string;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   isAgreeToProcConfData: {
     value: boolean;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   isAgreeToGetAdvToEmail: {
     value: boolean;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   gender: {
     value: genderTypes | null;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   profilePicture: {
     value: FileList | null;
-    hasError: FieldError | undefined;
+    hasError?: FieldError;
   };
   isSubmitButtonDisabled: boolean;
 }
@@ -191,7 +192,6 @@ export interface ICharacterQueryAttributes {
   species?: string;
   type?: string;
   gender?: characterQueryGender;
-  page?: number;
 }
 
 export interface IModalWindowProps {
@@ -235,6 +235,17 @@ export interface ICardFilter {
 export interface IPagination {
   pageCapacity: number;
   pagesCount?: number;
-  currentPage?: number;
+  currentPage: number;
   navigationInfo?: ICharacterNavigationInfo;
+}
+
+export interface ICardsSet {
+  data: ICharacterInfo[];
+  status: CARD_SET_STATUS;
+  error: string | null;
+}
+
+export interface IDBResponse {
+  info: ICharacterNavigationInfo;
+  results: ICharacterInfo[];
 }

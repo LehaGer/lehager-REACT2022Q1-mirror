@@ -1,8 +1,8 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import ItemStyles from './SearchBar.module.css';
 import { ISearchBarProps } from '../../types/interfaces';
-import { AppContext } from '../../context/AppContext';
-import { characterQueryReducerActionVariants } from '../../reducers/characterQueryReducer';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { characterQuerySlice } from '../../store/reducers/characterQuerySlice';
 
 const SearchBar: FC<ISearchBarProps> = ({
   type = 'text',
@@ -10,22 +10,22 @@ const SearchBar: FC<ISearchBarProps> = ({
   className = ItemStyles.searchBar,
   updateCharactersByName = () => null,
 }) => {
-  const { state, dispatch } = useContext(AppContext);
+  const dispatch = useAppDispatch();
+  const characterQuery = useAppSelector((state) => state.characterQueryReducer);
+  const cardFilter = useAppSelector((state) => state.cardFilterReducer);
+  const { setSearchString } = characterQuerySlice.actions;
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    dispatch({
-      type: characterQueryReducerActionVariants.SET_SEARCH_STR,
-      payload: value,
-    });
+    dispatch(setSearchString(value));
   };
   const handleKeyUp = async (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
       await updateCharactersByName({
-        name: state.characterQuery,
-        status: state.cardFilter.status,
-        gender: state.cardFilter.gender,
-        species: state.cardFilter.species,
+        name: characterQuery,
+        status: cardFilter.status,
+        gender: cardFilter.gender,
+        species: cardFilter.species,
       });
     }
   };
@@ -35,7 +35,7 @@ const SearchBar: FC<ISearchBarProps> = ({
       type={type}
       placeholder={placeholder}
       className={className}
-      value={state.characterQuery}
+      value={characterQuery}
       onInput={handleInput}
       onKeyUp={handleKeyUp}
       data-testid="searchBar"

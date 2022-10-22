@@ -1,14 +1,18 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import DropdownInput from '../UI/Inputs/DropdownInput/DropdownInput';
 import ItemStyles from './CardFilter.module.css';
 import { useForm } from 'react-hook-form';
-import { AppContext } from '../../context/AppContext';
-import { cardFilterReducerActionVariants } from '../../reducers/cardFilterReducer';
 import { characterQueryGender, characterStatus } from '../../types/interfaces';
-import { paginationReducerActionVariants } from '../../reducers/paginationReducer';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { cardFilterSlice } from '../../store/reducers/cardFilterSlice';
+import { paginationSlice } from '../../store/reducers/paginationSlice';
 
 const CardFilter = () => {
-  const { state, dispatch } = useContext(AppContext);
+  const cardFilter = useAppSelector((state) => state.cardFilterReducer);
+  const pagination = useAppSelector((state) => state.paginationReducer);
+  const { setCharacterGender, setCharacterStatus, setCharacterSpecies } = cardFilterSlice.actions;
+  const { setPageCapacity, setCurrentPage } = paginationSlice.actions;
+  const dispatch = useAppDispatch();
 
   type FormFields = {
     characterStatus: characterStatus;
@@ -29,35 +33,20 @@ const CardFilter = () => {
 
   useEffect(() => {
     reset({
-      characterStatus: state.cardFilter.status,
-      characterGender: state.cardFilter.gender,
-      characterSpecies: state.cardFilter.species,
-      cardsAmount: state.pagination.pageCapacity?.toString(),
+      characterStatus: cardFilter.status,
+      characterGender: cardFilter.gender,
+      characterSpecies: cardFilter.species,
+      cardsAmount: pagination.pageCapacity?.toString(),
     });
   }, []);
 
   useEffect(() => {
     const subscription = watch((data) => {
-      dispatch({
-        type: cardFilterReducerActionVariants.SET_CHARACTER_STATUS,
-        payload: { status: data.characterStatus },
-      });
-      dispatch({
-        type: cardFilterReducerActionVariants.SET_CHARACTER_GENDER,
-        payload: { gender: data.characterGender },
-      });
-      dispatch({
-        type: cardFilterReducerActionVariants.SET_CHARACTER_SPECIES,
-        payload: { species: data.characterSpecies },
-      });
-      dispatch({
-        type: paginationReducerActionVariants.SET_PAGE_CAPACITY,
-        payload: { pageCapacity: Number.parseInt(data.cardsAmount || '') },
-      });
-      dispatch({
-        type: paginationReducerActionVariants.SET_CURRENT_PAGE,
-        payload: { pageCapacity: Number.parseInt(data.cardsAmount || ''), currentPage: 1 },
-      });
+      dispatch(setCharacterStatus(data.characterStatus));
+      dispatch(setCharacterGender(data.characterGender));
+      dispatch(setCharacterSpecies(data.characterSpecies));
+      dispatch(setPageCapacity(Number.parseInt(data.cardsAmount || '')));
+      dispatch(setCurrentPage(1));
     });
 
     return () => subscription.unsubscribe();

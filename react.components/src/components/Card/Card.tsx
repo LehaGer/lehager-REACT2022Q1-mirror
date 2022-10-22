@@ -1,20 +1,20 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import ShareButton from '../UI/Buttons/ShareButton/ShareButton';
 import { ICardProps } from '../../types/interfaces';
 import FavouriteButton from '../UI/Buttons/FavouriteButton/FavouriteButton';
 import ButtonCustom from '../UI/Buttons/ButtonCustom/ButtonCustom';
 import ItemStyles from './Card.module.css';
 import { useNavigate } from 'react-router-dom';
-import { AppContext } from '../../context/AppContext';
+import { useAppSelector } from '../../hooks/redux';
 
 const Card: FC<ICardProps> = ({ id, name, origin, location, image }) => {
-  const { state } = useContext(AppContext);
+  const characterCards = useAppSelector((state) => state.characterCardsReducer);
 
   const navigate = useNavigate();
 
   const handleMoreInfoClick = async (event: React.MouseEvent) => {
     event.preventDefault();
-    const isStateContains = state.characterCards.some((e) => e.id === id);
+    const isStateContains = characterCards.data.some((e) => e.id === id);
     if (isStateContains) {
       navigate(`character/${id}`);
     } else {
