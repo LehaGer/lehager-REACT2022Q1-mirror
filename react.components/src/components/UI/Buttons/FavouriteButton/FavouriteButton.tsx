@@ -1,5 +1,5 @@
 import React from 'react';
-import { IFavouriteButtonProps } from '../../../types/interfaces';
+import { IFavouriteButtonProps } from '../../../../types/interfaces';
 import ItemStyles from './FavouriteButton.module.css';
 
 export interface IFavouriteButton {

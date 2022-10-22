@@ -8,6 +8,7 @@
     box-shadow: 0 0 1em #0000003d;
     height: 450px;
     transition: all 0.2s linear;
+    overflow: hidden;
 }
 
 .card:hover {

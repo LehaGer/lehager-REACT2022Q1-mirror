@@ -1,13 +1,13 @@
-.shrBtn {
+.fvrBtn {
     color: white;
     font-size: 0.7em;
     height: 3em;
     width: 3em;
 
-    background-image: url('../../../asserts/svg/share-icon.svg');
+    background-image: url('../../../../asserts/svg/favourite-icon.svg');
     background-color: rgba(0,0,0,0.1);
     background-repeat: no-repeat;
-    background-position: calc(50% - .1em) calc(50% - .05em);
+    background-position: 50% 50%;
     background-size: 1.5em;
     border: none;
     border-radius: 50%;
@@ -19,13 +19,13 @@
 
 }
 
-.shrBtn:hover {
+.fvrBtn:hover {
     background-color: rgba(0,0,0,0.3);
     box-shadow: 0.1em 0.1em 0.5em rgba(0, 0, 0, 0.5);
 
 }
 
-.shrBtn > img {
+.fvrBtn > img {
     vertical-align: middle;
     height: 3em;
 }

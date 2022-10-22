@@ -1,0 +1,26 @@
+.submitInput {
+    color: white;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 1em;
+    padding: 1em;
+    box-shadow: 0.1em 0.1em 0.5em rgba(0, 0, 0, 0.2);
+    transition: all 0.2s linear;
+    width: 95%;
+    margin: 1em auto auto;
+}
+
+.submitInput:not([disabled]) {
+    background-color: #ffa5009c;
+    cursor: pointer;
+}
+
+.submitInput[disabled] {
+    background-color: #6f6f6f47;
+    cursor: default;
+}
+
+.submitInput:not([disabled]):hover {
+    background-color: rgba(220, 139, 0, 0.71);
+    box-shadow: 0.1em 0.1em 0.5em rgba(0, 0, 0, 0.5);
+}

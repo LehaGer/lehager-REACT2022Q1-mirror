@@ -1,0 +1,39 @@
+.formCard {
+    width: 250px;
+    height: 370px;
+    margin: 2em;
+    background-color: rgba(255, 165, 0, 0.25);
+    border-radius: 1em;
+    word-break: break-word;
+    box-shadow: 0 0 1em #0000003d;
+    transition: all 0.2s linear;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.formCard:hover {
+    box-shadow: 0 0 3em #0000003d;
+}
+
+.formCard > img {
+    width: 250px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.formCard > div {
+    width: 250px;
+    height: 170px;
+    overflow: hidden;
+    padding: 1em;
+    font-size: 0.8em;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}

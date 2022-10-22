@@ -26,7 +26,6 @@ export interface ISearchBarProps {
   type?: string;
   placeholder?: string;
   className?: string;
-  style?: {};
 }
 
 export interface ISearchBarState {
@@ -55,18 +54,8 @@ export interface ICardState {
   isHovered: boolean;
 }
 
-export enum characterStatusSet {
-  Alive = 'Alive',
-  Dead = 'Dead',
-  unknown = 'unknown',
-}
-
 export interface IShareButtonProps {
   name?: string;
-}
-
-export interface IShareButtonState {
-  anchorEl: null | Element | ((element: Element) => Element);
 }
 
 export interface IFavouriteButtonProps {
@@ -74,16 +63,111 @@ export interface IFavouriteButtonProps {
   isFavorite?: boolean;
 }
 
-export interface IPopoverShareBtnGroupProps {
-  anchorEl: null | Element | ((element: Element) => Element);
-  onClick: MouseEventHandler;
-  onClose: MouseEventHandler;
+export interface IFormProps {
+  addNewCard?: (card: IFormsCardProps) => void;
 }
 
-export interface IPopoverCustomProps {
-  anchorEl: null | Element | ((element: Element) => Element);
-  isOpen: boolean;
-  onClick?: MouseEventHandler;
-  onClose?: MouseEventHandler;
-  arrowOffset?: string | number;
+export interface IFormState {
+  isFirstNameCorrect: boolean;
+  isLastNameCorrect: boolean;
+  isZipCodeCorrect: boolean;
+  isBirthdayCorrect: boolean;
+  isArrivingDateCorrect: boolean;
+  isCountryCorrect: boolean;
+  isAgreementToProcConfDataCorrect: boolean;
+  isAgreementToGetAdvToEmail: boolean;
+  isGenderCorrect: boolean;
+  isProfilePictureCorrect: boolean;
+  isSubmitButtonDisabled: boolean;
+}
+
+export enum genderTypes {
+  MALE = 'male',
+  FEMALE = 'female',
+}
+
+export interface IFormsCardProps {
+  id?: string;
+  firstName: string;
+  lastName: string;
+  zipCode: string;
+  birthday: string;
+  arrivingDate: string;
+  country: string;
+  isAgreeToProcConfData: boolean;
+  isAgreeToGetAdvToEmail: boolean;
+  gender: genderTypes;
+  profilePicture: string;
+}
+
+export interface IFormsCardSetProps {
+  name?: string;
+  cardSetArray?: IFormsCardProps[];
+}
+
+export interface IInputWhole {
+  name: string;
+}
+
+export interface IInputSelfField {
+  id: string;
+  label: string;
+}
+
+export interface IInputVerifiable {
+  formatInstruction: string;
+  isCorrectFormat: boolean;
+  onChange: (a: React.ChangeEvent) => void;
+}
+
+export interface IInputCheckable {
+  defaultChecked: boolean;
+}
+
+export interface IInputValueable {
+  defaultValue: string;
+}
+
+export interface ITextInputProps
+  extends IInputWhole,
+    IInputSelfField,
+    IInputVerifiable,
+    IInputValueable {}
+
+export interface IDateInputProps
+  extends IInputWhole,
+    IInputSelfField,
+    IInputVerifiable,
+    IInputValueable {}
+
+export interface IDropdownInputProps
+  extends IInputWhole,
+    IInputSelfField,
+    IInputVerifiable,
+    IInputValueable {
+  options: string[];
+}
+
+export interface IFileUploadInputProps
+  extends IInputWhole,
+    IInputSelfField,
+    IInputVerifiable,
+    IInputValueable {}
+
+export interface ICheckboxInputProps
+  extends IInputWhole,
+    IInputSelfField,
+    IInputVerifiable,
+    IInputCheckable {}
+
+export interface ISwitcherOptionProps extends IInputSelfField, IInputCheckable {}
+
+export interface ISwitcherInputProps extends IInputWhole, IInputVerifiable {
+  options: ISwitcherOptionProps[];
+}
+
+export interface ISubmitInputProps extends IInputWhole {
+  id: string;
+  value: string;
+  isDisabled: boolean;
 }
