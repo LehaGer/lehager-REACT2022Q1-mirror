@@ -1,10 +1,33 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { matchRoutes, NavLink, useLocation } from 'react-router-dom';
 import ItemStyles from './Navbar.module.css';
+import { AppContext } from '../../context/AppContext';
+import { ICharacterInfo } from '../../types/interfaces';
 
 const Navbar = () => {
+  const { state } = useContext(AppContext);
+  const location = useLocation();
+
+  const matchesResult = matchRoutes([{ path: '/character/:id' }], location);
+  const characterId = matchesResult?.[0]?.params?.id;
+
+  let character: ICharacterInfo | undefined;
+  state.characterCards.forEach((el) => {
+    if (el.id === Number(characterId)) {
+      character = el;
+    }
+  });
+
   return (
     <header className="App-header">
+      {character ? (
+        <div className={ItemStyles.currentRoute}>
+          <div className={ItemStyles.RouteElement}>Main</div> /{' '}
+          <div className={ItemStyles.RouteElement}>{character.name}</div>
+        </div>
+      ) : (
+        ''
+      )}
       <nav className={ItemStyles.navBar}>
         <NavLink to="/" className="App-link" data-testid="mainLink">
           Main

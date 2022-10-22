@@ -1,7 +1,14 @@
 import React from 'react';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
-import { Path, RegisterOptions } from 'react-hook-form';
+import { FieldError, Path, RegisterOptions } from 'react-hook-form';
 import { FieldErrors } from 'react-hook-form/dist/types/errors';
+
+export interface ICharacterNavigationInfo {
+  count: number;
+  pages: number;
+  next: string | null;
+  prev: string | null;
+}
 
 export interface ICharacterInfo {
   id: number;
@@ -29,11 +36,11 @@ export interface ISearchBarProps {
   type?: string;
   placeholder?: string;
   className?: string;
-  updateCharactersByName?: (name?: string) => void;
+  updateCharactersByName?: (attributes?: ICharacterQueryAttributes) => void;
 }
 
-export interface ICardSetProps<ICharacterInfo> {
-  dataSet: ICharacterInfo[];
+export interface ICardSetProps<ICardInfo> {
+  dataSet: ICardInfo[];
 }
 
 export interface ICardProps {
@@ -73,8 +80,48 @@ export interface IFormsCardProps {
   profilePicture: string;
 }
 
-export interface IFormsCardSetProps {
-  cardSetArray?: IFormsCardProps[];
+export interface IFormsState {
+  firstName: {
+    value: string;
+    hasError: FieldError | undefined;
+  };
+  lastName: {
+    value: string;
+    hasError: FieldError | undefined;
+  };
+  zipCode: {
+    value: string;
+    hasError: FieldError | undefined;
+  };
+  birthday: {
+    value: string;
+    hasError: FieldError | undefined;
+  };
+  arrivingDate: {
+    value: string;
+    hasError: FieldError | undefined;
+  };
+  country: {
+    value: string;
+    hasError: FieldError | undefined;
+  };
+  isAgreeToProcConfData: {
+    value: boolean;
+    hasError: FieldError | undefined;
+  };
+  isAgreeToGetAdvToEmail: {
+    value: boolean;
+    hasError: FieldError | undefined;
+  };
+  gender: {
+    value: genderTypes | null;
+    hasError: FieldError | undefined;
+  };
+  profilePicture: {
+    value: FileList | null;
+    hasError: FieldError | undefined;
+  };
+  isSubmitButtonDisabled: boolean;
 }
 
 export interface IInputWhole {
@@ -92,7 +139,7 @@ export interface IInputCheckable {
 
 export interface IInputUnderFormHook<TFormValues> extends IInputWhole {
   name: Path<TFormValues>;
-  register: UseFormRegister<TFormValues>;
+  register?: UseFormRegister<TFormValues>;
   rules?: RegisterOptions;
   errors?: FieldErrors<TFormValues>;
 }
@@ -144,6 +191,7 @@ export interface ICharacterQueryAttributes {
   species?: string;
   type?: string;
   gender?: characterQueryGender;
+  page?: number;
 }
 
 export interface IModalWindowProps {
@@ -151,10 +199,42 @@ export interface IModalWindowProps {
 }
 
 export interface ICardFullProps {
-  character: ICharacterInfo | null;
+  character?: ICharacterInfo;
 }
 
 export interface IButtonCustomProps {
   onClick?: (event: React.MouseEvent) => void;
   'data-testid'?: string;
+}
+
+export interface ICharacterContext {
+  searchBarValue: string;
+  cards: ICharacterInfo[];
+}
+
+export interface IFormContext {
+  formsFields: IFormsState;
+  cards: IFormsCardProps[];
+}
+
+export interface IInitialState {
+  characterQuery: string;
+  characterCards: ICharacterInfo[];
+  formFields: IFormsState;
+  formCards: IFormsCardProps[];
+  cardFilter: ICardFilter;
+  pagination: IPagination;
+}
+
+export interface ICardFilter {
+  status?: characterStatus;
+  gender?: characterQueryGender;
+  species?: string;
+}
+
+export interface IPagination {
+  pageCapacity: number;
+  pagesCount?: number;
+  currentPage?: number;
+  navigationInfo?: ICharacterNavigationInfo;
 }

@@ -15,7 +15,7 @@ const DateInput = <TFormValues extends Record<string, unknown>>({
     <div className={ItemStyles.dateInput} data-testid="DateInput">
       <div>
         <label htmlFor={id}>{label}</label>
-        <input type="date" id={id} {...register(name, rules)} />
+        <input type="date" id={id} {...(register ? register(name, rules) : [])} />
       </div>
       {errors?.[name] && (
         <div className={'showed'}>{(errors?.[name] as unknown as FieldError).message}</div>

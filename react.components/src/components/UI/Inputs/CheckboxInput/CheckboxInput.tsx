@@ -14,7 +14,7 @@ const CheckboxInput = <TFormValues extends Record<string, unknown>>({
   return (
     <div className={ItemStyles.checkboxInput} data-testid="CheckBoxInput">
       <div>
-        <input type="checkbox" id={id} {...register(name, rules)} />
+        <input type="checkbox" id={id} {...(register ? register(name, rules) : [])} />
         <label htmlFor={id}>{label}</label>
       </div>
       {errors?.[name] && (

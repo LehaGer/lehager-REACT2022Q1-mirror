@@ -3,6 +3,10 @@
     margin: 0 10%;
 }
 
-.Main > input {
+.Main > input  {
+    margin-bottom: 1em;
+}
+
+.Main input~div  {
     margin-bottom: 3em;
 }

@@ -11,11 +11,12 @@ const TextInput = <TFormValues extends Record<string, unknown>>({
   rules,
   errors,
 }: ITextInputProps<TFormValues>) => {
+  console.log('errors', errors);
   return (
     <div className={ItemStyles.textInput} data-testid="TextInput">
       <div>
         <label htmlFor={id}>{label}</label>
-        <input id={id} {...register(name, rules)} />
+        <input id={id} {...(register ? register(name, rules) : [])} />
       </div>
       {errors?.[name] && (
         <div className={errors?.[name] ? 'showed' : 'hidden'}>

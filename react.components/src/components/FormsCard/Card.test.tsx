@@ -77,7 +77,7 @@ describe('Card testing', () => {
     );
   });
 
-  test('does Card handle request error for CardFull', async () => {
+  test('does Card handle request error for CardFullModal', async () => {
     render(
       <Card
         key={response[0].id}
